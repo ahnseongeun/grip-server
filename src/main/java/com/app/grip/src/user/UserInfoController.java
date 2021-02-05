@@ -3,7 +3,6 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,17 +12,15 @@ import static com.app.grip.config.BaseResponseStatus.*;
 import static com.app.grip.utils.ValidationRegex.isRegexEmail;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserInfoController {
     private final UserInfoProvider userInfoProvider;
     private final UserInfoService userInfoService;
-    private final JwtService jwtService;
 
     @Autowired
-    public UserInfoController(UserInfoProvider userInfoProvider, UserInfoService userInfoService, JwtService jwtService) {
+    public UserInfoController(UserInfoProvider userInfoProvider, UserInfoService userInfoService) {
         this.userInfoProvider = userInfoProvider;
         this.userInfoService = userInfoService;
-        this.jwtService = jwtService;
     }
 
     /**
@@ -178,19 +175,4 @@ public class UserInfoController {
         }
     }
 
-    /**
-     * JWT 검증 API
-     * [GET] /users/jwt
-     * @return BaseResponse<Void>
-     */
-    @GetMapping("/jwt")
-    public BaseResponse<Void> jwt() {
-        try {
-            int userId = jwtService.getUserId();
-            userInfoProvider.retrieveUserInfo(userId);
-            return new BaseResponse<>(SUCCESS_JWT);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
 }
