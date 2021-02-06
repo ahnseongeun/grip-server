@@ -38,3 +38,16 @@ out/
 
 ### VS Code ###
 .vscode/
+
+## DB 설정파일
+*/resources/application.yml
+src/main/resources/application.yml
+
+## 숨겨야하는 파일
+*secret/Secret.java
+*/Secret*
+*Secret*
+
+## 테스트 폴더 전체
+/test/*
+*/test/*
