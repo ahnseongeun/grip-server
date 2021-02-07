@@ -1,4 +1,7 @@
 package com.app.grip.src.vidioCategory;
 
-public interface VideoCategoryRepository {
+import com.app.grip.src.advertisement.AdvertisementInfo;
+import org.springframework.data.repository.CrudRepository;
+
+public interface VideoCategoryRepository extends CrudRepository<VideoCategoryInfo, Long> {
 }

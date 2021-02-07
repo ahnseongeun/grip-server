@@ -3,12 +3,16 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.ApiExamMemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.app.grip.config.BaseResponseStatus.*;
+import static com.app.grip.utils.ApiExamMemberProfile.getNaverTokenResponse;
 import static com.app.grip.utils.ValidationRegex.isRegexEmail;
 
 @RestController
@@ -74,34 +78,38 @@ public class UserInfoController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<PostUserRes> postUsers(@RequestBody PostUserReq parameters) {
-        // 1. Body Parameter Validation
-        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
-            return new BaseResponse<>(EMPTY_EMAIL);
-        }
-        if (!isRegexEmail(parameters.getEmail())){
-            return new BaseResponse<>(INVALID_EMAIL);
-        }
-        if (parameters.getPassword() == null || parameters.getPassword().length() == 0) {
-            return new BaseResponse<>(EMPTY_PASSWORD);
-        }
-        if (parameters.getConfirmPassword() == null || parameters.getConfirmPassword().length() == 0) {
-            return new BaseResponse<>(EMPTY_CONFIRM_PASSWORD);
-        }
-        if (!parameters.getPassword().equals(parameters.getConfirmPassword())) {
-            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
-        }
-        if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
-            return new BaseResponse<>(EMPTY_NICKNAME);
-        }
+    public BaseResponse<PostUserRes> postUsersByNaver(
+            @RequestParam(value = "token") String token) {
 
-        // 2. Post UserInfo
-        try {
-            PostUserRes postUserRes = userInfoService.createUserInfo(parameters);
-            return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+        String header = "Bearer " + token; // Bearer 다음에 공백 추가
+
+        String apiURL = "https://openapi.naver.com/v1/nid/me";
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("Authorization", header);
+        String responseBody = getNaverTokenResponse(apiURL,requestHeaders);
+
+        System.out.println(responseBody);
+
+        return null;
+//        // 1. Body Parameter Validation
+//        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
+//            return new BaseResponse<>(EMPTY_EMAIL);
+//        }
+//        if (!isRegexEmail(parameters.getEmail())){
+//            return new BaseResponse<>(INVALID_EMAIL);
+//        }
+//        if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
+//            return new BaseResponse<>(EMPTY_NICKNAME);
+//        }
+//
+//        // 2. Post UserInfo
+//        try {
+//            PostUserRes postUserRes = userInfoService.createUserInfo(parameters);
+//            return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
     }
 
     /**

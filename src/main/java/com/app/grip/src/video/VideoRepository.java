@@ -1,4 +1,6 @@
 package com.app.grip.src.video;
 
-public interface VideoRepository {
+import org.springframework.data.repository.CrudRepository;
+
+public interface VideoRepository extends CrudRepository<VideoInfo, Long> {
 }
