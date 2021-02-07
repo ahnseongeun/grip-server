@@ -79,11 +79,11 @@ public class UserInfo extends BaseEntity {
     @Column(name = "role", nullable = false, columnDefinition = "integer default 1")
     private Integer role;
 
-    /**
-     * 상태
-     */
-    @Column(name = "status", nullable = false, columnDefinition = "varchar(1) default 'Y'")
-    private String Status;
+//    /**
+//     * 상태
+//     */
+//    @Column(name = "status", nullable = false, columnDefinition = "varchar(1) default 'Y'")
+//    private String Status;
 
     /**
      * 이미지 상태
