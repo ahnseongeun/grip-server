@@ -3,7 +3,6 @@ package com.app.grip.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,27 +11,14 @@ import java.util.Date;
 @Setter
 @MappedSuperclass
 public abstract class BaseEntity {
-//    @Getter
-//    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
-//    @Temporal(TIMESTAMP)
     @CreationTimestamp
-    @Column(name = "createdAt", nullable = false, updatable = false)
-    private Date createdAt;
+    @Column(name = "createDate", nullable = false, updatable = false)
+    private Date createDate;
 
-//    @Getter
-//    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP", insertable = false, updatable = false)
-//    @Temporal(TIMESTAMP)
-    @UpdateTimestamp
-    @Column(name = "updatedAt", nullable = false)
-    private Date updatedAt;
+    @CreationTimestamp
+    @Column(name = "updateDate")
+    private Date updateDate;
 
-//    @PrePersist
-//    void prePersist() {
-//        this.createdAt = this.updatedAt = new Date();
-//    }
-//
-//    @PreUpdate
-//    void preUpdate() {
-//        this.updatedAt = new Date();
-//    }
+    @Column(name = "status", length = 1)
+    private String status = "Y";
 }
