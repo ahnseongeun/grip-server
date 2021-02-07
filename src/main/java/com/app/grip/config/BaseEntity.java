@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Getter
-@Setter
 @MappedSuperclass
 public abstract class BaseEntity {
     @CreationTimestamp
@@ -19,6 +18,6 @@ public abstract class BaseEntity {
     @Column(name = "updateDate")
     private Date updateDate;
 
-    @Column(name = "status", length = 1)
-    private String status = "Y";
+    @Column(name = "status", nullable = false, columnDefinition = "varchar(1) default 'Y'")
+    private String status;
 }
