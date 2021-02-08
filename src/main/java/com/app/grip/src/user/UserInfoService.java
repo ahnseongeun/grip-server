@@ -3,6 +3,7 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,7 @@ public class UserInfoService {
     private final UserInfoRepository userRepository;
     private final UserInfoProvider userProvider;
 
+    @Autowired
     public UserInfoService(UserInfoRepository userRepository, UserInfoProvider userProvider) {
         this.userRepository = userRepository;
         this.userProvider = userProvider;
@@ -102,10 +104,10 @@ public class UserInfoService {
                 .build();
     }
 
-    public PatchUserRes updateUserInfo(Integer userId, PatchUserReq parameters)  throws BaseException {
-        return null;
-    }
-
-    public void deleteUserInfo(Integer userId) throws BaseException {
-    }
+//    public PatchUserRes updateUserInfo(Integer userId, PatchUserReq parameters)  throws BaseException {
+//        return null;
+//    }
+//
+//    public void deleteUserInfo(Integer userId) throws BaseException {
+//    }
 }

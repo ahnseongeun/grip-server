@@ -2,6 +2,7 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,21 +15,22 @@ public class UserInfoProvider {
 
     private final UserInfoRepository userRepository;
 
+    @Autowired
     public UserInfoProvider(UserInfoRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public List<GetUsersRes> retrieveUserInfoList(String word) throws BaseException {
-        return null;
-    }
-
-    public GetUserRes retrieveUserInfo(Integer userId) throws BaseException {
-        return null;
-    }
-
-    public PostLoginRes login(PostLoginReq parameters) throws BaseException {
-        return null;
-    }
+//    public List<GetUsersRes> retrieveUserInfoList(String word) throws BaseException {
+//        return null;
+//    }
+//
+//    public GetUserRes retrieveUserInfo(Integer userId) throws BaseException {
+//        return null;
+//    }
+//
+//    public PostLoginRes login(PostLoginReq parameters) throws BaseException {
+//        return null;
+//    }
 
     /**
      * email로 중복된 회원 조회
