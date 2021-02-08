@@ -2,12 +2,10 @@ package com.app.grip.src.video;
 
 import com.app.grip.config.BaseEntity;
 import com.app.grip.src.vidioCategory.VideoCategoryInfo;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Accessors(chain = true)
 @Builder

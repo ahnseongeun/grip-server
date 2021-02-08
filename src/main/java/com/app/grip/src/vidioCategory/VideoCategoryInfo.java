@@ -44,5 +44,12 @@ public class VideoCategoryInfo extends BaseEntity {
     @OneToMany(mappedBy = "videoCategoryInfo",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<VideoInfo> videoInfoList;
 
+    @Builder
+    public VideoCategoryInfo(Long id, String name, String pictureURL) {
+        this.id = id;
+        this.name = name;
+        this.pictureURL = pictureURL;
+    }
+
 
 }

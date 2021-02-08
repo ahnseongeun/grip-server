@@ -1,5 +1,8 @@
 package com.app.grip;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,64 +15,15 @@ import java.util.Map;
 
 public class ObjectTest {
     public static void main(String[] args) {
-        String token = "AAAAOeEXn3tkuqHHm73mNAvNVoGHqbPVvD4LTIVVAm2pxgccX5ffBwtw6RUqU31q1yBkhU3xFaEhF0SV2kFqH843A84"; // 네이버 로그인 접근 토큰;
-        String header = "Bearer " + token; // Bearer 다음에 공백 추가
+        String token = "{\"resultcode\":\"00\",\"message\":\"success\",\"response\":{\"id\":\"27551400\",\"nickname\":\"\\ud558\\uc5ec\\uc2dc\",\"profile_image\":\"https:\\/\\/phinf.pstatic.net\\/contact\\/profile\\/blog\\/30\\/65\\/dudtls153.jpg\",\"age\":\"20-29\",\"gender\":\"M\",\"email\":\"dudtls153@naver.com\",\"mobile\":\"010-2234-5619\",\"mobile_e164\":\"+821022345619\",\"name\":\"\\ud55c\\uc601\\uc2e0\",\"birthday\":\"02-26\",\"birthyear\":\"1996\"}}"; // 네이버 로그인 접근 토큰;
 
-        String apiURL = "https://openapi.naver.com/v1/nid/me";
-
-        Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("Authorization", header);
-        String responseBody = get(apiURL,requestHeaders);
-
-        System.out.println(responseBody);
-    }
-
-    private static String get(String apiUrl, Map<String, String> requestHeaders){
-        HttpURLConnection con = connect(apiUrl);
         try {
-            con.setRequestMethod("GET");
-            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
-                con.setRequestProperty(header.getKey(), header.getValue());
-            }
-
-            int responseCode = con.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
-                return readBody(con.getInputStream());
-            } else { // 에러 발생
-                return readBody(con.getErrorStream());
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("API 요청과 응답 실패", e);
-        } finally {
-            con.disconnect();
+            JSONObject json = new JSONObject(token);
+            System.out.println(json.getJSONObject("response").getString("nickname"));
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
-    private static HttpURLConnection connect(String apiUrl){
-        try {
-            URL url = new URL(apiUrl);
-            return (HttpURLConnection)url.openConnection();
-        } catch (MalformedURLException e) {
-            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
-        } catch (IOException e) {
-            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
-        }
-    }
-
-    private static String readBody(InputStream body){
-        InputStreamReader streamReader = new InputStreamReader(body);
-
-        try (BufferedReader lineReader = new BufferedReader(streamReader)) {
-            StringBuilder responseBody = new StringBuilder();
-
-            String line;
-            while ((line = lineReader.readLine()) != null) {
-                responseBody.append(line);
-            }
-
-            return responseBody.toString();
-        } catch (IOException e) {
-            throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
-        }
-    }
 }
