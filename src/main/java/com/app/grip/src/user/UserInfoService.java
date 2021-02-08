@@ -4,7 +4,6 @@ import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
