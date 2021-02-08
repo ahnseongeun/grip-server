@@ -5,7 +5,7 @@ import com.app.grip.src.user.models.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -23,7 +23,7 @@ public class UserInfoService {
         this.userProvider = userProvider;
     }
 
-    public PostUserRes createUserInfo(String parameters) throws BaseException,JSONException  {
+    public PostUserRes createUserInfo(String parameters) throws BaseException {
 
         UserInfo existsUser = null;
 
@@ -38,21 +38,16 @@ public class UserInfoService {
         String imageStatus = "Y";
         String profile_image = null;
 
-        try {
-            JSONObject json = new JSONObject(parameters);
-            name = json.getJSONObject("response").getString("name");
-            nickName = json.getJSONObject("response").getString("nickname");
-            birthyear = json.getJSONObject("response").getString("birthyear");
-            birthday = json.getJSONObject("response").getString("birthday");
-            email = json.getJSONObject("response").getString("email");
-            phoneNumber = json.getJSONObject("response").getString("mobile");
-            gender = json.getJSONObject("response").getString("gender");
-            id = json.getJSONObject("response").getString("id");
-            profile_image = json.getJSONObject("response").getString("profile_image");
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        JSONObject json = new JSONObject(parameters);
+        name = json.getJSONObject("response").getString("name");
+        nickName = json.getJSONObject("response").getString("nickname");
+        birthyear = json.getJSONObject("response").getString("birthyear");
+        birthday = json.getJSONObject("response").getString("birthday");
+        email = json.getJSONObject("response").getString("email");
+        phoneNumber = json.getJSONObject("response").getString("mobile");
+        gender = json.getJSONObject("response").getString("gender");
+        id = json.getJSONObject("response").getString("id");
+        profile_image = json.getJSONObject("response").getString("profile_image");
 
         try {
             // 1-1. 이미 존재하는 회원이 있는지 조회
