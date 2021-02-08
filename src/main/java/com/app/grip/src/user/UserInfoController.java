@@ -70,48 +70,48 @@ public class UserInfoController {
 //        }
 //    }
 
-    /**
-     * 네이버 회원가입 및 로그인 API
-     * [POST] /api/users/naver
-     * @RequestBody PostUserReq
-     * @return BaseResponse<PostUserRes>
-     */
-    @ResponseBody
-    @PostMapping("/naver")
-    public BaseResponse<PostUserRes> postUsersByNaver(
-            @RequestHeader(value = "token") String token) {
-
-        String header = "Bearer " + token; // Bearer 다음에 공백 추가
-
-        String apiURL = "https://openapi.naver.com/v1/nid/me";
-
-        Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("Authorization", header);
-        String responseBody = getNaverTokenResponse(apiURL, requestHeaders);
-//        // 1. Body Parameter Validation
-//        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
-//            return new BaseResponse<>(EMPTY_EMAIL);
+//    /**
+//     * 네이버 회원가입 및 로그인 API
+//     * [POST] /api/users/naver
+//     * @RequestBody PostUserReq
+//     * @return BaseResponse<PostUserRes>
+//     */
+//    @ResponseBody
+//    @PostMapping("/naver")
+//    public BaseResponse<PostUserRes> postUsersByNaver(
+//            @RequestHeader(value = "token") String token) {
+//
+//        String header = "Bearer " + token; // Bearer 다음에 공백 추가
+//
+//        String apiURL = "https://openapi.naver.com/v1/nid/me";
+//
+//        Map<String, String> requestHeaders = new HashMap<>();
+//        requestHeaders.put("Authorization", header);
+//        String responseBody = getNaverTokenResponse(apiURL, requestHeaders);
+////        // 1. Body Parameter Validation
+////        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
+////            return new BaseResponse<>(EMPTY_EMAIL);
+////        }
+////        if (!isRegexEmail(parameters.getEmail())){
+////            return new BaseResponse<>(INVALID_EMAIL);
+////        }
+////        if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
+////            return new BaseResponse<>(EMPTY_NICKNAME);
+////        }
+//
+//        // 2. Post UserInfo
+//        try {
+//            PostUserRes postUserRes = userInfoService.createUserInfo(responseBody);
+//
+//            if (postUserRes.getResponse().equals("login")) {
+//                return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
+//            }
+//            return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
+//
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
 //        }
-//        if (!isRegexEmail(parameters.getEmail())){
-//            return new BaseResponse<>(INVALID_EMAIL);
-//        }
-//        if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
-//            return new BaseResponse<>(EMPTY_NICKNAME);
-//        }
-
-        // 2. Post UserInfo
-        try {
-            PostUserRes postUserRes = userInfoService.createUserInfo(responseBody);
-
-            if (postUserRes.getResponse().equals("login")) {
-                return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
-            }
-            return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
-
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
+//    }
 
 
 //    /**
