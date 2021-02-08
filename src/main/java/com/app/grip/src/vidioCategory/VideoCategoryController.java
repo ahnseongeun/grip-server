@@ -51,14 +51,22 @@ public class VideoCategoryController {
      * @throws IOException
      * @throws BaseException
      */
-    @PostMapping("/upload-category-image")
-    public VideoCategoryInfo execWrite(
+    @ResponseBody
+    @RequestMapping(value = "/upload-category-image",method = RequestMethod.POST)
+    public BaseResponse<VideoCategoryInfo> execWrite(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException, BaseException {
+        log.info("upload");
         String imgPath = s3Service.upload(imageFile);
 
-        return videoCategoryService.savePost(name,imgPath);
+        try{
+            log.info("image 추가 ");
 
+            VideoCategoryInfo videoCategoryInfo = videoCategoryService.savePost(name,imgPath);
+            return new BaseResponse<>(SUCCESS, videoCategoryInfo);
+        }catch(BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
 }

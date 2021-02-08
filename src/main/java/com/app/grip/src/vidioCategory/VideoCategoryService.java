@@ -2,10 +2,12 @@ package com.app.grip.src.vidioCategory;
 
 import com.app.grip.config.BaseException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import static com.app.grip.config.BaseResponseStatus.FAILED_TO_POST_IMAGE;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class VideoCategoryService {
@@ -25,7 +27,12 @@ public class VideoCategoryService {
             throw new BaseException(FAILED_TO_POST_IMAGE);
         }
 
-        return videoCategoryInfo;
+        log.info("uploading");
+        return VideoCategoryInfo.builder()
+                .id(videoCategoryInfo.getId())
+                .name(videoCategoryInfo.getName())
+                .pictureURL(videoCategoryInfo.getPictureURL())
+                .build();
     }
 
 }
