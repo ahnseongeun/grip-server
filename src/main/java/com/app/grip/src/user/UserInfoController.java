@@ -5,6 +5,7 @@ import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
 import com.app.grip.utils.ApiExamMemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -79,7 +80,7 @@ public class UserInfoController {
     @ResponseBody
     @PostMapping("/naver")
     public BaseResponse<PostUserRes> postUsersByNaver(
-            @RequestHeader(value = "token") String token) {
+            @RequestHeader(value = "token") String token) throws JSONException {
 
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
@@ -88,8 +89,8 @@ public class UserInfoController {
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("Authorization", header);
         String responseBody = getNaverTokenResponse(apiURL, requestHeaders);
-        System.out.println(responseBody);
-        return null;
+//        System.out.println(responseBody);
+//        return null;
 //        // 1. Body Parameter Validation
 //        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
 //            return new BaseResponse<>(EMPTY_EMAIL);
@@ -102,17 +103,17 @@ public class UserInfoController {
 //        }
 
         // 2. Post UserInfo
-//        try {
-//            PostUserRes postUserRes = userInfoService.createUserInfo(responseBody);
-//
-//            if (postUserRes.getResponse().equals("login")) {
-//                return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
-//            }
-//            return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
-//
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
+        try {
+            PostUserRes postUserRes = userInfoService.createUserInfo(responseBody);
+
+            if (postUserRes.getResponse().equals("login")) {
+                return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
+            }
+            return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
     }
 
 
