@@ -80,7 +80,7 @@ public class UserInfoController {
     @ResponseBody
     @PostMapping("/naver")
     public BaseResponse<PostUserRes> postUsersByNaver(
-            @RequestHeader(value = "token") String token) throws JSONException {
+            @RequestHeader(value = "token") String token) {
 
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
