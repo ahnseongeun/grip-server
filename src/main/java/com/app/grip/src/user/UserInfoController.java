@@ -27,48 +27,48 @@ public class UserInfoController {
         this.userInfoService = userInfoService;
     }
 
-    /**
-     * 회원 전체 조회 API
-     * [GET] /users
-     * 회원 닉네임 검색 조회 API
-     * [GET] /users?word=
-     * @return BaseResponse<List<GetUsersRes>>
-     */
-    @ResponseBody
-    @GetMapping("") // (GET) 127.0.0.1:9000/users
-    public BaseResponse<List<GetUsersRes>> getUsers(@RequestParam(required = false) String word) {
-        try {
-            List<GetUsersRes> getUsersResList = userInfoProvider.retrieveUserInfoList(word);
-            if (word == null) {
-                return new BaseResponse<>(SUCCESS_READ_USERS, getUsersResList);
-            } else {
-                return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
-            }
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
+//    /**
+//     * 회원 전체 조회 API
+//     * [GET] /users
+//     * 회원 닉네임 검색 조회 API
+//     * [GET] /users?word=
+//     * @return BaseResponse<List<GetUsersRes>>
+//     */
+//    @ResponseBody
+//    @GetMapping("") // (GET) 127.0.0.1:9000/users
+//    public BaseResponse<List<GetUsersRes>> getUsers(@RequestParam(required = false) String word) {
+//        try {
+//            List<GetUsersRes> getUsersResList = userInfoProvider.retrieveUserInfoList(word);
+//            if (word == null) {
+//                return new BaseResponse<>(SUCCESS_READ_USERS, getUsersResList);
+//            } else {
+//                return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
+//            }
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
 
-    /**
-     * 회원 조회 API
-     * [GET] /users/:userId
-     * @PathVariable userId
-     * @return BaseResponse<GetUserRes>
-     */
-    @ResponseBody
-    @GetMapping("/{userId}")
-    public BaseResponse<GetUserRes> getUser(@PathVariable Integer userId) {
-        if (userId == null || userId <= 0) {
-            return new BaseResponse<>(EMPTY_USERID);
-        }
-
-        try {
-            GetUserRes getUserRes = userInfoProvider.retrieveUserInfo(userId);
-            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
+//    /**
+//     * 회원 조회 API
+//     * [GET] /users/:userId
+//     * @PathVariable userId
+//     * @return BaseResponse<GetUserRes>
+//     */
+//    @ResponseBody
+//    @GetMapping("/{userId}")
+//    public BaseResponse<GetUserRes> getUser(@PathVariable Integer userId) {
+//        if (userId == null || userId <= 0) {
+//            return new BaseResponse<>(EMPTY_USERID);
+//        }
+//
+//        try {
+//            GetUserRes getUserRes = userInfoProvider.retrieveUserInfo(userId);
+//            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
 
     /**
      * 네이버 회원가입 및 로그인 API
