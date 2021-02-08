@@ -12,4 +12,5 @@ public class PostUserRes {
     private final int role;
     private final String nickName;
     private final String profileImage;
+    private final String response;
 }

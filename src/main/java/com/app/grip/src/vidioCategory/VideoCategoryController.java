@@ -18,13 +18,17 @@ import static com.app.grip.config.BaseResponseStatus.SUCCESS;
 @Slf4j
 @Controller
 @AllArgsConstructor
-//@RequestMapping(value = "/api")
+@RequestMapping(value = "/api")
 public class VideoCategoryController {
 
     private final S3Service s3Service;
     private final VideoCategoryService videoCategoryService;
     private final VideoCategoryProvider videoCategoryProvider;
 
+    /**
+     * 영상 카테고리 조회
+     * @return
+     */
     @ResponseBody
     @RequestMapping(value = "/video-category",method = RequestMethod.GET)
     public BaseResponse<List<GetVideoCategory>> GetVideoCategory() {
@@ -39,21 +43,22 @@ public class VideoCategoryController {
         }
     }
 
-    @GetMapping("/gallery")
-    public String dispWrite() {
-
-        return "/gallery";
-    }
-
-    @PostMapping("/gallery")
-    public String execWrite(
+    /**
+     * 더미데이터 이미지 삽입할때 사용.
+     * @param name
+     * @param imageFile
+     * @return
+     * @throws IOException
+     * @throws BaseException
+     */
+    @PostMapping("/upload-category-image")
+    public VideoCategoryInfo execWrite(
             @RequestParam(value = "name") String name,
-            @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException {
+            @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException, BaseException {
         String imgPath = s3Service.upload(imageFile);
 
-        videoCategoryService.savePost(name,imgPath);
+        return videoCategoryService.savePost(name,imgPath);
 
-        return "redirect:/gallery";
     }
 
 }

@@ -2,12 +2,14 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
+@Slf4j
 @Service
 public class UserInfoService {
 
@@ -61,7 +63,14 @@ public class UserInfoService {
         }
         // 1-3. 이미 존재하는 회원이 있다면 return DUPLICATED_USER
         if (existsUser != null) {
-            throw new BaseException(DUPLICATED_USER);
+            log.info("login");
+            return PostUserRes.builder()
+                    .userNo(existsUser.getNo())
+                    .nickName(nickName)
+                    .profileImage(profile_image)
+                    .role(existsUser.getRole())
+                    .response("login")
+                    .build();
         }
 
         UserInfo newUser = UserInfo.builder()
@@ -89,6 +98,7 @@ public class UserInfoService {
                 .nickName(nickName)
                 .profileImage(profile_image)
                 .role(newUser.getRole())
+                .response("registry")
                 .build();
     }
 

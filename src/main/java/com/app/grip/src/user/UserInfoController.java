@@ -71,7 +71,7 @@ public class UserInfoController {
     }
 
     /**
-     * 네이버 회원가입 API
+     * 네이버 회원가입 및 로그인 API
      * [POST] /api/users/naver
      * @RequestBody PostUserReq
      * @return BaseResponse<PostUserRes>
@@ -87,7 +87,7 @@ public class UserInfoController {
 
         Map<String, String> requestHeaders = new HashMap<>();
         requestHeaders.put("Authorization", header);
-        String responseBody = getNaverTokenResponse(apiURL,requestHeaders);
+        String responseBody = getNaverTokenResponse(apiURL, requestHeaders);
 //        // 1. Body Parameter Validation
 //        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
 //            return new BaseResponse<>(EMPTY_EMAIL);
@@ -102,11 +102,17 @@ public class UserInfoController {
         // 2. Post UserInfo
         try {
             PostUserRes postUserRes = userInfoService.createUserInfo(responseBody);
+
+            if (postUserRes.getResponse().equals("login")) {
+                return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
+            }
             return new BaseResponse<>(SUCCESS_POST_USER, postUserRes);
+
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
 
     /**
      * 회원 정보 수정 API
