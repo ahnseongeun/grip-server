@@ -11,4 +11,6 @@ public interface UserInfoRepository extends CrudRepository<UserInfo, Long> {
     List<UserInfo> findByStatus(String status);
     List<UserInfo> findByEmailAndStatus(String email, String status);
     List<UserInfo> findByStatusAndNicknameIsContaining(String status, String word);
+
+    List<UserInfo> findByStatusAndPhoneNumberIsContaining(String y, String phoneNumber);
 }

@@ -18,6 +18,6 @@ public abstract class BaseEntity {
     @Column(name = "updateDate")
     private Date updateDate;
 
-    @Column(name = "status", nullable = false, columnDefinition = "varchar(1) default 'Y'")
+    @Column(name = "status", columnDefinition = "varchar(1) default 'Y'")
     private String status;
 }

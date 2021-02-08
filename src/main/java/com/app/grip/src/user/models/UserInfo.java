@@ -45,13 +45,14 @@ public class UserInfo extends BaseEntity {
     /**
      * 핸드폰 번호
      */
-    @Column(name = "phoneNumber", length = 11)
+    @Column(name = "phoneNumber", length = 13)
     private String phoneNumber;
+
 
     /**
      * 생년월일
      */
-    @Column(name = "birthday", length = 8)
+    @Column(name = "birthday", length = 10)
     private String birthday;
 
     /**

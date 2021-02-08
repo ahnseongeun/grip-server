@@ -30,16 +30,29 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+
     // DB
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'com.h2database:h2'
     //runtimeOnly 'mysql:mysql-connector-java'
+
+    //
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     // Security, Authentication
     implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    //template
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    //S3
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
+    compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure', version: '2.2.1.RELEASE'
 }
 test {
     useJUnitPlatform()
