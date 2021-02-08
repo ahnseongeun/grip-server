@@ -38,9 +38,5 @@ out/
 ### VS Code ###
 .vscode/
 
-## DB 설정파일
-*/resources/application.yml
-src/main/resources/application.yml
-
 ## 테스트 폴더 전체
 */test/*
