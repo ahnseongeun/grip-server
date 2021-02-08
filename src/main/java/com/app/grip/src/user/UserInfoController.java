@@ -5,7 +5,6 @@ import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
 import com.app.grip.utils.ApiExamMemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
