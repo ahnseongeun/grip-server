@@ -12,6 +12,8 @@ public class GripApplication {
         SpringApplication.run(GripApplication.class, args);
     }
 
+    
+    //https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg 사진 더미데이터
 
 
 
