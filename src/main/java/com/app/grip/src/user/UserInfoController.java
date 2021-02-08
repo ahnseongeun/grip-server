@@ -114,75 +114,75 @@ public class UserInfoController {
     }
 
 
-    /**
-     * 회원 정보 수정 API
-     * [PATCH] /users/:userId
-     * @PathVariable userId
-     * @RequestBody PatchUserReq
-     * @return BaseResponse<PatchUserRes>
-     */
-    @ResponseBody
-    @PatchMapping("/{userId}")
-    public BaseResponse<PatchUserRes> patchUsers(@PathVariable Integer userId, @RequestBody PatchUserReq parameters) {
-        if (userId == null || userId <= 0) {
-            return new BaseResponse<>(EMPTY_USERID);
-        }
-
-        if (!parameters.getPassword().equals(parameters.getConfirmPassword())) {
-            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
-        }
-
-        try {
-            return new BaseResponse<>(SUCCESS_PATCH_USER, userInfoService.updateUserInfo(userId, parameters));
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
-
-    /**
-     * 로그인 API
-     * [POST] /users/login
-     * @RequestBody PostLoginReq
-     * @return BaseResponse<PostLoginRes>
-     */
-    @PostMapping("/login")
-    public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq parameters) {
-        // 1. Body Parameter Validation
-        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
-            return new BaseResponse<>(EMPTY_EMAIL);
-        } else if (!isRegexEmail(parameters.getEmail())) {
-            return new BaseResponse<>(INVALID_EMAIL);
-        } else if (parameters.getPassword() == null || parameters.getPassword().length() == 0) {
-            return new BaseResponse<>(EMPTY_PASSWORD);
-        }
-
-        // 2. Login
-        try {
-            PostLoginRes postLoginRes = userInfoProvider.login(parameters);
-            return new BaseResponse<>(SUCCESS_LOGIN, postLoginRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
-
-    /**
-     * 회원 탈퇴 API
-     * [DELETE] /users/:userId
-     * @PathVariable userId
-     * @return BaseResponse<Void>
-     */
-    @DeleteMapping("/{userId}")
-    public BaseResponse<Void> deleteUsers(@PathVariable Integer userId) {
-        if (userId == null || userId <= 0) {
-            return new BaseResponse<>(EMPTY_USERID);
-        }
-
-        try {
-            userInfoService.deleteUserInfo(userId);
-            return new BaseResponse<>(SUCCESS_DELETE_USER);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
+//    /**
+//     * 회원 정보 수정 API
+//     * [PATCH] /users/:userId
+//     * @PathVariable userId
+//     * @RequestBody PatchUserReq
+//     * @return BaseResponse<PatchUserRes>
+//     */
+//    @ResponseBody
+//    @PatchMapping("/{userId}")
+//    public BaseResponse<PatchUserRes> patchUsers(@PathVariable Integer userId, @RequestBody PatchUserReq parameters) {
+//        if (userId == null || userId <= 0) {
+//            return new BaseResponse<>(EMPTY_USERID);
+//        }
+//
+//        if (!parameters.getPassword().equals(parameters.getConfirmPassword())) {
+//            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
+//        }
+//
+//        try {
+//            return new BaseResponse<>(SUCCESS_PATCH_USER, userInfoService.updateUserInfo(userId, parameters));
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
+//
+//    /**
+//     * 로그인 API
+//     * [POST] /users/login
+//     * @RequestBody PostLoginReq
+//     * @return BaseResponse<PostLoginRes>
+//     */
+//    @PostMapping("/login")
+//    public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq parameters) {
+//        // 1. Body Parameter Validation
+//        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
+//            return new BaseResponse<>(EMPTY_EMAIL);
+//        } else if (!isRegexEmail(parameters.getEmail())) {
+//            return new BaseResponse<>(INVALID_EMAIL);
+//        } else if (parameters.getPassword() == null || parameters.getPassword().length() == 0) {
+//            return new BaseResponse<>(EMPTY_PASSWORD);
+//        }
+//
+//        // 2. Login
+//        try {
+//            PostLoginRes postLoginRes = userInfoProvider.login(parameters);
+//            return new BaseResponse<>(SUCCESS_LOGIN, postLoginRes);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
+//
+//    /**
+//     * 회원 탈퇴 API
+//     * [DELETE] /users/:userId
+//     * @PathVariable userId
+//     * @return BaseResponse<Void>
+//     */
+//    @DeleteMapping("/{userId}")
+//    public BaseResponse<Void> deleteUsers(@PathVariable Integer userId) {
+//        if (userId == null || userId <= 0) {
+//            return new BaseResponse<>(EMPTY_USERID);
+//        }
+//
+//        try {
+//            userInfoService.deleteUserInfo(userId);
+//            return new BaseResponse<>(SUCCESS_DELETE_USER);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
 
 }
