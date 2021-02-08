@@ -48,6 +48,11 @@ public class UserInfoService {
         id = json.getJSONObject("response").getString("id");
         profile_image = json.getJSONObject("response").getString("profile_image");
 
+        if(name == null || id == null){
+            throw new BaseException(INVALID_TOKEN);
+        }
+
+
         try {
             // 1-1. 이미 존재하는 회원이 있는지 조회
             existsUser = userProvider.retrieveUserByPhoneNumber(phoneNumber);
