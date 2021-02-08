@@ -17,5 +17,3 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .headers().frameOptions().disable();
     }
 }
-
-

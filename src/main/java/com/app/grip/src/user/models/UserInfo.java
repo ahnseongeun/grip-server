@@ -1,10 +1,12 @@
 package com.app.grip.src.user.models;
 
 import com.app.grip.config.BaseEntity;
+import com.app.grip.src.coupon.CouponInfo;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Accessors(chain = true)
 @Builder
@@ -98,6 +100,8 @@ public class UserInfo extends BaseEntity {
     @Column(name = "id",length = 100)
     private String id;
 
+    @OneToMany(mappedBy = "userInfo", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<CouponInfo> couponInfoList;
 
     public UserInfo(String email, String nickname, String phoneNumber) {
         this.email = email;
