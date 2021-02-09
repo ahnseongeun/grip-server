@@ -1,8 +1,8 @@
-package com.app.grip.src.following;
+package com.app.grip.src.follower.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.store.StoreInfo;
-import com.app.grip.src.user.models.UserInfo;
+import com.app.grip.src.store.models.Store;
+import com.app.grip.src.user.models.User;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -11,12 +11,12 @@ import javax.persistence.*;
 @Accessors(chain = true)
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-@EqualsAndHashCode(callSuper = false)
+@NoArgsConstructor(access =  AccessLevel.PUBLIC)
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "followingInfo")
-public class FollowingInfo extends BaseEntity {
+@Table(name = "follower")
+public class Follower extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,10 +24,9 @@ public class FollowingInfo extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "store_id")
-    private StoreInfo storeInfo;
+    private Store store;
 
     @ManyToOne
     @JoinColumn(name = "user_no")
-    private UserInfo userInfo;
-
+    private User user;
 }

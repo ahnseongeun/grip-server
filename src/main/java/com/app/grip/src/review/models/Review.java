@@ -1,8 +1,8 @@
-package com.app.grip.src.review;
+package com.app.grip.src.review.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.store.StoreInfo;
-import com.app.grip.src.user.models.UserInfo;
+import com.app.grip.src.store.models.Store;
+import com.app.grip.src.user.models.User;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -16,20 +16,20 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-@Table(name = "reviewInfo")
-public class ReviewInfo extends BaseEntity {
+@Table(name = "review")
+public class Review extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "storeInfo_id")
-    private StoreInfo storeInfo;
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     @ManyToOne
     @JoinColumn(name = "user_no")
-    private UserInfo userInfo;
+    private User user;
 
     @Column(name = "star", nullable = false)
     private Integer star;
@@ -37,10 +37,10 @@ public class ReviewInfo extends BaseEntity {
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @OneToMany(mappedBy = "reviewInfo", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<ReviewPictureInfo> reviewPictureInfoList;
+    @OneToMany(mappedBy = "review", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<ReviewPicture> reviewPictureList;
 
-    public ReviewInfo(Integer star, String content) {
+    public Review(Integer star, String content) {
         this.star = star;
         this.content = content;
     }

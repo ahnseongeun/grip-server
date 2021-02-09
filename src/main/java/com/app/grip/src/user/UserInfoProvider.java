@@ -37,9 +37,9 @@ public class UserInfoProvider {
      * @param phoneNumber
      * @return
      */
-    public UserInfo retrieveUserByPhoneNumber(String phoneNumber) throws BaseException {
+    public User retrieveUserByPhoneNumber(String phoneNumber) throws BaseException {
 
-        List<UserInfo> existsUserList;
+        List<User> existsUserList;
 
         // DB에 접근해서 email로 회원 정보 조회
         try{
@@ -49,7 +49,7 @@ public class UserInfoProvider {
         }
 
         // userList에 중복된 회원이 있는지 검사
-        UserInfo user;
+        User user;
         if (existsUserList != null && existsUserList.size() > 0) {
             user = existsUserList.get(0);
         } else {
