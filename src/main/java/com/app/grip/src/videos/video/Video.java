@@ -3,10 +3,14 @@ package com.app.grip.src.videos.video;
 import com.app.grip.config.BaseEntity;
 import com.app.grip.src.user.models.User;
 import com.app.grip.src.videoCategory.VideoCategory;
+import com.app.grip.src.videos.videoLike.VideoLike;
+import com.app.grip.src.videos.videoParticipant.VideoParticipant;
+import com.app.grip.src.watchMyVideo.WatchMyVideo;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Accessors(chain = true)
 @Builder
@@ -81,4 +85,15 @@ public class Video extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "userNo",nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VideoParticipant> videoParticipantList;
+
+    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VideoLike> videoLikeList;
+
+    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<WatchMyVideo> watchMyVideoList;
+
+
 }
