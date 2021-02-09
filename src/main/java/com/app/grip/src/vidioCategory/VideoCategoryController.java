@@ -53,7 +53,7 @@ public class VideoCategoryController {
      */
     @ResponseBody
     @RequestMapping(value = "/upload-category-image",method = RequestMethod.POST)
-    public BaseResponse<VideoCategoryInfo> execWrite(
+    public BaseResponse<VideoCategory> execWrite(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException, BaseException {
         log.info("upload");
@@ -62,8 +62,8 @@ public class VideoCategoryController {
         try{
             log.info("image 추가 ");
 
-            VideoCategoryInfo videoCategoryInfo = videoCategoryService.savePost(name,imgPath);
-            return new BaseResponse<>(SUCCESS, videoCategoryInfo);
+            VideoCategory videoCategory = videoCategoryService.savePost(name,imgPath);
+            return new BaseResponse<>(SUCCESS, videoCategory);
         }catch(BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
