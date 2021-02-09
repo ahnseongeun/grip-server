@@ -1,4 +1,4 @@
-package com.app.grip.src.videoParticipant;
+package com.app.grip.src.videos.videoParticipant;
 
 
 import com.app.grip.config.BaseEntity;

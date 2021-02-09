@@ -12,13 +12,13 @@ import static com.app.grip.config.BaseResponseStatus.*;
 
 @Slf4j
 @Service
-public class UserInfoService {
+public class UserService {
 
-    private final UserInfoRepository userRepository;
-    private final UserInfoProvider userProvider;
+    private final UserRepository userRepository;
+    private final UserProvider userProvider;
 
     @Autowired
-    public UserInfoService(UserInfoRepository userRepository, UserInfoProvider userProvider) {
+    public UserService(UserRepository userRepository, UserProvider userProvider) {
         this.userRepository = userRepository;
         this.userProvider = userProvider;
     }

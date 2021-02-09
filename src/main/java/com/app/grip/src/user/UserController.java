@@ -3,28 +3,25 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.ApiExamMemberProfile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 import static com.app.grip.utils.ApiExamMemberProfile.getNaverTokenResponse;
-import static com.app.grip.utils.ValidationRegex.isRegexEmail;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserInfoController {
-    private final UserInfoProvider userInfoProvider;
-    private final UserInfoService userInfoService;
+public class UserController {
+    private final UserProvider userProvider;
+    private final UserService userService;
 
     @Autowired
-    public UserInfoController(UserInfoProvider userInfoProvider, UserInfoService userInfoService) {
-        this.userInfoProvider = userInfoProvider;
-        this.userInfoService = userInfoService;
+    public UserController(UserProvider userProvider, UserService userService) {
+        this.userProvider = userProvider;
+        this.userService = userService;
     }
 
 //    /**
@@ -103,7 +100,7 @@ public class UserInfoController {
 
         // 2. Post UserInfo
         try {
-            PostUserRes postUserRes = userInfoService.createUserInfo(responseBody);
+            PostUserRes postUserRes = userService.createUserInfo(responseBody);
 
             if (postUserRes.getResponse().equals("login")) {
                 return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);

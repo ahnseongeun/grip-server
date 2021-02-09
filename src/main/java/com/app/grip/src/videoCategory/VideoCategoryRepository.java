@@ -1,4 +1,4 @@
-package com.app.grip.src.vidioCategory;
+package com.app.grip.src.videoCategory;
 
 import org.springframework.data.repository.CrudRepository;
 

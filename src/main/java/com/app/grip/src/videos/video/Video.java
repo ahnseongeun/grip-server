@@ -1,7 +1,8 @@
-package com.app.grip.src.video;
+package com.app.grip.src.videos.video;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.vidioCategory.VideoCategory;
+import com.app.grip.src.user.models.User;
+import com.app.grip.src.videoCategory.VideoCategory;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -77,7 +78,7 @@ public class Video extends BaseEntity {
     /**
      * 그래퍼 id
      */
-//    @ManyToOne
-//    @JoinColumn(name = "userNo",nullable = false)
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "userNo",nullable = false)
+    private User user;
 }

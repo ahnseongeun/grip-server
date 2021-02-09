@@ -1,4 +1,4 @@
-package com.app.grip.src.vidioCategory;
+package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
 import lombok.AllArgsConstructor;
