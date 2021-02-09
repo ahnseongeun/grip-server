@@ -2,6 +2,8 @@ package com.app.grip.src.videos.videoParticipant;
 
 
 import com.app.grip.config.BaseEntity;
+import com.app.grip.src.user.models.User;
+import com.app.grip.src.videos.video.Video;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -21,5 +23,13 @@ public class VideoParticipant extends BaseEntity {
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "userNo",nullable = false)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "videoId",nullable = false)
+    private Video video;
 
 }

@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    active: "deploy"
+    active: "test"
   application:
     name: demo
   jpa:
