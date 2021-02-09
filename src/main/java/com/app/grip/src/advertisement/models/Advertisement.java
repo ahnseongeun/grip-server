@@ -1,4 +1,4 @@
-package com.app.grip.src.advertisement;
+package com.app.grip.src.advertisement.models;
 
 import com.app.grip.config.BaseEntity;
 import lombok.*;
@@ -36,4 +36,15 @@ public class Advertisement extends BaseEntity {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    /**
+     * 디렉토리 번호
+     */
+    @Column(name = "directoryId", nullable = false)
+    private Long directoryId;
+
+    public Advertisement(String description, String pictureURL,Long directoryId) {
+        this.description = description;
+        this.pictureURL = pictureURL;
+        this.directoryId = directoryId;
+    }
 }

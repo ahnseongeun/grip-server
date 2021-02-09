@@ -1,13 +1,12 @@
 package com.app.grip.src.user.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.chattingMessage.ChattingMessage;
-import com.app.grip.src.chattingRoom.ChattingRoom;
+import com.app.grip.src.chattingMessage.models.ChattingMessage;
 import com.app.grip.src.coupon.models.Coupon;
-import com.app.grip.src.videos.video.Video;
-import com.app.grip.src.videos.videoLike.VideoLike;
-import com.app.grip.src.videos.videoParticipant.VideoParticipant;
-import com.app.grip.src.watchMyVideo.WatchMyVideo;
+import com.app.grip.src.video.models.Video;
+import com.app.grip.src.video.videoLike.models.VideoLike;
+import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
+import com.app.grip.src.watchMyVideo.models.WatchMyVideo;
 import lombok.*;
 import lombok.experimental.Accessors;
 

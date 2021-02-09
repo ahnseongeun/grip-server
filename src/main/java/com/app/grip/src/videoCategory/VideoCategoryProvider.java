@@ -33,7 +33,7 @@ public class VideoCategoryProvider {
                     .map(videoCategoryInfo -> GetVideoCategory.builder()
                             .id(videoCategoryInfo.getId())
                             .title(videoCategoryInfo.getName())
-                            .imageURL(videoCategoryInfo.getPictureURL())
+                            .pictureURL(videoCategoryInfo.getPictureURL())
                             .build()).collect(Collectors.toList());
 
     }
