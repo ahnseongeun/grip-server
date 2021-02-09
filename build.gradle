@@ -33,7 +33,7 @@ dependencies {
 
     // DB
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    //runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.h2database:h2'
 
     runtimeOnly 'mysql:mysql-connector-java'
 
@@ -56,6 +56,14 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-s3'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure', version: '2.2.1.RELEASE'
+
+    sourceSets {
+        main {
+            resources {
+                srcDirs("src/main/resources", "src/main/resources")
+            }
+        }
+    }
 }
 test {
     useJUnitPlatform()
