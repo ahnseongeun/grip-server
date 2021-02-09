@@ -1,4 +1,4 @@
-package com.app.grip.src.videoLike;
+package com.app.grip.src.video.videoLike;
 
 public interface VideoLikeRepository {
 }

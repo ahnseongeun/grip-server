@@ -1,7 +1,12 @@
 package com.app.grip.src.user.models;
 
 import com.app.grip.config.BaseEntity;
+import com.app.grip.src.chattingMessage.models.ChattingMessage;
 import com.app.grip.src.coupon.models.Coupon;
+import com.app.grip.src.video.models.Video;
+import com.app.grip.src.video.videoLike.models.VideoLike;
+import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
+import com.app.grip.src.watchMyVideo.models.WatchMyVideo;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -96,6 +101,21 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Coupon> couponList;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Video> videoList;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VideoParticipant> videoParticipantList ;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VideoLike> videoLikeList;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<WatchMyVideo> watchMyVideoList;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<ChattingMessage> chattingMessageList;
 
     public User(String email, String nickname, String phoneNumber) {
         this.email = email;

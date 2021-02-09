@@ -1,11 +1,16 @@
-package com.app.grip.src.video;
+package com.app.grip.src.video.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.vidioCategory.VideoCategoryInfo;
+import com.app.grip.src.user.models.User;
+import com.app.grip.src.videoCategory.VideoCategory;
+import com.app.grip.src.video.videoLike.models.VideoLike;
+import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
+import com.app.grip.src.watchMyVideo.models.WatchMyVideo;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Accessors(chain = true)
 @Builder
@@ -14,8 +19,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false)
 @Data // from lombok
 @Entity // 필수, Class 를 Database Table화 해주는 것이다
-@Table(name = "videoInfo") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
-public class VideoInfo extends BaseEntity {
+@Table(name = "video") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
+public class Video extends BaseEntity {
 
     /**
      * 영상 id
@@ -72,5 +77,23 @@ public class VideoInfo extends BaseEntity {
      */
     @ManyToOne
     @JoinColumn(name = "videoCategoryId",nullable = false)
-    private VideoCategoryInfo videoCategoryInfo;
+    private VideoCategory videoCategory;
+
+    /**
+     * 그래퍼 id
+     */
+    @ManyToOne
+    @JoinColumn(name = "userNo",nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VideoParticipant> videoParticipantList;
+
+    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<VideoLike> videoLikeList;
+
+    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<WatchMyVideo> watchMyVideoList;
+
+
 }

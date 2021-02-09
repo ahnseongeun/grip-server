@@ -1,4 +1,4 @@
-package com.app.grip.src.advertisement;
+package com.app.grip.src.advertisement.models;
 
 import com.app.grip.config.BaseEntity;
 import lombok.*;
@@ -13,8 +13,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false)
 @Data // from lombok
 @Entity // 필수, Class 를 Database Table화 해주는 것이다
-@Table(name = "advertisementInfo") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
-public class AdvertisementInfo extends BaseEntity {
+@Table(name = "advertisement") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
+public class Advertisement extends BaseEntity {
 
     /**
      * 광고 ID
@@ -36,4 +36,15 @@ public class AdvertisementInfo extends BaseEntity {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    /**
+     * 디렉토리 번호
+     */
+    @Column(name = "directoryId", nullable = false)
+    private Long directoryId;
+
+    public Advertisement(String description, String pictureURL,Long directoryId) {
+        this.description = description;
+        this.pictureURL = pictureURL;
+        this.directoryId = directoryId;
+    }
 }

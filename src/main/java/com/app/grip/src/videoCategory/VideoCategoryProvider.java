@@ -1,7 +1,7 @@
-package com.app.grip.src.vidioCategory;
+package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
-import com.app.grip.src.vidioCategory.models.GetVideoCategory;
+import com.app.grip.src.videoCategory.models.GetVideoCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,17 +23,17 @@ public class VideoCategoryProvider {
 
     public List<GetVideoCategory> retrieveVideoCategoryList() throws BaseException {
 
-            List<VideoCategoryInfo> videoCategoryInfoList;
+            List<VideoCategory> videoCategoryList;
             try{
-                videoCategoryInfoList = (List<VideoCategoryInfo>) videoCategoryRepository.findAll();
+                videoCategoryList = (List<VideoCategory>) videoCategoryRepository.findAll();
             }catch (Exception exception){
                 throw new BaseException(FAILED_TO_GET_VIDEO_CATEGORY);
             }
-            return videoCategoryInfoList.stream()
+            return videoCategoryList.stream()
                     .map(videoCategoryInfo -> GetVideoCategory.builder()
                             .id(videoCategoryInfo.getId())
                             .title(videoCategoryInfo.getName())
-                            .imageURL(videoCategoryInfo.getPictureURL())
+                            .pictureURL(videoCategoryInfo.getPictureURL())
                             .build()).collect(Collectors.toList());
 
     }

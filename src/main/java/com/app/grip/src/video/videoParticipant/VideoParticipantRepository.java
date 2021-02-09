@@ -1,4 +1,4 @@
-package com.app.grip.src.videoParticipant;
+package com.app.grip.src.video.videoParticipant;
 
 public interface VideoParticipantRepository {
 }

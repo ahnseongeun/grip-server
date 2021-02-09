@@ -136,6 +136,7 @@ public class UserService {
                 newUser.getNickname(), newUser.getProfileImageURL(), "registry");
     }
 
+
 //    public PatchUserRes updateUserInfo(Integer userId, PatchUserReq parameters)  throws BaseException {
 //        return null;
 //    }

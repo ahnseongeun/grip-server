@@ -9,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.app.grip.config.BaseResponseStatus.*;
+import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_USER;
+import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
 
 @Service
 public class UserProvider {
@@ -60,6 +61,7 @@ public class UserProvider {
 
         return user;
     }
+
 
     /**
      * 회원 조회
@@ -142,8 +144,6 @@ public class UserProvider {
         // PostLoginRes 변환하여 return
         return new PostLoginRes("Login", user.getNo(), jwt);
     }
-
-
 
 
 
