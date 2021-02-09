@@ -216,6 +216,7 @@ public class UserController {
             appId = "fail";
             return new BaseResponse<>(FAILED_TO_FACEBOOKTOCKEN);
         }
+        //System.out.println(responseJson.toString());
 
         // 만약 회원 테이블에 있다면 회원가입으로 이동, 없다면 로그인
         try {

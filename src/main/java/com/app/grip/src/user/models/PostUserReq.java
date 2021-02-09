@@ -13,6 +13,5 @@ public class PostUserReq {
     // TODO 페이스북 api에서 확인 가능한지 확인하기
     private String name;
     private String mail;
-    private String id;
     private String profileImage;
 }
