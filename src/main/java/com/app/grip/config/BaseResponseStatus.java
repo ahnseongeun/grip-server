@@ -43,6 +43,7 @@ public enum BaseResponseStatus {
     FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),
     FAILED_TO_POST_IMAGE(false, 3501, "이미지 등록에 실패하였습니다."),
+    NOT_FOUND_ADVERTISEMENT(false, 3502, "광고 조회 실패하였습니다."),
 
     // 4000 : Database 오류
     SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),

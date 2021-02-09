@@ -11,6 +11,6 @@ public class GetVideoCategory {
 
     private final Long id;
     private final String title;
-    private final String imageURL;
+    private final String pictureURL;
 
 }

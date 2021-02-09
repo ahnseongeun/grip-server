@@ -30,7 +30,7 @@ public class VideoCategoryController {
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "/video-category",method = RequestMethod.GET)
+    @RequestMapping(value = "/videos-category",method = RequestMethod.GET)
     public BaseResponse<List<GetVideoCategory>> GetVideoCategory() {
 
         try{

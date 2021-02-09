@@ -1,11 +1,11 @@
-package com.app.grip.src.videos.video;
+package com.app.grip.src.video.models;
 
 import com.app.grip.config.BaseEntity;
 import com.app.grip.src.user.models.User;
 import com.app.grip.src.videoCategory.VideoCategory;
-import com.app.grip.src.videos.videoLike.VideoLike;
-import com.app.grip.src.videos.videoParticipant.VideoParticipant;
-import com.app.grip.src.watchMyVideo.WatchMyVideo;
+import com.app.grip.src.video.videoLike.models.VideoLike;
+import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
+import com.app.grip.src.watchMyVideo.models.WatchMyVideo;
 import lombok.*;
 import lombok.experimental.Accessors;
 
