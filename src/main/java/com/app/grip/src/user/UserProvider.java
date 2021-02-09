@@ -2,8 +2,10 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,12 +14,13 @@ import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
 
 @Service
 public class UserProvider {
-
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserProvider(UserRepository userRepository) {
+    public UserProvider(UserRepository userRepository, JwtService jwtService) {
         this.userRepository = userRepository;
+        this.jwtService = jwtService;
     }
 
 //    public List<GetUsersRes> retrieveUserInfoList(String word) throws BaseException {
@@ -58,4 +61,93 @@ public class UserProvider {
 
         return user;
     }
+
+
+    /**
+     * 회원 조회
+     * @param id
+     * @return User
+     * @throws BaseException
+     * @comment 페이스북 id 회원조회
+     */
+    @Transactional
+    public User retrieveFacebookUserById(String id) throws BaseException {
+        List<User> existsUserList;
+        try {
+            existsUserList = userRepository.findByIdAndSnsDiv(id, "F");
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_GET_USER);
+        }
+
+        // 존재하는 UserInfo가 있는지 확인
+        User user;
+        if (existsUserList != null && existsUserList.size() > 0) {
+            user = existsUserList.get(0);
+        } else {
+            throw new BaseException(NOT_FOUND_USER);
+        }
+
+        // UserInfo를 return
+        return user;
+    }
+
+    /**
+     * 회원 조회
+     * @param userNo
+     * @return User
+     * @throws BaseException
+     * @comment 회원번호로 회원조회
+     */
+    @Transactional
+    public User retrieveUser(Long userNo) throws BaseException {
+        User user;
+
+        try {
+            user = userRepository.findById(userNo).orElse(null);
+        } catch (Exception ignored) {
+            throw new BaseException(FAILED_TO_GET_USER);
+        }
+
+        if (user == null || !user.getStatus().equals("Y")) {
+            throw new BaseException(NOT_FOUND_USER);
+        }
+
+        return user;
+    }
+
+    /**
+     * 페이스북 로그인
+     * @param appId
+     * @return PostLoginRes
+     * @throws BaseException
+     */
+    @Transactional
+    public PostLoginRes login(String appId) throws BaseException {
+        User user = null;
+
+        try {
+            user = retrieveFacebookUserById(appId);
+        } catch (BaseException exception) {
+            if (exception.getStatus() != NOT_FOUND_USER) {
+                throw exception;
+            }
+        }
+
+        System.out.println(user);
+        if (user == null) {
+            return new PostLoginRes("NeedJoin", null, null);
+        }
+
+        // Create JWT
+        String jwt = jwtService.createJwt(user.getNo());
+
+        // PostLoginRes 변환하여 return
+        return new PostLoginRes("Login", user.getNo(), jwt);
+    }
+
+
+
+
+
+
 }

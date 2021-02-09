@@ -13,4 +13,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findByStatusAndNicknameIsContaining(String status, String word);
 
     List<User> findByStatusAndPhoneNumberIsContaining(String y, String phoneNumber);
+    List<User> findByIdAndSnsDiv(String id, String div);
 }

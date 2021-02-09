@@ -3,9 +3,16 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.JwtService;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,11 +24,13 @@ import static com.app.grip.utils.ApiExamMemberProfile.getNaverTokenResponse;
 public class UserController {
     private final UserProvider userProvider;
     private final UserService userService;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserController(UserProvider userProvider, UserService userService) {
+    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService) {
         this.userProvider = userProvider;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
 //    /**
@@ -65,8 +74,8 @@ public class UserController {
 //        } catch (BaseException exception) {
 //            return new BaseResponse<>(exception.getStatus());
 //        }
-//    }
 
+//    }
     /**
      * 네이버 회원가입 및 로그인 API
      * [POST] /api/users/naver
@@ -111,6 +120,112 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
+    /**
+     * 페이스북 회원가입 API
+     * [POST] /api/users/facebook
+     * @RequestBody PostUserReq
+     * @return BaseResponse<PostUserRes>
+     */
+    @ResponseBody
+    @PostMapping("/facebook")
+    public BaseResponse<PostUserRes> postUsersByFacebook(@RequestBody PostUserReq parameters) {
+        if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
+            return new BaseResponse<>(EMPTY_NICKNAME);
+        }
+
+        try {
+            PostUserRes postUserRes = userService.createUserFacebook(parameters);
+            return new BaseResponse<>(SUCCESS, postUserRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * JWT 검증 API(토큰있을때)
+     * [GET] /users/jwt
+     * @return BaseResponse<Void>
+     */
+    @GetMapping("/jwt")
+    public BaseResponse<Void> jwt() {
+        try {
+            Long userNo = jwtService.getUserNo();
+            userProvider.retrieveUser(userNo);
+            return new BaseResponse<>(SUCCESS);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 페이스북 로그인 API(토큰없을때)
+     * [POST] /api/users/login/facebook
+     * @RequestHeader token
+     * @return BaseResponse<PostLoginRes>
+     */
+    @ResponseBody
+    @PostMapping("/login/facebook")
+    public BaseResponse<PostLoginRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
+        HttpURLConnection conn = null;
+        JSONObject responseJson = null;
+
+        //String token = "773022300256919%7C0f91a67de5f802547d97ee9f25484361";        // 유효한 토큰
+        //String token = "773022300256919%7C0f91a67de5f802547d97ee9f25484361asd";     // 유요하지 않은 토큰
+
+        try {
+            URL url = new URL("https://graph.facebook.com/debug_token?input_token=" + token
+                    + "&access_token=" + "773022300256919|IcoV0PpB3NqIKrOBK6xDvawowuc");        // access_token => app_access_token
+                                                                                                // 개발자가 프로젝트 설정에서 따로 app-secret, id 같은 것들을 변경하지않는한 영구히 유효
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+
+            // 클라에서 전달받은 결과값 json으로 받기
+            int responseCode = conn.getResponseCode();
+            if (responseCode == 400) {
+                System.out.println("400:: 해당 명령을 실행할 수 없음");
+            } else if (responseCode == 401) {
+                System.out.println("401:: X-Auth-Token Header가 잘못됨");
+            } else if (responseCode == 500) {
+                System.out.println("500:: 서버 에러, 문의 필요");
+            } else {                // 성공 후 응답 JSON 데이터받기
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                StringBuilder sb = new StringBuilder();
+                String line = "";
+                while ((line = br.readLine()) != null) {
+                    sb.append(line);
+                }
+                responseJson = new JSONObject(sb.toString());
+            }
+
+        } catch (MalformedURLException exception) {
+            exception.printStackTrace();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        } catch (JSONException exception) {
+            System.out.println("not JSON Format response");
+            exception.printStackTrace();
+        }
+
+        // 전달받은 값이 유효한지 검사
+        String appId = "";
+        try {
+            appId = responseJson.getJSONObject("data").getString("app_id");
+        } catch (Exception exception) {
+            appId = "fail";
+            return new BaseResponse<>(FAILED_TO_FACEBOOKTOCKEN);
+        }
+
+        // 만약 회원 테이블에 있다면 회원가입으로 이동, 없다면 로그인
+        try {
+            PostLoginRes postLoginRes = userProvider.login(appId);
+            return new BaseResponse<>(SUCCESS, postLoginRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 
 
 //    /**

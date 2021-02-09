@@ -7,13 +7,13 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
 @Slf4j
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
     private final UserProvider userProvider;
 
@@ -103,6 +103,39 @@ public class UserService {
                 .response("registry")
                 .build();
     }
+
+    /**
+     * 페이스북 회원가입
+     * @param postUserReq
+     * @return PostUserRes
+     * @throws BaseException
+     */
+    @Transactional
+    public PostUserRes createUserFacebook(PostUserReq postUserReq) throws BaseException {
+        User newUser = User.builder()
+                .name(postUserReq.getName())
+                .nickname(postUserReq.getNickname())
+                .birthday(postUserReq.getBirthday())
+                .email(postUserReq.getMail())
+                .gender(postUserReq.getGender())
+                .id(postUserReq.getId())
+                .imageStatus("Y")
+                .phoneNumber(postUserReq.getPhoneNumber())
+                .profileImageURL(postUserReq.getProfileImage())
+                .role(1)
+                .snsDiv("F")
+                .build();
+
+        try {
+            newUser = userRepository.save(newUser);
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_POST_USER);
+        }
+
+        return new PostUserRes(newUser.getNo(), newUser.getRole(),
+                newUser.getNickname(), newUser.getProfileImageURL(), "registry");
+    }
+
 
 //    public PatchUserRes updateUserInfo(Integer userId, PatchUserReq parameters)  throws BaseException {
 //        return null;
