@@ -1,7 +1,7 @@
 package com.app.grip.src.vidioCategory;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.video.VideoInfo;
+import com.app.grip.src.video.Video;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -15,8 +15,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Data // from lombok
 @Entity // 필수, Class 를 Database Table화 해주는 것이다
-@Table(name = "videoCategoryInfo") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
-public class VideoCategoryInfo extends BaseEntity {
+@Table(name = "videoCategory") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
+public class VideoCategory extends BaseEntity {
 
     /**
      * 카테고리 id
@@ -41,15 +41,12 @@ public class VideoCategoryInfo extends BaseEntity {
     /**
      * 영상 리스트
      */
-    @OneToMany(mappedBy = "videoCategoryInfo",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<VideoInfo> videoInfoList;
+    @OneToMany(mappedBy = "videoCategory",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Video> videoList;
 
-    @Builder
-    public VideoCategoryInfo(Long id, String name, String pictureURL) {
-        this.id = id;
+
+    public VideoCategory(String name, String pictureURL) {
         this.name = name;
         this.pictureURL = pictureURL;
     }
-
-
 }

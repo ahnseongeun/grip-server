@@ -1,7 +1,7 @@
-package com.app.grip.src.product;
+package com.app.grip.src.product.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.store.StoreInfo;
+import com.app.grip.src.store.models.Store;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -14,8 +14,8 @@ import javax.persistence.*;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-@Table(name = "productInfo")
-public class ProductInfo extends BaseEntity {
+@Table(name = "product")
+public class Product extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,16 +32,16 @@ public class ProductInfo extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "store_id")
-    private StoreInfo storeInfo;
+    private Store store;
 
     @Column(name = "pictureURL", nullable = false, columnDefinition = "TEXT")
     private String pictureURL;
 
     @ManyToOne
-    @JoinColumn(name = "productCategoryInfo_id")
-    private ProductCategoryInfo productCategoryInfo;
+    @JoinColumn(name = "productCategory_id")
+    private ProductCategory productCategory;
 
-    public ProductInfo(String name, String content, Integer price, String pictureURL) {
+    public Product(String name, String content, Integer price, String pictureURL) {
         this.name = name;
         this.content = content;
         this.price = price;

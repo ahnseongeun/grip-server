@@ -1,4 +1,4 @@
-package com.app.grip.src.product;
+package com.app.grip.src.product.models;
 
 import com.app.grip.config.BaseEntity;
 import lombok.*;
@@ -14,8 +14,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Data
 @Entity
-@Table(name = "productCategoryInfo")
-public class ProductCategoryInfo extends BaseEntity {
+@Table(name = "productCategory")
+public class ProductCategory extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class ProductCategoryInfo extends BaseEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "productCategoryInfo", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<ProductInfo> productInfoList;
+    @OneToMany(mappedBy = "productCategory", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Product> productList;
 }
