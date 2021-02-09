@@ -23,13 +23,13 @@ public class VideoCategoryProvider {
 
     public List<GetVideoCategory> retrieveVideoCategoryList() throws BaseException {
 
-            List<VideoCategoryInfo> videoCategoryInfoList;
+            List<VideoCategory> videoCategoryList;
             try{
-                videoCategoryInfoList = (List<VideoCategoryInfo>) videoCategoryRepository.findAll();
+                videoCategoryList = (List<VideoCategory>) videoCategoryRepository.findAll();
             }catch (Exception exception){
                 throw new BaseException(FAILED_TO_GET_VIDEO_CATEGORY);
             }
-            return videoCategoryInfoList.stream()
+            return videoCategoryList.stream()
                     .map(videoCategoryInfo -> GetVideoCategory.builder()
                             .id(videoCategoryInfo.getId())
                             .title(videoCategoryInfo.getName())

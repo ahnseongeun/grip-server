@@ -14,24 +14,24 @@ public class VideoCategoryService {
 
     private VideoCategoryRepository videoCategoryRepository;
 
-    public VideoCategoryInfo savePost(String name, String path) throws BaseException {
+    public VideoCategory savePost(String name, String path) throws BaseException {
 
-        VideoCategoryInfo videoCategoryInfo = VideoCategoryInfo.builder()
+        VideoCategory videoCategory = VideoCategory.builder()
                 .name(name)
                 .pictureURL(path)
                 .build();
 
         try{
-            videoCategoryInfo = videoCategoryRepository.save(videoCategoryInfo);
+            videoCategory = videoCategoryRepository.save(videoCategory);
         }catch (Exception e){
             throw new BaseException(FAILED_TO_POST_IMAGE);
         }
 
         log.info("uploading");
-        return VideoCategoryInfo.builder()
-                .id(videoCategoryInfo.getId())
-                .name(videoCategoryInfo.getName())
-                .pictureURL(videoCategoryInfo.getPictureURL())
+        return VideoCategory.builder()
+                .id(videoCategory.getId())
+                .name(videoCategory.getName())
+                .pictureURL(videoCategory.getPictureURL())
                 .build();
     }
 
