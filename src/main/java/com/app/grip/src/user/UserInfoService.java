@@ -25,7 +25,7 @@ public class UserInfoService {
 
     public PostUserRes createUserInfo(String parameters) throws BaseException {
 
-        UserInfo existsUser = null;
+        User existsUser = null;
 
         String name = null;
         String nickName = null;
@@ -75,7 +75,7 @@ public class UserInfoService {
                     .build();
         }
 
-        UserInfo newUser = UserInfo.builder()
+        User newUser = User.builder()
                 .name(name)
                 .nickname(nickName)
                 .birthday(birthyear+"-"+birthday)

@@ -1,7 +1,7 @@
 package com.app.grip.src.user.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.coupon.CouponInfo;
+import com.app.grip.src.coupon.models.Coupon;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -11,16 +11,16 @@ import java.util.List;
 @Accessors(chain = true)
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @EqualsAndHashCode(callSuper = false)
-@Data // from lombok
-@Entity // 필수, Class 를 Database Table화 해주는 것이다
-@Table(name = "userInfo") // Table 이름을 명시해주지 않으면 class 이름을 Table 이름으로 대체한다.
-public class UserInfo extends BaseEntity {
+@Data
+@Entity
+@Table(name = "user")
+public class User extends BaseEntity {
     /**
      * 유저 ID
      */
-    @Id // PK를 의미하는 어노테이션
+    @Id
     @Column(name = "no", nullable = false, updatable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long no;
@@ -82,12 +82,6 @@ public class UserInfo extends BaseEntity {
     @Column(name = "role", nullable = false, columnDefinition = "integer default 1")
     private Integer role;
 
-//    /**
-//     * 상태
-//     */
-//    @Column(name = "status", nullable = false, columnDefinition = "varchar(1) default 'Y'")
-//    private String Status;
-
     /**
      * 이미지 상태
      */
@@ -100,10 +94,10 @@ public class UserInfo extends BaseEntity {
     @Column(name = "id",length = 100)
     private String id;
 
-    @OneToMany(mappedBy = "userInfo", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<CouponInfo> couponInfoList;
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Coupon> couponList;
 
-    public UserInfo(String email, String nickname, String phoneNumber) {
+    public User(String email, String nickname, String phoneNumber) {
         this.email = email;
         this.nickname = nickname;
         this.phoneNumber = phoneNumber;
