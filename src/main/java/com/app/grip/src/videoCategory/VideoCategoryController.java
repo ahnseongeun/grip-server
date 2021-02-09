@@ -1,8 +1,8 @@
-package com.app.grip.src.vidioCategory;
+package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
-import com.app.grip.src.vidioCategory.models.GetVideoCategory;
+import com.app.grip.src.videoCategory.models.GetVideoCategory;
 import com.app.grip.utils.S3Service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

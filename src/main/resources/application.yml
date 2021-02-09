@@ -5,4 +5,4 @@ spring:
 
 #
 #  java -Dspring.profiles.active=deploy -jar [jar파일명].jar
-#  java -jar [jar파일명].jar --spring.profiles.active=deploy
+#  nohup java -jar [jar파일명].jar --spring.profiles.active=deploy &

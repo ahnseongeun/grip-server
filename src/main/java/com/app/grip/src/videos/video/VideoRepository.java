@@ -1,4 +1,4 @@
-package com.app.grip.src.video;
+package com.app.grip.src.videos.video;
 
 import org.springframework.data.repository.CrudRepository;
 

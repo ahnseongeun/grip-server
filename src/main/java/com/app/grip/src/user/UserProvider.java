@@ -11,12 +11,12 @@ import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_USER;
 import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
 
 @Service
-public class UserInfoProvider {
+public class UserProvider {
 
-    private final UserInfoRepository userRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserInfoProvider(UserInfoRepository userRepository) {
+    public UserProvider(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

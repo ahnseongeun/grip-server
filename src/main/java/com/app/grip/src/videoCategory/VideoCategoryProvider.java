@@ -1,7 +1,7 @@
-package com.app.grip.src.vidioCategory;
+package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
-import com.app.grip.src.vidioCategory.models.GetVideoCategory;
+import com.app.grip.src.videoCategory.models.GetVideoCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

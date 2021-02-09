@@ -1,7 +1,7 @@
 package com.app.grip;
 
-import com.app.grip.src.vidioCategory.VideoCategory;
-import com.app.grip.src.vidioCategory.VideoCategoryRepository;
+import com.app.grip.src.videoCategory.VideoCategory;
+import com.app.grip.src.videoCategory.VideoCategoryRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,7 @@
-package com.app.grip.src.vidioCategory;
+package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.video.Video;
+import com.app.grip.src.videos.video.Video;
 import lombok.*;
 import lombok.experimental.Accessors;
 

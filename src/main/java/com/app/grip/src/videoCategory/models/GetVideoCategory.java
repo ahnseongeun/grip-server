@@ -1,4 +1,4 @@
-package com.app.grip.src.vidioCategory.models;
+package com.app.grip.src.videoCategory.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
