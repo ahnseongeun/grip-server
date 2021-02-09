@@ -1,0 +1,8 @@
+# application.yml
+spring:
+  profiles:
+    active: local # 디폴트 환경
+
+#
+#  java -Dspring.profiles.active=deploy -jar [jar파일명].jar
+#  java -jar [jar파일명].jar --spring.profiles.active=deploy
