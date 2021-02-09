@@ -3,6 +3,7 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -38,17 +39,17 @@ public class UserInfoService {
         String profile_image = null;
 
         JSONObject json = new JSONObject(parameters);
-        name = json.getJSONObject("response").getString("name");
-        nickName = json.getJSONObject("response").getString("nickname");
-        birthyear = json.getJSONObject("response").getString("birthyear");
-        birthday = json.getJSONObject("response").getString("birthday");
-        email = json.getJSONObject("response").getString("email");
-        phoneNumber = json.getJSONObject("response").getString("mobile");
-        gender = json.getJSONObject("response").getString("gender");
-        id = json.getJSONObject("response").getString("id");
-        profile_image = json.getJSONObject("response").getString("profile_image");
-
-        if(name == null || id == null){
+        try {
+            name = json.getJSONObject("response").getString("name");
+            nickName = json.getJSONObject("response").getString("nickname");
+            birthyear = json.getJSONObject("response").getString("birthyear");
+            birthday = json.getJSONObject("response").getString("birthday");
+            email = json.getJSONObject("response").getString("email");
+            phoneNumber = json.getJSONObject("response").getString("mobile");
+            gender = json.getJSONObject("response").getString("gender");
+            id = json.getJSONObject("response").getString("id");
+            profile_image = json.getJSONObject("response").getString("profile_image");
+        }catch (JSONException jsonException){
             throw new BaseException(INVALID_TOKEN);
         }
 
