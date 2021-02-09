@@ -30,7 +30,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-
     // DB
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     //runtimeOnly 'com.h2database:h2'
@@ -56,6 +55,9 @@ dependencies {
     implementation 'com.amazonaws:aws-java-sdk-s3'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-aws', version: '2.2.1.RELEASE', ext: 'pom'
     compile group: 'org.springframework.cloud', name: 'spring-cloud-aws-autoconfigure', version: '2.2.1.RELEASE'
+
+    // jwt
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.7.0'
 }
 test {
     useJUnitPlatform()

@@ -91,7 +91,7 @@ public class User extends BaseEntity {
     /**
      * 발급받은 userId
      */
-    @Column(name = "id",length = 100)
+    @Column(name = "id", length = 100)
     private String id;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
