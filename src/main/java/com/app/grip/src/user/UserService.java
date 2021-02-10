@@ -2,6 +2,7 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +15,13 @@ import static com.app.grip.config.BaseResponseStatus.*;
 @Slf4j
 @Service
 public class UserService {
+    private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserProvider userProvider;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserProvider userProvider) {
+    public UserService(JwtService jwtService, UserRepository userRepository, UserProvider userProvider) {
+        this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.userProvider = userProvider;
     }
@@ -106,19 +109,19 @@ public class UserService {
 
     /**
      * 페이스북 회원가입
-     * @param postUserReq
-     * @return PostUserRes
+     * @param postUserReq, appId
+     * @return PostUserFacebookRes
      * @throws BaseException
      */
     @Transactional
-    public PostUserRes createUserFacebook(PostUserReq postUserReq) throws BaseException {
+    public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq) throws BaseException {
         User newUser = User.builder()
                 .name(postUserReq.getName())
                 .nickname(postUserReq.getNickname())
                 .birthday(postUserReq.getBirthday())
                 .email(postUserReq.getMail())
                 .gender(postUserReq.getGender())
-                .id(postUserReq.getId())
+                .id(postUserReq.getAppId())
                 .imageStatus("Y")
                 .phoneNumber(postUserReq.getPhoneNumber())
                 .profileImageURL(postUserReq.getProfileImage())
@@ -132,8 +135,8 @@ public class UserService {
             throw new BaseException(FAILED_TO_POST_USER);
         }
 
-        return new PostUserRes(newUser.getNo(), newUser.getRole(),
-                newUser.getNickname(), newUser.getProfileImageURL(), "registry");
+        String jwt = jwtService.createJwt(newUser.getNo());
+        return new PostUserFacebookRes(newUser.getNo(), newUser.getRole(), newUser.getNickname(), newUser.getProfileImageURL(), jwt);
     }
 
 

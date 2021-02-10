@@ -129,14 +129,22 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/facebook")
-    public BaseResponse<PostUserRes> postUsersByFacebook(@RequestBody PostUserReq parameters) {
+    public BaseResponse<PostUserFacebookRes> postUsersByFacebook(@RequestBody(required = false) PostUserFacebookReq parameters) {
+        if (parameters.getAppId() == null || parameters.getAppId().length() == 0) {
+            return new BaseResponse<>(EMPTY_NICKNAME);
+        }
         if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
         }
+        if (parameters.getName() == null || parameters.getName().length() == 0) {
+            return new BaseResponse<>(EMPTY_NICKNAME);
+        }
 
+        // TODO BaseResponse 에러메시지!!!
+        
         try {
-            PostUserRes postUserRes = userService.createUserFacebook(parameters);
-            return new BaseResponse<>(SUCCESS, postUserRes);
+            PostUserFacebookRes postUserFacebookRes = userService.createUserFacebook(parameters);
+            return new BaseResponse<>(SUCCESS, postUserFacebookRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -166,7 +174,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/login/facebook")
-    public BaseResponse<PostLoginRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
+    public BaseResponse<PostLoginFacebookRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
         HttpURLConnection conn = null;
         JSONObject responseJson = null;
 
@@ -220,7 +228,7 @@ public class UserController {
 
         // 만약 회원 테이블에 있다면 회원가입으로 이동, 없다면 로그인
         try {
-            PostLoginRes postLoginRes = userProvider.login(appId);
+            PostLoginFacebookRes postLoginRes = userProvider.login(appId);
             return new BaseResponse<>(SUCCESS, postLoginRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

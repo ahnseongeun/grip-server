@@ -122,7 +122,7 @@ public class UserProvider {
      * @throws BaseException
      */
     @Transactional
-    public PostLoginRes login(String appId) throws BaseException {
+    public PostLoginFacebookRes login(String appId) throws BaseException {
         User user = null;
 
         try {
@@ -133,16 +133,12 @@ public class UserProvider {
             }
         }
 
-        System.out.println(user);
         if (user == null) {
-            return new PostLoginRes("NeedJoin", null, null);
+            return new PostLoginFacebookRes("true", null, null, appId);
         }
 
-        // Create JWT
         String jwt = jwtService.createJwt(user.getNo());
-
-        // PostLoginRes 변환하여 return
-        return new PostLoginRes("Login", user.getNo(), jwt);
+        return new PostLoginFacebookRes("false", user.getNo(), jwt, null);
     }
 
 
