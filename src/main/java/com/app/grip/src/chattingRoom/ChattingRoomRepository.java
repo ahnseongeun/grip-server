@@ -1,4 +1,7 @@
 package com.app.grip.src.chattingRoom;
 
-public interface ChattingRoomRepository {
+import com.app.grip.src.chattingRoom.models.ChattingRoom;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ChattingRoomRepository extends CrudRepository<ChattingRoom, Long> {
 }
