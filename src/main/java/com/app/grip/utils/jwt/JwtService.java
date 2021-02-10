@@ -42,7 +42,7 @@ public class JwtService {
 
     /**
      * JWT에서 userNo 추출
-     * @return int
+     * @return Long
      * @throws BaseException
      */
     public Long getUserNo() throws BaseException {

@@ -21,6 +21,7 @@ public abstract class BaseEntity {
     @Column(name = "updateDate")
     private Date updateDate;
 
+    @Setter
     @Column(name = "status",length = 1)
     private String status = "Y";
 }
