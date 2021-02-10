@@ -142,7 +142,7 @@ public class UserService {
         }
 
         String jwt = jwtService.createJwt(newUser.getNo());
-        return new PostUserFacebookRes(newUser.getNo(), newUser.getRole(), newUser.getNickname(), newUser.getProfileImageURL(), jwt);
+        return new PostUserFacebookRes(newUser.getNo(), jwt);
     }
 
 
