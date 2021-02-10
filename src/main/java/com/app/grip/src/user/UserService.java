@@ -2,6 +2,7 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,17 @@ import static com.app.grip.config.BaseResponseStatus.*;
 public class UserService {
     private final UserRepository userRepository;
     private final UserProvider userProvider;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserProvider userProvider) {
+    public UserService(UserRepository userRepository, UserProvider userProvider,
+                       JwtService jwtService) {
         this.userRepository = userRepository;
         this.userProvider = userProvider;
+        this.jwtService = jwtService;
     }
 
-    public PostUserRes createUserInfo(String parameters) throws BaseException {
+    public PostUserRes createUserInfo(String parameters,boolean login) throws BaseException {
 
         User existsUser = null;
 
@@ -63,14 +67,20 @@ public class UserService {
                 throw exception;
             }
         }
+
+
         // 1-3. 이미 존재하는 회원이 있다면 return DUPLICATED_USER
+        if (existsUser != null && !login) {
+            throw new BaseException(DUPLICATED_USER);
+        }
+
+
+        // 1-4. 로그인 구현
         if (existsUser != null) {
             log.info("login");
             return PostUserRes.builder()
                     .userNo(existsUser.getNo())
-                    .nickName(nickName)
-                    .profileImage(profile_image)
-                    .role(existsUser.getRole())
+                    .jwt(jwtService.createJwt(existsUser.getNo()))
                     .response("login")
                     .build();
         }
@@ -95,11 +105,10 @@ public class UserService {
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_POST_USER);
         }
+
         return PostUserRes.builder()
                 .userNo(newUser.getNo())
-                .nickName(nickName)
-                .profileImage(profile_image)
-                .role(newUser.getRole())
+                .jwt(jwtService.createJwt(newUser.getNo()))
                 .response("registry")
                 .build();
     }
@@ -118,7 +127,7 @@ public class UserService {
                 .birthday(postUserReq.getBirthday())
                 .email(postUserReq.getMail())
                 .gender(postUserReq.getGender())
-                .id(postUserReq.getId())
+                //.id(postUserReq.getId())
                 .imageStatus("Y")
                 .phoneNumber(postUserReq.getPhoneNumber())
                 .profileImageURL(postUserReq.getProfileImage())
@@ -132,8 +141,7 @@ public class UserService {
             throw new BaseException(FAILED_TO_POST_USER);
         }
 
-        return new PostUserRes(newUser.getNo(), newUser.getRole(),
-                newUser.getNickname(), newUser.getProfileImageURL(), "registry");
+        return new PostUserRes(newUser.getNo(), jwtService.createJwt(newUser.getNo()), "registry");
     }
 
 

@@ -5,6 +5,7 @@ import com.app.grip.config.BaseResponse;
 import com.app.grip.src.advertisement.models.GetAdvertisement;
 import com.app.grip.src.videoCategory.models.GetVideoCategory;
 import com.app.grip.utils.S3Service;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class AdvertisementController {
      */
     @ResponseBody
     @RequestMapping(value = "/advertisements",method = RequestMethod.GET)
+    @ApiOperation(value = "광고 조회", notes = "광고 리스트 조회")
     public BaseResponse<List<GetAdvertisement>> GetAdvertisements() {
 
         try{

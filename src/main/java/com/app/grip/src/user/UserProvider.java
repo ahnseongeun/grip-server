@@ -2,7 +2,7 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.JwtService;
+import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,7 +99,7 @@ public class UserProvider {
      * @comment 회원번호로 회원조회
      */
     @Transactional
-    public User retrieveUser(Long userNo) throws BaseException {
+    public GetUserRes retrieveUser(Long userNo) throws BaseException {
         User user;
 
         try {
@@ -112,7 +112,16 @@ public class UserProvider {
             throw new BaseException(NOT_FOUND_USER);
         }
 
-        return user;
+        return GetUserRes.builder()
+                .userNo(user.getNo())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .birthday(user.getBirthday())
+                .profileImageURL(user.getProfileImageURL())
+                .gender(user.getGender())
+                .build();
     }
 
     /**
