@@ -20,8 +20,7 @@ public class UserService {
     private final JwtService jwtService;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserProvider userProvider,
-                       JwtService jwtService) {
+    public UserService(UserRepository userRepository, UserProvider userProvider, JwtService jwtService) {
         this.userRepository = userRepository;
         this.userProvider = userProvider;
         this.jwtService = jwtService;
@@ -116,18 +115,19 @@ public class UserService {
     /**
      * 페이스북 회원가입
      * @param postUserReq
-     * @return PostUserRes
+     * @return PostUserFacebookRes
      * @throws BaseException
+     * @Auther shine
      */
     @Transactional
-    public PostUserRes createUserFacebook(PostUserReq postUserReq) throws BaseException {
+    public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq) throws BaseException {
         User newUser = User.builder()
                 .name(postUserReq.getName())
                 .nickname(postUserReq.getNickname())
                 .birthday(postUserReq.getBirthday())
                 .email(postUserReq.getMail())
                 .gender(postUserReq.getGender())
-                //.id(postUserReq.getId())
+                .id(postUserReq.getAppId())
                 .imageStatus("Y")
                 .phoneNumber(postUserReq.getPhoneNumber())
                 .profileImageURL(postUserReq.getProfileImage())
@@ -141,7 +141,8 @@ public class UserService {
             throw new BaseException(FAILED_TO_POST_USER);
         }
 
-        return new PostUserRes(newUser.getNo(), jwtService.createJwt(newUser.getNo()), "registry");
+        String jwt = jwtService.createJwt(newUser.getNo());
+        return new PostUserFacebookRes(newUser.getNo(), newUser.getRole(), newUser.getNickname(), newUser.getProfileImageURL(), jwt);
     }
 
 

@@ -69,6 +69,7 @@ public class UserProvider {
      * @return User
      * @throws BaseException
      * @comment 페이스북 id 회원조회
+     * @Auther shine
      */
     @Transactional
     public User retrieveFacebookUserById(String id) throws BaseException {
@@ -79,7 +80,6 @@ public class UserProvider {
             throw new BaseException(FAILED_TO_GET_USER);
         }
 
-        // 존재하는 UserInfo가 있는지 확인
         User user;
         if (existsUserList != null && existsUserList.size() > 0) {
             user = existsUserList.get(0);
@@ -87,16 +87,16 @@ public class UserProvider {
             throw new BaseException(NOT_FOUND_USER);
         }
 
-        // UserInfo를 return
         return user;
     }
 
     /**
      * 회원 조회
      * @param userNo
-     * @return User
+     * @return GetUserRes
      * @throws BaseException
      * @comment 회원번호로 회원조회
+     * @Auther shine
      */
     @Transactional
     public GetUserRes retrieveUser(Long userNo) throws BaseException {
@@ -127,11 +127,12 @@ public class UserProvider {
     /**
      * 페이스북 로그인
      * @param appId
-     * @return PostLoginRes
+     * @return PostLoginFacebookRes
      * @throws BaseException
+     * @Auther shine
      */
     @Transactional
-    public PostLoginRes login(String appId) throws BaseException {
+    public PostLoginFacebookRes login(String appId) throws BaseException {
         User user = null;
 
         try {
@@ -142,16 +143,12 @@ public class UserProvider {
             }
         }
 
-        System.out.println(user);
         if (user == null) {
-            return new PostLoginRes("NeedJoin", null, null);
+            return new PostLoginFacebookRes("true", null, null, appId);
         }
 
-        // Create JWT
         String jwt = jwtService.createJwt(user.getNo());
-
-        // PostLoginRes 변환하여 return
-        return new PostLoginRes("Login", user.getNo(), jwt);
+        return new PostLoginFacebookRes("false", user.getNo(), jwt, null);
     }
 
 

@@ -5,8 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PostLoginRes {
-    private final String status;
+public class PostLoginFacebookRes {
+    private final String isMember;
     private final Long userNo;
     private final String jwt;
+    private final String appId;
 }
