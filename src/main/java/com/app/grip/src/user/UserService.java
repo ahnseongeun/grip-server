@@ -2,7 +2,7 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.JwtService;
+import com.app.grip.utils.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +15,18 @@ import static com.app.grip.config.BaseResponseStatus.*;
 @Slf4j
 @Service
 public class UserService {
-    private final JwtService jwtService;
     private final UserRepository userRepository;
     private final UserProvider userProvider;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserService(JwtService jwtService, UserRepository userRepository, UserProvider userProvider) {
-        this.jwtService = jwtService;
+    public UserService(UserRepository userRepository, UserProvider userProvider, JwtService jwtService) {
         this.userRepository = userRepository;
         this.userProvider = userProvider;
+        this.jwtService = jwtService;
     }
 
-    public PostUserRes createUserInfo(String parameters) throws BaseException {
+    public PostUserRes createUserInfo(String parameters,boolean login) throws BaseException {
 
         User existsUser = null;
 
@@ -66,14 +66,20 @@ public class UserService {
                 throw exception;
             }
         }
+
+
         // 1-3. 이미 존재하는 회원이 있다면 return DUPLICATED_USER
+        if (existsUser != null && !login) {
+            throw new BaseException(DUPLICATED_USER);
+        }
+
+
+        // 1-4. 로그인 구현
         if (existsUser != null) {
             log.info("login");
             return PostUserRes.builder()
                     .userNo(existsUser.getNo())
-                    .nickName(nickName)
-                    .profileImage(profile_image)
-                    .role(existsUser.getRole())
+                    .jwt(jwtService.createJwt(existsUser.getNo()))
                     .response("login")
                     .build();
         }
@@ -98,20 +104,20 @@ public class UserService {
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_POST_USER);
         }
+
         return PostUserRes.builder()
                 .userNo(newUser.getNo())
-                .nickName(nickName)
-                .profileImage(profile_image)
-                .role(newUser.getRole())
+                .jwt(jwtService.createJwt(newUser.getNo()))
                 .response("registry")
                 .build();
     }
 
     /**
      * 페이스북 회원가입
-     * @param postUserReq, appId
+     * @param postUserReq
      * @return PostUserFacebookRes
      * @throws BaseException
+     * @Auther shine
      */
     @Transactional
     public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq) throws BaseException {

@@ -3,7 +3,9 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.JwtService;
+import com.app.grip.utils.ValidationRegex;
+import com.app.grip.utils.jwt.JwtService;
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,14 @@ public class UserController {
     private final UserProvider userProvider;
     private final UserService userService;
     private final JwtService jwtService;
+    private final ValidationRegex validationRegex;
 
     @Autowired
-    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService) {
+    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService, ValidationRegex validationRegex) {
         this.userProvider = userProvider;
         this.userService = userService;
         this.jwtService = jwtService;
+        this.validationRegex = validationRegex;
     }
 
 //    /**
@@ -55,27 +59,32 @@ public class UserController {
 //        }
 //    }
 
-//    /**
-//     * 회원 조회 API
-//     * [GET] /users/:userId
-//     * @PathVariable userId
-//     * @return BaseResponse<GetUserRes>
-//     */
-//    @ResponseBody
-//    @GetMapping("/{userId}")
-//    public BaseResponse<GetUserRes> getUser(@PathVariable Integer userId) {
-//        if (userId == null || userId <= 0) {
-//            return new BaseResponse<>(EMPTY_USERID);
-//        }
-//
-//        try {
-//            GetUserRes getUserRes = userInfoProvider.retrieveUserInfo(userId);
-//            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
+    /**
+     * 회원 조회 API
+     * [GET] /users/:userId
+     * @PathVariable userId
+     * @return BaseResponse<GetUserRes>
+     */
+    @ResponseBody
+    @GetMapping("")
+    @ApiOperation(value = "내 프로필 조회", notes = "내 프로필 조회")
+    public BaseResponse<GetUserRes> getUser(
+            @RequestHeader(value = "Jwt") String jwt) throws BaseException {
+        Long userNo = jwtService.getUserNo();
 
-//    }
+        if (userNo == null || userNo <= 0) {
+            return new BaseResponse<>(EMPTY_USERID);
+        }
+
+        try {
+            GetUserRes getUserRes = userProvider.retrieveUser(userNo);
+            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
     /**
      * 네이버 회원가입 및 로그인 API
      * [POST] /api/users/naver
@@ -84,8 +93,11 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/naver")
+    @ApiOperation(value = "네이버 로그인 및 회원가입",
+            notes = "네이버 로그인 및 회원가입\n"+"로그인은 login true, 회원가입은 login false로 구분")
     public BaseResponse<PostUserRes> postUsersByNaver(
-            @RequestHeader(value = "token") String token) {
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "login",required = false,defaultValue = "true") boolean login) {
 
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
@@ -109,7 +121,7 @@ public class UserController {
 
         // 2. Post UserInfo
         try {
-            PostUserRes postUserRes = userService.createUserInfo(responseBody);
+            PostUserRes postUserRes = userService.createUserInfo(responseBody,login);
 
             if (postUserRes.getResponse().equals("login")) {
                 return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
@@ -124,24 +136,35 @@ public class UserController {
     /**
      * 페이스북 회원가입 API
      * [POST] /api/users/facebook
-     * @RequestBody PostUserReq
-     * @return BaseResponse<PostUserRes>
+     * @RequestBody PostUserFacebookReq
+     * @return BaseResponse<PostUserFacebookRes>
+     * @Auther shine
      */
+    @ApiOperation(value = "페이스북 회원가입", notes = "페이스 북회원가입")
     @ResponseBody
     @PostMapping("/facebook")
     public BaseResponse<PostUserFacebookRes> postUsersByFacebook(@RequestBody(required = false) PostUserFacebookReq parameters) {
-        if (parameters.getAppId() == null || parameters.getAppId().length() == 0) {
+        if(parameters.getAppId() == null || parameters.getAppId().length() == 0) {
+            return new BaseResponse<>(EMPTY_APPID);
+        }
+        if(parameters.getNickname() == null || parameters.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
         }
-        if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
-            return new BaseResponse<>(EMPTY_NICKNAME);
-        }
-        if (parameters.getName() == null || parameters.getName().length() == 0) {
-            return new BaseResponse<>(EMPTY_NICKNAME);
+        if(parameters.getName() == null || parameters.getName().length() == 0) {
+            return new BaseResponse<>(EMPTY_NAME);
         }
 
-        // TODO BaseResponse 에러메시지!!!
-        
+        if(parameters.getPhoneNumber() != null || parameters.getPhoneNumber().length() != 0) {
+            if(!validationRegex.isRegexPhoneNumber(parameters.getPhoneNumber())) {
+                return new BaseResponse<>(INVALID_EMAIL);
+            }
+        }
+        if(parameters.getMail() != null || parameters.getMail().length() != 0) {
+            if(!validationRegex.isRegexEmail(parameters.getName())) {
+                return new BaseResponse<>(INVALID_PHONENUMBER);
+            }
+        }
+
         try {
             PostUserFacebookRes postUserFacebookRes = userService.createUserFacebook(parameters);
             return new BaseResponse<>(SUCCESS, postUserFacebookRes);
@@ -152,11 +175,14 @@ public class UserController {
 
     /**
      * JWT 검증 API(토큰있을때)
-     * [GET] /users/jwt
+     * [GET] /api/users/jwt
+     * @RequestHeader jwt
      * @return BaseResponse<Void>
+     * @Auther shine
      */
+    @ApiOperation(value = "JWT 검증 (자동로그인)", notes = "JWT 검증 (자동로그인)")
     @GetMapping("/jwt")
-    public BaseResponse<Void> jwt() {
+    public BaseResponse<Void> jwt(@RequestHeader(value = "jwt") String jwt) {
         try {
             Long userNo = jwtService.getUserNo();
             userProvider.retrieveUser(userNo);
@@ -170,8 +196,10 @@ public class UserController {
      * 페이스북 로그인 API(토큰없을때)
      * [POST] /api/users/login/facebook
      * @RequestHeader token
-     * @return BaseResponse<PostLoginRes>
+     * @return BaseResponse<PostLoginFacebookRes>
+     * @Auther shine
      */
+    @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인")
     @ResponseBody
     @PostMapping("/login/facebook")
     public BaseResponse<PostLoginFacebookRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
@@ -191,13 +219,7 @@ public class UserController {
 
             // 클라에서 전달받은 결과값 json으로 받기
             int responseCode = conn.getResponseCode();
-            if (responseCode == 400) {
-                System.out.println("400:: 해당 명령을 실행할 수 없음");
-            } else if (responseCode == 401) {
-                System.out.println("401:: X-Auth-Token Header가 잘못됨");
-            } else if (responseCode == 500) {
-                System.out.println("500:: 서버 에러, 문의 필요");
-            } else {                // 성공 후 응답 JSON 데이터받기
+            if(responseCode == 200) {
                 BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                 StringBuilder sb = new StringBuilder();
                 String line = "";
@@ -205,15 +227,21 @@ public class UserController {
                     sb.append(line);
                 }
                 responseJson = new JSONObject(sb.toString());
+            } else if (responseCode == 400) {
+                return new BaseResponse<>(FACEBOOK_CONNECTION_400);
+            } else if (responseCode == 500) {
+                return new BaseResponse<>(FACEBOOK_CONNECTION_500);
+            } else {
+                return new BaseResponse<>(FACEBOOK_CONNECTION);
             }
 
         } catch (MalformedURLException exception) {
-            exception.printStackTrace();
+            return new BaseResponse<>(FACEBOOK_CONNECTION_URL);
         } catch (IOException exception) {
             exception.printStackTrace();
+            return new BaseResponse<>(FACEBOOK_CONNECTION_INVALID_TOKEN);
         } catch (JSONException exception) {
-            System.out.println("not JSON Format response");
-            exception.printStackTrace();
+            return new BaseResponse<>(FACEBOOK_CONNECTION_NOT_JSON_RESPONSE);
         }
 
         // 전달받은 값이 유효한지 검사
@@ -222,7 +250,7 @@ public class UserController {
             appId = responseJson.getJSONObject("data").getString("app_id");
         } catch (Exception exception) {
             appId = "fail";
-            return new BaseResponse<>(FAILED_TO_FACEBOOKTOCKEN);
+            return new BaseResponse<>(FACEBOOK_CONNECTION_INVALID_TOKEN);
         }
         //System.out.println(responseJson.toString());
 

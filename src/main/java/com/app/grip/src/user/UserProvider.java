@@ -2,7 +2,7 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.JwtService;
+import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +69,7 @@ public class UserProvider {
      * @return User
      * @throws BaseException
      * @comment 페이스북 id 회원조회
+     * @Auther shine
      */
     @Transactional
     public User retrieveFacebookUserById(String id) throws BaseException {
@@ -79,7 +80,6 @@ public class UserProvider {
             throw new BaseException(FAILED_TO_GET_USER);
         }
 
-        // 존재하는 UserInfo가 있는지 확인
         User user;
         if (existsUserList != null && existsUserList.size() > 0) {
             user = existsUserList.get(0);
@@ -87,19 +87,19 @@ public class UserProvider {
             throw new BaseException(NOT_FOUND_USER);
         }
 
-        // UserInfo를 return
         return user;
     }
 
     /**
      * 회원 조회
      * @param userNo
-     * @return User
+     * @return GetUserRes
      * @throws BaseException
      * @comment 회원번호로 회원조회
+     * @Auther shine
      */
     @Transactional
-    public User retrieveUser(Long userNo) throws BaseException {
+    public GetUserRes retrieveUser(Long userNo) throws BaseException {
         User user;
 
         try {
@@ -112,14 +112,24 @@ public class UserProvider {
             throw new BaseException(NOT_FOUND_USER);
         }
 
-        return user;
+        return GetUserRes.builder()
+                .userNo(user.getNo())
+                .name(user.getName())
+                .nickname(user.getNickname())
+                .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .birthday(user.getBirthday())
+                .profileImageURL(user.getProfileImageURL())
+                .gender(user.getGender())
+                .build();
     }
 
     /**
      * 페이스북 로그인
      * @param appId
-     * @return PostLoginRes
+     * @return PostLoginFacebookRes
      * @throws BaseException
+     * @Auther shine
      */
     @Transactional
     public PostLoginFacebookRes login(String appId) throws BaseException {

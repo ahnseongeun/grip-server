@@ -30,6 +30,12 @@ public enum BaseResponseStatus {
     WRONG_PASSWORD(false, 2032, "비밀번호를 다시 입력해주세요."),
     DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호와 비밀번호확인 값이 일치하지 않습니다."),
     EMPTY_NICKNAME(false, 2040, "닉네임을 입력해주세요."),
+    // shine
+    EMPTY_APPID(false, 2100, "페이스북 아이디가 누락되었습니다."),
+    EMPTY_NAME(false, 2101, "닉네임을 입력해주세요."),
+    INVALID_PHONENUMBER(false, 2102, "휴대전화번호 형식을 확인해주세요."),
+
+    // divi
     INVALID_TOKEN(false, 2500, "토큰이 유효하지 않습니다."),
 
     // 3000 : Response 오류
@@ -41,17 +47,22 @@ public enum BaseResponseStatus {
     FAILED_TO_LOGIN(false, 3014, "로그인에 실패하였습니다."),
     FAILED_TO_DELETE_USER(false, 3015, "회원 탈퇴에 실패하였습니다."),
     FAILED_TO_PATCH_USER(false, 3016, "개인정보 수정에 실패하였습니다."),
-
-    FAILED_TO_FACEBOOKTOCKEN(false, 3100,"유효하지 않은 페이스북 토큰입니다."),
-
+    // shine
+    FACEBOOK_CONNECTION_INVALID_TOKEN(false, 3100,"유효하지 않은 페이스북 토큰입니다."),
+    FACEBOOK_CONNECTION(false, 3101,"페이스북 연결 에러가 발생했습니다."),
+    FACEBOOK_CONNECTION_400(false, 3102,"페이스북에 잘못된 요청을 보냈습니다."),
+    FACEBOOK_CONNECTION_500(false, 3103,"페이스북 서버 에러가 발생했습니다."),
+    FACEBOOK_CONNECTION_URL(false, 3104,"잘못된 URL입니다."),
+    FACEBOOK_CONNECTION_IO(false, 3105,"페이스북과 통신 중 IO 에러가 발생했습니다."),
+    FACEBOOK_CONNECTION_NOT_JSON_RESPONSE(false, 3106,"페이스북의 response가 JSON Format response가 아닙니다."),
+    // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),
     FAILED_TO_POST_IMAGE(false, 3501, "이미지 등록에 실패하였습니다."),
     NOT_FOUND_ADVERTISEMENT(false, 3502, "광고 조회 실패하였습니다."),
 
 
     // 4000 : Database 오류
-    SERVER_ERROR(false, 4000, "서버와의 통신에 실패하였습니다."),
-    DATABASE_ERROR(false, 4001, "데이터베이스 연결에 실패하였습니다.");
+    DATABASE_ERROR(false, 4000, "데이터베이스 관련한 오류가 발생하였습니다.");
 
     // 5000 : 필요시 만들어서 쓰세요
     // 6000 : 필요시 만들어서 쓰세요
