@@ -140,12 +140,12 @@ public class UserController {
      * @return BaseResponse<PostUserFacebookRes>
      * @Auther shine
      */
-    @ApiOperation(value = "페이스북 회원가입", notes = "페이스 북회원가입")
+    @ApiOperation(value = "페이스북 회원가입", notes = "페이스북 회원가입")
     @ResponseBody
     @PostMapping("/facebook")
     public BaseResponse<PostUserFacebookRes> postUsersByFacebook(@RequestBody(required = false) PostUserFacebookReq parameters) {
-        if(parameters.getAppId() == null || parameters.getAppId().length() == 0) {
-            return new BaseResponse<>(EMPTY_APPID);
+        if(parameters.getUserId() == null || parameters.getUserId().length() == 0) {
+            return new BaseResponse<>(EMPTY_FACEBOOK_USERID);
         }
         if(parameters.getNickname() == null || parameters.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
@@ -206,7 +206,7 @@ public class UserController {
         HttpURLConnection conn = null;
         JSONObject responseJson = null;
 
-        //String token = "773022300256919%7C0f91a67de5f802547d97ee9f25484361";        // 유효한 토큰
+        //String token = "EAAKZCD0ecOpcBAEaR4khZBjymOMSSHqs25SP0aIK3MRPGbQmnmvercV0xOpE6v2c0sOiUFpRcDGZCgk37AczG8S8ZBli4mBEYHVRmbnKtZBd6mAKNcZAtdRt0RY5ZBedVug41DcdfITZAv93qegHCeQC2hyLDzdpZBiRk6ksQZArfw761QlDciAbFPFBrzYSrMw0Caqs2bzTEMGViws96qhKZAQyySZCz7FFzNJPVlueU2xCYwZDZD";        // 유효한 토큰
         //String token = "773022300256919%7C0f91a67de5f802547d97ee9f25484361asd";     // 유요하지 않은 토큰
 
         try {
@@ -245,18 +245,18 @@ public class UserController {
         }
 
         // 전달받은 값이 유효한지 검사
-        String appId = "";
+        String userId = "";
         try {
-            appId = responseJson.getJSONObject("data").getString("app_id");
+            userId = responseJson.getJSONObject("data").getString("user_id");
         } catch (Exception exception) {
-            appId = "fail";
             return new BaseResponse<>(FACEBOOK_CONNECTION_INVALID_TOKEN);
         }
         //System.out.println(responseJson.toString());
+        //System.out.println(responseJson.getJSONObject("data").getString("user_id"));
 
         // 만약 회원 테이블에 있다면 회원가입으로 이동, 없다면 로그인
         try {
-            PostLoginFacebookRes postLoginRes = userProvider.login(appId);
+            PostLoginFacebookRes postLoginRes = userProvider.login(userId);
             return new BaseResponse<>(SUCCESS, postLoginRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
