@@ -32,8 +32,8 @@ public class StoreController {
     @GetMapping("")
     public BaseResponse<List<GetStoresRes>> getStores() {
         try {
-            List<GetStoresRes> getStoresResList = storeProvider.retrieveStores();
-            return new BaseResponse<>(SUCCESS, getStoresResList);
+            List<GetStoresRes> storesResList = storeProvider.retrieveStores();
+            return new BaseResponse<>(SUCCESS, storesResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -51,8 +51,8 @@ public class StoreController {
     @GetMapping("/{storeId}")
     public BaseResponse<GetStoresRes> getStore(@PathVariable Long storeId) {
         try {
-            GetStoresRes getStoresRes = storeProvider.retrieveStore(storeId);
-            return new BaseResponse<>(SUCCESS, getStoresRes);
+            GetStoresRes storesRes = storeProvider.retrieveStore(storeId);
+            return new BaseResponse<>(SUCCESS, storesRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -83,10 +83,5 @@ public class StoreController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
-
-
-
-
 
 }

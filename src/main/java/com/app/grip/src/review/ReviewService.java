@@ -37,8 +37,8 @@ public class ReviewService {
 
         List<ReviewPicture> reviewPictureList = new ArrayList<>();
 
-        if(parameters.getPictureURL() != null) {
-            for (PictureReq picture : parameters.getPictureURL()) {
+        if(parameters.getPicture() != null) {
+            for (PictureReq picture : parameters.getPicture()) {
                 System.out.println(picture.toString());
                 ReviewPicture reviewPicture = new ReviewPicture(picture.getPictureURL());
                 reviewPictureList.add(reviewPicture);
@@ -65,16 +65,5 @@ public class ReviewService {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
                 }).collect(Collectors.toList()));
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }

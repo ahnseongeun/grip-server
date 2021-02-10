@@ -61,7 +61,9 @@ public enum BaseResponseStatus {
     FACEBOOK_CONNECTION_NOT_JSON_RESPONSE(false, 3106,"페이스북의 response가 JSON Format response가 아닙니다."),
     FAILED_TO_GET_STORE(false, 3107, "상점 검색에 실패하였습니다."),
     FAILED_TO_POST_STORE(false, 3108, "상점 등록에 실패하였습니다."),
-    FAILED_TO_POST_REVIEW(false, 3109, "리뷰 등록에 실패하였습니다."),
+    FAILED_TO_GET_REVIEW(false, 3109, "리뷰 검색에 실패하였습니다."),
+    FAILED_TO_POST_REVIEW(false, 3110, "리뷰 등록에 실패하였습니다."),
+
     
     // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),

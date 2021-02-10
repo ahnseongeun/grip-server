@@ -61,11 +61,4 @@ public class StoreProvider {
                 store.getIntroduction(), store.getPictureURL(), store.getUserNo().getNo());
     }
 
-
-
-
-
-
-
-
 }
