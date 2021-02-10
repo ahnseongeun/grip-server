@@ -32,12 +32,14 @@ public class UserController {
     private final UserProvider userProvider;
     private final UserService userService;
     private final JwtService jwtService;
+    private final ValidationRegex validationRegex;
 
     @Autowired
-    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService) {
+    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService, ValidationRegex validationRegex) {
         this.userProvider = userProvider;
         this.userService = userService;
         this.jwtService = jwtService;
+        this.validationRegex = validationRegex;
     }
 
 //    /**
@@ -160,7 +162,6 @@ public class UserController {
             return new BaseResponse<>(EMPTY_NAME);
         }
 
-<<<<<<< HEAD
         if(parameters.getPhoneNumber() != null) {
             if(!validationRegex.isRegexPhoneNumber(parameters.getPhoneNumber())) {
                 return new BaseResponse<>(INVALID_PHONENUMBER);
@@ -169,16 +170,6 @@ public class UserController {
         if(parameters.getEmail() != null) {
             if(!validationRegex.isRegexEmail(parameters.getEmail())) {
                 return new BaseResponse<>(INVALID_EMAIL);
-=======
-        if(parameters.getPhoneNumber() != null || parameters.getPhoneNumber().length() != 0) {
-            if(!ValidationRegex.isRegexPhoneNumber(parameters.getPhoneNumber())) {
-                return new BaseResponse<>(INVALID_EMAIL);
-            }
-        }
-        if(parameters.getMail() != null || parameters.getMail().length() != 0) {
-            if(!ValidationRegex.isRegexEmail(parameters.getName())) {
-                return new BaseResponse<>(INVALID_PHONENUMBER);
->>>>>>> e93e0e956bcd3c982023d0f65ba16f586ab170fa
             }
         }
 

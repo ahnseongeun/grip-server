@@ -5,18 +5,13 @@ import com.app.grip.src.user.models.*;
 import com.app.grip.utils.S3Service;
 import com.app.grip.utils.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
-=======
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
->>>>>>> e93e0e956bcd3c982023d0f65ba16f586ab170fa
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -221,15 +216,6 @@ public class UserService {
             throw new BaseException(FAILED_TO_DELETE_USER);
         }
 
-
-
     }
 
-
-//    public PatchUserRes updateUserInfo(Integer userId, PatchUserReq parameters)  throws BaseException {
-//        return null;
-//    }
-//
-//    public void deleteUserInfo(Integer userId) throws BaseException {
-//    }
 }
