@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,6 +19,7 @@ import java.net.MalformedURLException;
 
 @Slf4j
 @RestController
+@RequestMapping("/api")
 public class VideoController {
 
     private static final String IMAGE_PNG_FORMAT = "png";
@@ -40,7 +38,8 @@ public class VideoController {
                                                    @RequestHeader HttpHeaders headers) throws IOException {
 
         log.info("getVideo");
-
+        String path = System.getProperty("user.home");
+        log.info(path);
         UrlResource video = new UrlResource("/home/ubuntu/video/" + name);
         ResourceRegion region = resourceRegion(video, headers);
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
