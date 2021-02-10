@@ -8,7 +8,6 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -119,13 +118,12 @@ public class UserService {
      * @throws BaseException
      * @Auther shine
      */
-    @Transactional
     public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq) throws BaseException {
         User newUser = User.builder()
                 .name(postUserReq.getName())
                 .nickname(postUserReq.getNickname())
                 .birthday(postUserReq.getBirthday())
-                .email(postUserReq.getMail())
+                .email(postUserReq.getEmail())
                 .gender(postUserReq.getGender())
                 .id(postUserReq.getUserId())
                 .imageStatus("Y")
@@ -138,6 +136,7 @@ public class UserService {
         try {
             newUser = userRepository.save(newUser);
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(FAILED_TO_POST_USER);
         }
 

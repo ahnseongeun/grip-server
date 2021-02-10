@@ -1,16 +1,11 @@
 package com.app.grip.src.store.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.follower.models.Follower;
-import com.app.grip.src.following.models.Following;
-import com.app.grip.src.product.models.Product;
-import com.app.grip.src.review.models.Review;
 import com.app.grip.src.user.models.User;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Accessors(chain = true)
 @Builder
@@ -39,20 +34,9 @@ public class Store extends BaseEntity {
     @JoinColumn(name = "userNo", referencedColumnName = "no")
     private User userNo;
 
-    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Following> followingList;
-
-    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Follower> followerList;
-
-    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Review> reviewList;
-
-    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Product> productList;
-
-    public Store(String name, String introduction) {
+    public Store(String name, String introduction, String pictureURL) {
         this.name = name;
         this.introduction = introduction;
+        this.pictureURL = pictureURL;
     }
 }

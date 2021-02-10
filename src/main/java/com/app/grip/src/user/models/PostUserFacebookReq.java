@@ -11,6 +11,6 @@ public class PostUserFacebookReq {
     private String gender;
     private String birthday;
     private String name;
-    private String mail;
+    private String email;
     private String profileImage;
 }

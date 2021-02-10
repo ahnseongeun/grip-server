@@ -32,8 +32,12 @@ public enum BaseResponseStatus {
     EMPTY_NICKNAME(false, 2040, "닉네임을 입력해주세요."),
     // shine
     EMPTY_FACEBOOK_USERID(false, 2100, "페이스북 아이디가 누락되었습니다."),
-    EMPTY_NAME(false, 2101, "닉네임을 입력해주세요."),
-    INVALID_PHONENUMBER(false, 2102, "휴대전화번호 형식을 확인해주세요."),
+    EMPTY_NAME(false, 2101, "이름을 입력해주세요."),
+    EMPTY_INTRODUCTION(false, 2102, "소개말을 입력해주세요."),
+    EMPTY_STAR(false, 2103, "별점을 입력해주세요."),
+    EMPTY_CONTENT(false, 2104, "내용을 입력해주세요."),
+    INVALID_PHONENUMBER(false, 2105, "휴대전화번호 형식을 확인해주세요."),
+
 
     // divi
     INVALID_TOKEN(false, 2500, "토큰이 유효하지 않습니다."),
@@ -55,6 +59,10 @@ public enum BaseResponseStatus {
     FACEBOOK_CONNECTION_URL(false, 3104,"잘못된 URL입니다."),
     FACEBOOK_CONNECTION_IO(false, 3105,"페이스북과 통신 중 IO 에러가 발생했습니다."),
     FACEBOOK_CONNECTION_NOT_JSON_RESPONSE(false, 3106,"페이스북의 response가 JSON Format response가 아닙니다."),
+    FAILED_TO_GET_STORE(false, 3107, "상점 검색에 실패하였습니다."),
+    FAILED_TO_POST_STORE(false, 3108, "상점 등록에 실패하였습니다."),
+    FAILED_TO_POST_REVIEW(false, 3109, "리뷰 등록에 실패하였습니다."),
+    
     // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),
     FAILED_TO_POST_IMAGE(false, 3501, "이미지 등록에 실패하였습니다."),
