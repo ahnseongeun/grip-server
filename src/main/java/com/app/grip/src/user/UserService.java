@@ -2,13 +2,18 @@ package com.app.grip.src.user;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.S3Service;
 import com.app.grip.utils.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -18,16 +23,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserProvider userProvider;
     private final JwtService jwtService;
+    private final S3Service s3Service;
 
     @Autowired
     public UserService(UserRepository userRepository, UserProvider userProvider,
-                       JwtService jwtService) {
+                       JwtService jwtService, S3Service s3Service) {
         this.userRepository = userRepository;
         this.userProvider = userProvider;
         this.jwtService = jwtService;
+        this.s3Service = s3Service;
     }
 
-    public PostUserRes createUserInfo(String parameters,boolean login) throws BaseException {
+    public PostUserRes createUserInfo(String parameters,String login) throws BaseException {
 
         User existsUser = null;
 
@@ -70,7 +77,7 @@ public class UserService {
 
 
         // 1-3. 이미 존재하는 회원이 있다면 return DUPLICATED_USER
-        if (existsUser != null && !login) {
+        if (existsUser != null && login.equals("N")) {
             throw new BaseException(DUPLICATED_USER);
         }
 
@@ -142,6 +149,75 @@ public class UserService {
         }
 
         return new PostUserRes(newUser.getNo(), jwtService.createJwt(newUser.getNo()), "registry");
+    }
+
+
+    @Transactional
+    public PatchUserRes updateUser(Long userNo, MultipartFile profileImage,
+                                   String nickname,String phoneNumber,
+                                   String birthday,String imageDelete)
+            throws BaseException{
+
+        //유저 조회
+        User user = userRepository.findByNoAndStatus(userNo,"Y")
+                .orElseThrow(() -> new BaseException(NOT_FOUND_USER));
+
+        //이미지가 null값이 들어오면 기존 image 유지
+        String imgPath;
+        if(profileImage == null){
+            imgPath = user.getProfileImageURL();
+        }else{
+            try {
+                imgPath = s3Service.upload(profileImage);
+                user.setProfileImageURL(imgPath);
+            }catch (IOException ioException){
+                throw new BaseException(FAILED_TO_UPLOAD_IMAGE);
+            }
+            user.setImageStatus("Y"); //사용함
+        }
+
+
+        //이미지 삭제 요청 확인
+        if(imageDelete.equals("Y")){
+            user.setImageStatus("N");
+        }
+
+        if (nickname != null) {
+            user.setNickname(nickname);
+        }
+
+        if (phoneNumber != null) {
+            user.setPhoneNumber(phoneNumber);
+        }
+
+
+        if (birthday != null) {
+            user.setBirthday(birthday);
+        }
+
+
+        return PatchUserRes.builder()
+                .userNo(user.getNo())
+                .build();
+    }
+
+    public void deleteUser(Long userNo) throws BaseException {
+
+        //유저 조회
+        User user = userRepository.findByNoAndStatus(userNo,"Y")
+                .orElseThrow(() -> new BaseException(NOT_FOUND_USER));
+
+        user.setStatus("N");
+
+        User newUser;
+        try{
+            userRepository.save(user);
+        }catch (Exception exception){
+            throw new BaseException(FAILED_TO_DELETE_USER);
+        }
+
+
+
     }
 
 
