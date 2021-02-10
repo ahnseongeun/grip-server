@@ -49,11 +49,12 @@ public class S3Service {
         String fileName = file.getOriginalFilename();
 
 //        byte[] bytes = IOUtils.toByteArray(file.getInputStream());
-//        ObjectMetadata metaData = new ObjectMetadata();
-//        metaData.setContentLength(bytes.length);
-//        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        ObjectMetadata metaData = new ObjectMetadata();
+        metaData.setCacheControl("604800"); // 60*60*24*7 일주일
+        metaData.setContentType("image/png");
+        //ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
 
-        s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), null)
+        s3Client.putObject(new PutObjectRequest(bucket, fileName, file.getInputStream(), metaData)
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
     }
