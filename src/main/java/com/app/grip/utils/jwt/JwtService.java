@@ -1,4 +1,4 @@
-package com.app.grip.utils;
+package com.app.grip.utils.jwt;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.secret.Secret;
@@ -32,12 +32,12 @@ public class JwtService {
     }
 
     /**
-     * Header에서 X-ACCESS-TOKEN 으로 JWT 추출
+     * Header에서 Jwt로 JWT 추출
      * @return String
      */
     public String getJwt() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
-        return request.getHeader("X-ACCESS-TOKEN");
+        return request.getHeader("Jwt");
     }
 
     /**

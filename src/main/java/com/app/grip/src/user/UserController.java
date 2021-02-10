@@ -3,7 +3,8 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
-import com.app.grip.utils.JwtService;
+import com.app.grip.utils.jwt.JwtService;
+import io.swagger.annotations.ApiOperation;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,27 +56,32 @@ public class UserController {
 //        }
 //    }
 
-//    /**
-//     * 회원 조회 API
-//     * [GET] /users/:userId
-//     * @PathVariable userId
-//     * @return BaseResponse<GetUserRes>
-//     */
-//    @ResponseBody
-//    @GetMapping("/{userId}")
-//    public BaseResponse<GetUserRes> getUser(@PathVariable Integer userId) {
-//        if (userId == null || userId <= 0) {
-//            return new BaseResponse<>(EMPTY_USERID);
-//        }
-//
-//        try {
-//            GetUserRes getUserRes = userInfoProvider.retrieveUserInfo(userId);
-//            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
+    /**
+     * 회원 조회 API
+     * [GET] /users/:userId
+     * @PathVariable userId
+     * @return BaseResponse<GetUserRes>
+     */
+    @ResponseBody
+    @GetMapping("")
+    @ApiOperation(value = "내 프로필 조회", notes = "내 프로필 조회")
+    public BaseResponse<GetUserRes> getUser(
+            @RequestHeader(value = "Jwt") String jwt) throws BaseException {
+        Long userNo = jwtService.getUserNo();
 
-//    }
+        if (userNo == null || userNo <= 0) {
+            return new BaseResponse<>(EMPTY_USERID);
+        }
+
+        try {
+            GetUserRes getUserRes = userProvider.retrieveUser(userNo);
+            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+
+    }
+
     /**
      * 네이버 회원가입 및 로그인 API
      * [POST] /api/users/naver
@@ -84,8 +90,11 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/naver")
+    @ApiOperation(value = "네이버 로그인 및 회원가입",
+            notes = "네이버 로그인 및 회원가입\n"+"로그인은 login true, 회원가입은 login false로 구분")
     public BaseResponse<PostUserRes> postUsersByNaver(
-            @RequestHeader(value = "token") String token) {
+            @RequestHeader(value = "token") String token,
+            @RequestParam(value = "login",required = false,defaultValue = "true") boolean login) {
 
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
@@ -109,7 +118,7 @@ public class UserController {
 
         // 2. Post UserInfo
         try {
-            PostUserRes postUserRes = userService.createUserInfo(responseBody);
+            PostUserRes postUserRes = userService.createUserInfo(responseBody,login);
 
             if (postUserRes.getResponse().equals("login")) {
                 return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
@@ -129,6 +138,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/facebook")
+    @ApiOperation(value = "페이스북 회원가입", notes = "페이스 북회원가입")
     public BaseResponse<PostUserRes> postUsersByFacebook(@RequestBody PostUserReq parameters) {
         if (parameters.getNickname() == null || parameters.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
@@ -148,7 +158,10 @@ public class UserController {
      * @return BaseResponse<Void>
      */
     @GetMapping("/jwt")
-    public BaseResponse<Void> jwt() {
+    @ApiOperation(value = "JWT 검증 (자동로그인)", notes = "JWT 검증 (자동로그인)")
+    public BaseResponse<Void> jwt(
+            @RequestHeader(value = "Jwt") String jwt
+    ) {
         try {
             Long userNo = jwtService.getUserNo();
             userProvider.retrieveUser(userNo);
@@ -166,6 +179,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/login/facebook")
+    @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인")
     public BaseResponse<PostLoginRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
         HttpURLConnection conn = null;
         JSONObject responseJson = null;

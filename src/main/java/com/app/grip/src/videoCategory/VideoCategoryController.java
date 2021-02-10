@@ -4,6 +4,7 @@ import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.videoCategory.models.GetVideoCategory;
 import com.app.grip.utils.S3Service;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class VideoCategoryController {
      */
     @ResponseBody
     @RequestMapping(value = "/videos-category",method = RequestMethod.GET)
+    @ApiOperation(value = "영상 카테고리 조회", notes = "영상 카테고리 조회")
     public BaseResponse<List<GetVideoCategory>> GetVideoCategory() {
 
         try{
@@ -53,6 +55,7 @@ public class VideoCategoryController {
      */
     @ResponseBody
     @RequestMapping(value = "/upload-category-image",method = RequestMethod.POST)
+    @ApiOperation(value = "영상 업로드, 더미 데이터 추가용(서버에서 사용)", notes = "더미 데이터 추가용(서버에서 사용)")
     public BaseResponse<VideoCategory> execWrite(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "imageFile") MultipartFile imageFile) throws IOException, BaseException {
