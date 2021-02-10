@@ -2,11 +2,14 @@ package com.app.grip.src.review;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
+import com.app.grip.src.review.models.GetReviewRes;
 import com.app.grip.src.review.models.PostReviewReq;
 import com.app.grip.src.review.models.PostReviewRes;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -14,7 +17,45 @@ import static com.app.grip.config.BaseResponseStatus.*;
 @RestController
 @RequestMapping("/api/reviews")
 public class ReviewController {
+    private final ReviewProvider reviewProvider;
     private final ReviewService reviewService;
+
+    /**
+     * 리뷰 전체조회 API
+     * [GET] /api/reviews
+     * @return BaseResponse<List<GetReviewRes>>
+     * @Auther shine
+     */
+    @ApiOperation(value = "리뷰 전체조회", notes = "리뷰 전체조회")
+    @ResponseBody
+    @GetMapping("")
+    public BaseResponse<List<GetReviewRes>> getReviews() {
+        try {
+            List<GetReviewRes> reviewResList = reviewProvider.retrieveReviews();
+            return new BaseResponse<>(SUCCESS, reviewResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 리뷰 조회 API
+     * [GET] /api/reviews/:reviewId
+     * @PathVariable Long reviewId
+     * @return BaseResponse<GetReviewRes>
+     * @Auther shine
+     */
+    @ApiOperation(value = "리뷰 조회", notes = "리뷰 조회")
+    @ResponseBody
+    @GetMapping("/{reviewId}")
+    public BaseResponse<GetReviewRes> getReview(@PathVariable Long reviewId) {
+        try {
+            GetReviewRes reviewRes = reviewProvider.retrieveReview(reviewId);
+            return new BaseResponse<>(SUCCESS, reviewRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
     /**
      * 리뷰 등록 API
@@ -42,9 +83,5 @@ public class ReviewController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
-
-
-
 
 }
