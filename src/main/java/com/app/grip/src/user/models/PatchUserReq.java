@@ -1,15 +1,15 @@
 package com.app.grip.src.user.models;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // Unit Test 를 위해 PUBLIC
+@AllArgsConstructor
 @Getter
+@Builder
 public class PatchUserReq {
-    private String email;
-    private String password;
-    private String confirmPassword;
-    private String nickname;
-    private String phoneNumber;
+
+    private final String nickname;
+    private final String phoneNumber;
+    private final String birthday;
+    private final String imageDelete = "N";
 }

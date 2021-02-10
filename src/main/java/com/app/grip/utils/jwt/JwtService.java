@@ -42,7 +42,7 @@ public class JwtService {
 
     /**
      * JWT에서 userNo 추출
-     * @return int
+     * @return Long
      * @throws BaseException
      */
     public Long getUserNo() throws BaseException {
@@ -63,6 +63,6 @@ public class JwtService {
         }
 
         // 3. userId 추출
-        return claims.getBody().get("userNo", Long.class);
+        return (long) claims.getBody().get("userNo", Integer.class);
     }
 }

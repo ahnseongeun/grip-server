@@ -59,6 +59,7 @@ public enum BaseResponseStatus {
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),
     FAILED_TO_POST_IMAGE(false, 3501, "이미지 등록에 실패하였습니다."),
     NOT_FOUND_ADVERTISEMENT(false, 3502, "광고 조회 실패하였습니다."),
+    FAILED_TO_UPLOAD_IMAGE(false, 3503, "이미지 등록에 실패하였습니다."),
 
 
     // 4000 : Database 오류

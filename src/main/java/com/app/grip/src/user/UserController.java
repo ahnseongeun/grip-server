@@ -5,11 +5,15 @@ import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
 import com.app.grip.utils.ValidationRegex;
 import com.app.grip.utils.jwt.JwtService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -21,6 +25,7 @@ import java.util.Map;
 import static com.app.grip.config.BaseResponseStatus.*;
 import static com.app.grip.utils.ApiExamMemberProfile.getNaverTokenResponse;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -94,10 +99,13 @@ public class UserController {
     @ResponseBody
     @PostMapping("/naver")
     @ApiOperation(value = "네이버 로그인 및 회원가입",
-            notes = "네이버 로그인 및 회원가입\n"+"로그인은 login true, 회원가입은 login false로 구분")
+            notes = "네이버 로그인 및 회원가입\n"+"로그인은 login Y, 회원가입은 login N로 구분")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "login", value = "Y일경우 로그인, N일 경우 회원 가입", required = false, dataType = "string", paramType = "query", defaultValue="Y")
+    })
     public BaseResponse<PostUserRes> postUsersByNaver(
             @RequestHeader(value = "token") String token,
-            @RequestParam(value = "login",required = false,defaultValue = "true") boolean login) {
+            @RequestParam(value = "login",required = false,defaultValue = "Y") String login) {
 
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
@@ -265,75 +273,72 @@ public class UserController {
 
 
 
-//    /**
-//     * 회원 정보 수정 API
-//     * [PATCH] /users/:userId
-//     * @PathVariable userId
-//     * @RequestBody PatchUserReq
-//     * @return BaseResponse<PatchUserRes>
-//     */
-//    @ResponseBody
-//    @PatchMapping("/{userId}")
-//    public BaseResponse<PatchUserRes> patchUsers(@PathVariable Integer userId, @RequestBody PatchUserReq parameters) {
-//        if (userId == null || userId <= 0) {
-//            return new BaseResponse<>(EMPTY_USERID);
-//        }
-//
-//        if (!parameters.getPassword().equals(parameters.getConfirmPassword())) {
-//            return new BaseResponse<>(DO_NOT_MATCH_PASSWORD);
-//        }
-//
-//        try {
-//            return new BaseResponse<>(SUCCESS_PATCH_USER, userInfoService.updateUserInfo(userId, parameters));
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
-//
-//    /**
-//     * 로그인 API
-//     * [POST] /users/login
-//     * @RequestBody PostLoginReq
-//     * @return BaseResponse<PostLoginRes>
-//     */
-//    @PostMapping("/login")
-//    public BaseResponse<PostLoginRes> login(@RequestBody PostLoginReq parameters) {
-//        // 1. Body Parameter Validation
-//        if (parameters.getEmail() == null || parameters.getEmail().length() == 0) {
-//            return new BaseResponse<>(EMPTY_EMAIL);
-//        } else if (!isRegexEmail(parameters.getEmail())) {
-//            return new BaseResponse<>(INVALID_EMAIL);
-//        } else if (parameters.getPassword() == null || parameters.getPassword().length() == 0) {
-//            return new BaseResponse<>(EMPTY_PASSWORD);
-//        }
-//
-//        // 2. Login
-//        try {
-//            PostLoginRes postLoginRes = userInfoProvider.login(parameters);
-//            return new BaseResponse<>(SUCCESS_LOGIN, postLoginRes);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
-//
-//    /**
-//     * 회원 탈퇴 API
-//     * [DELETE] /users/:userId
-//     * @PathVariable userId
-//     * @return BaseResponse<Void>
-//     */
-//    @DeleteMapping("/{userId}")
-//    public BaseResponse<Void> deleteUsers(@PathVariable Integer userId) {
-//        if (userId == null || userId <= 0) {
-//            return new BaseResponse<>(EMPTY_USERID);
-//        }
-//
-//        try {
-//            userInfoService.deleteUserInfo(userId);
-//            return new BaseResponse<>(SUCCESS_DELETE_USER);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
+    /**
+     * 회원 정보 수정 API
+     * [PATCH] /users/
+     * @RequestBody PatchUserReq
+     * @return BaseResponse<PatchUserRes>
+     */
+    /*
+
+     */
+    @ResponseBody
+    @PatchMapping("")
+    @ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "imageDelete", value = "Y일경우 image 삭제, N일 경우 기존 이미지 유지", required = false, dataType = "string", paramType = "query", defaultValue="N")
+    })
+    public BaseResponse<PatchUserRes> patchUsers(
+            @RequestHeader(value = "Jwt") String jwt,
+            @RequestParam(value = "profileImage",required = false) MultipartFile profileImage,
+            @RequestParam(value = "nickname",required = false) String nickname,
+            @RequestParam(value = "phoneNumber",required = false) String phoneNumber,
+            @RequestParam(value = "birthday",required = false) String birthday,
+            @RequestParam(value = "imageDelete",required = false,defaultValue = "N") String imageDelete) {
+
+        try {
+            Long userNo = jwtService.getUserNo();
+
+            if (userNo == null || userNo <= 0) {
+                return new BaseResponse<>(EMPTY_USERID);
+            }
+
+            PatchUserRes patchUserRes = userService.updateUser(userNo, profileImage,nickname,phoneNumber,birthday,imageDelete);
+
+            return new BaseResponse<>(SUCCESS, patchUserRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+
+
+
+    /**
+     * 회원 탈퇴 API
+     * [DELETE] /users
+     * @PathVariable userId
+     * @return BaseResponse<Void>
+     */
+    @ResponseBody
+    @PatchMapping("/delete")
+    @ApiOperation(value = "회원 정보 삭제", notes = "회원 정보 삭제")
+    public BaseResponse<Void> deleteUsers(
+            @RequestHeader(value = "Jwt") String jwt) {
+
+        try {
+            Long userNo = jwtService.getUserNo();
+
+            if (userNo == null || userNo <= 0) {
+                return new BaseResponse<>(EMPTY_USERID);
+            }
+
+            userService.deleteUser(userNo);
+            return new BaseResponse<>(SUCCESS_DELETE_USER);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 }
