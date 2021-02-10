@@ -9,8 +9,5 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PostUserFacebookRes {
     private final Long userNo;
-    private final Integer role;
-    private final String nickName;
-    private final String profileImage;
     private final String jwt;
 }
