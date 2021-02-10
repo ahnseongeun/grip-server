@@ -31,7 +31,7 @@ public enum BaseResponseStatus {
     DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호와 비밀번호확인 값이 일치하지 않습니다."),
     EMPTY_NICKNAME(false, 2040, "닉네임을 입력해주세요."),
     // shine
-    EMPTY_APPID(false, 2100, "페이스북 아이디가 누락되었습니다."),
+    EMPTY_FACEBOOK_USERID(false, 2100, "페이스북 아이디가 누락되었습니다."),
     EMPTY_NAME(false, 2101, "닉네임을 입력해주세요."),
     INVALID_PHONENUMBER(false, 2102, "휴대전화번호 형식을 확인해주세요."),
 

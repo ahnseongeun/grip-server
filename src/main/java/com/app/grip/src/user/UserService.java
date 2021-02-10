@@ -135,7 +135,7 @@ public class UserService {
                 .birthday(postUserReq.getBirthday())
                 .email(postUserReq.getMail())
                 .gender(postUserReq.getGender())
-                .id(postUserReq.getAppId())
+                .id(postUserReq.getUserId())
                 .imageStatus("Y")
                 .phoneNumber(postUserReq.getPhoneNumber())
                 .profileImageURL(postUserReq.getProfileImage())
