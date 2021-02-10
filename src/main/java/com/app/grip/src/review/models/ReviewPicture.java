@@ -1,5 +1,6 @@
 package com.app.grip.src.review.models;
 
+import com.app.grip.config.BaseEntity;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "reviewPicture")
-public class ReviewPicture {
+public class ReviewPicture extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +26,8 @@ public class ReviewPicture {
     @ManyToOne
     @JoinColumn(name = "review_id")
     private Review review;
+
+    public ReviewPicture(String pictureURL) {
+        this.pictureURL = pictureURL;
+    }
 }

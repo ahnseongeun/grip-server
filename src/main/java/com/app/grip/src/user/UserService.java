@@ -5,14 +5,12 @@ import com.app.grip.src.user.models.*;
 import com.app.grip.utils.S3Service;
 import com.app.grip.utils.jwt.JwtService;
 import lombok.extern.slf4j.Slf4j;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -127,13 +125,12 @@ public class UserService {
      * @throws BaseException
      * @Auther shine
      */
-    @Transactional
     public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq) throws BaseException {
         User newUser = User.builder()
                 .name(postUserReq.getName())
                 .nickname(postUserReq.getNickname())
                 .birthday(postUserReq.getBirthday())
-                .email(postUserReq.getMail())
+                .email(postUserReq.getEmail())
                 .gender(postUserReq.getGender())
                 .id(postUserReq.getUserId())
                 .imageStatus("Y")
@@ -146,6 +143,7 @@ public class UserService {
         try {
             newUser = userRepository.save(newUser);
         } catch (Exception exception) {
+            exception.printStackTrace();
             throw new BaseException(FAILED_TO_POST_USER);
         }
 
@@ -218,15 +216,6 @@ public class UserService {
             throw new BaseException(FAILED_TO_DELETE_USER);
         }
 
-
-
     }
 
-
-//    public PatchUserRes updateUserInfo(Integer userId, PatchUserReq parameters)  throws BaseException {
-//        return null;
-//    }
-//
-//    public void deleteUserInfo(Integer userId) throws BaseException {
-//    }
 }

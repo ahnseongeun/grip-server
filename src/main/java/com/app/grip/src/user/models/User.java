@@ -45,7 +45,7 @@ public class User extends BaseEntity {
     /**
      * 프로필사진
      */
-    @Column(name = "profileImageURL", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "profileImageURL", columnDefinition = "TEXT")
     private String profileImageURL;
 
 
@@ -72,7 +72,7 @@ public class User extends BaseEntity {
     /**
      * 성별
      */
-    @Column(name = "gender", nullable = false, length = 1)
+    @Column(name = "gender", length = 1)
     private String gender;
 
     /**
