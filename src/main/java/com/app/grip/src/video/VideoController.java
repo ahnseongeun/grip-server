@@ -43,7 +43,7 @@ public class VideoController {
     @GetMapping("/videos/{name}")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
-        String path = "/home/ubuntu/video/";
+        String path = "https://test.shine94.kr/video/";
         //UrlResource
         System.out.println(path);
         UrlResource video = new UrlResource(path+name);
@@ -53,6 +53,8 @@ public class VideoController {
                             .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
                             .body(region);
     }
+
+
 
     @GetMapping("/videos/getThumbNail/{name}")
     public File getSumNail(@PathVariable String name,

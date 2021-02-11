@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/api/videos/**")
                     //.addResourceLocations("file:///home/ubuntu/")
-                    .addResourceLocations("file:/home/ubuntu/");
+                    .addResourceLocations("file:///home/ubuntu/video");
         }
 
 }
