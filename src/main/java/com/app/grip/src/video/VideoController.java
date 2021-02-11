@@ -11,6 +11,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -43,9 +44,8 @@ public class VideoController {
     @GetMapping("/videos/{name}")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
-        String path = "https://test.shine94.kr/video/";
+        String path = "/home/ubuntu/video/";
         //UrlResource
-        System.out.println(path);
         UrlResource video = new UrlResource(path+name);
         log.info(video.toString());
         ResourceRegion region = resourceRegion(video, headers);
@@ -53,6 +53,13 @@ public class VideoController {
                             .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
                             .body(region);
     }
+
+    @GetMapping("/{videoName}")
+    public String video(@PathVariable String videoName, Model model){
+        model.addAttribute("videoName", videoName);
+        return "video";
+    }
+    
 
 
 
