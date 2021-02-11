@@ -5,7 +5,9 @@ import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
@@ -23,7 +25,12 @@ import java.net.MalformedURLException;
 public class VideoController {
 
     private static final String IMAGE_PNG_FORMAT = "png";
+    private final ResourceLoader resourceLoader;
 
+    @Autowired
+    public VideoController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
 
     @GetMapping("/videos/{name}/full")
     public ResponseEntity<UrlResource> getFullVideo(@PathVariable String name) throws MalformedURLException {
@@ -36,10 +43,10 @@ public class VideoController {
     @GetMapping("/videos/{name}")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
-
-        log.info("getVideo");
-        //String path = System.getProperty("user.home");
-        UrlResource video = new UrlResource("/home/ubuntu/video/"+name);
+        String path = "/home/ubuntu/videos/";
+        //UrlResource
+        System.out.println(path);
+        UrlResource video = new UrlResource(path+name);
         log.info(video.toString());
         ResourceRegion region = resourceRegion(video, headers);
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
