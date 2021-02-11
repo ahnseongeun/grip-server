@@ -38,9 +38,9 @@ public class VideoController {
                                                    @RequestHeader HttpHeaders headers) throws IOException {
 
         log.info("getVideo");
-        String path = System.getProperty("user.home");
-        log.info(path);
-        UrlResource video = new UrlResource("/home/ubuntu/video/" + name);
+        //String path = System.getProperty("user.home");
+        UrlResource video = new UrlResource("/home/ubuntu/video/"+name);
+        log.info(video.toString());
         ResourceRegion region = resourceRegion(video, headers);
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
                             .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
