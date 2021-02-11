@@ -32,6 +32,9 @@ spring:
     password: shine1234
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  freemarker:
+    template-loader-path: classpath:/templates
+    suffix: .ftl
 
 cloud:
   aws:
