@@ -43,7 +43,7 @@ public class VideoController {
     @GetMapping("/videos/{name}")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
-        String path = "/home/ubuntu/videos/";
+        String path = "/home/ubuntu/video/";
         //UrlResource
         System.out.println(path);
         UrlResource video = new UrlResource(path+name);
