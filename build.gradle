@@ -47,7 +47,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
     //template
-    //implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-freemarker'
 
     implementation 'org.json:json:20200518'
 
@@ -66,6 +66,7 @@ dependencies {
     //jcodec
     compile 'org.jcodec:jcodec:0.2.3'
     compile 'org.jcodec:jcodec-javase:0.2.3'
+
 
     sourceSets {
         main {
