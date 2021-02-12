@@ -1,5 +1,6 @@
 package com.app.grip.utils;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 
 @Service
@@ -58,4 +60,20 @@ public class S3Service {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
         return s3Client.getUrl(bucket, fileName).toString();
     }
+
+    public String uploadFile(File file) {
+        ObjectMetadata metaData = new ObjectMetadata();
+        metaData.setCacheControl("604800"); // 60*60*24*7 일주일
+        metaData.setContentType("image/png");
+
+        PutObjectRequest putObjectRequest =
+                new PutObjectRequest(bucket, file.getName(), file);
+        putObjectRequest.setCannedAcl(CannedAccessControlList.PublicRead); // file permission
+        s3Client.putObject(putObjectRequest); // upload file
+        return s3Client.getUrl(bucket, file.getName()).toString();
+    }
+
+
+
+
 }

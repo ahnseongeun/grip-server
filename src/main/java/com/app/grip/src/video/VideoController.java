@@ -1,5 +1,9 @@
 package com.app.grip.src.video;
 
+import com.app.grip.config.BaseException;
+import com.app.grip.config.BaseResponse;
+import com.app.grip.src.video.models.GetVideos;
+import com.app.grip.utils.S3Service;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -8,12 +12,9 @@ import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
 import org.jcodec.scale.AWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
+import java.util.List;
+
+import static com.app.grip.config.BaseResponseStatus.SUCCESS;
 
 @Slf4j
 @RestController
@@ -30,14 +33,28 @@ import java.net.MalformedURLException;
 public class VideoController {
 
     private static final String IMAGE_PNG_FORMAT = "png";
+    private final VideoProvider videoProvider;
+    private final S3Service s3Service;
 
-//    @GetMapping("/videos/{name}/full")
-//    public ResponseEntity<UrlResource> getFullVideo(@PathVariable String name) throws MalformedURLException {
-//        UrlResource video = new UrlResource("file:${video.location}/${name}");
-//        return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
-//                .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
-//                .body(video);
-//    }
+    @Autowired
+    public VideoController(VideoProvider videoProvider,
+                           S3Service s3Service) {
+        this.videoProvider = videoProvider;
+        this.s3Service = s3Service;
+    }
+
+    @GetMapping("/videos/")
+    @ApiOperation(value = "전체 영상 리스트 조회", notes = "전체 영상 리스트 조회")
+    public BaseResponse<List<GetVideos>> getVideos()  {
+
+        List<GetVideos> getVideoList;
+        try{
+            getVideoList = videoProvider.retrieveVideos();
+            return new BaseResponse<>(SUCCESS, getVideoList);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
     @GetMapping("/videos/{name}")
     @ApiOperation(value = "영상 불러오기(테스트 중)", notes = "영상 리스트 조회")
@@ -62,6 +79,8 @@ public class VideoController {
         String thumbNailPath = "/home/ubuntu/image/"+thumbNailName;
         File thumbNailFile = new File(thumbNailPath);
         File videoFile = new File(videoPath + name);
+        File resultFile = getThumbnail(videoFile,thumbNailFile);
+        s3Service.uploadFile(resultFile);
         return getThumbnail(videoFile,thumbNailFile);
     }
 
@@ -116,3 +135,11 @@ public class VideoController {
     }
 
 }
+/*
+try {
+                imgPath = s3Service.upload(profileImage);
+                user.setProfileImageURL(imgPath);
+            }catch (IOException ioException){
+                throw new BaseException(FAILED_TO_UPLOAD_IMAGE);
+            }
+ */
