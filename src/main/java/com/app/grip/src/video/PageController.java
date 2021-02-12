@@ -16,23 +16,23 @@ import java.nio.file.Paths;
 @Controller
 public class PageController {
 
-    @Value("${video.location}")
-    private String videoLocation;
-
-    @GetMapping("/video-list")
-    String index(Model model) throws IOException {
-
-        log.info(videoLocation);
-
-        ClassPathResource resource = new ClassPathResource(videoLocation);
-
-        Object[] videos = Files.list(Paths.get(resource.getURI()))
-                            .map(f -> f.getFileName().toString())
-                            .toArray();
-
-        model.addAttribute("videos", videos);
-        return "index";
-    }
+//    @Value("${video.location}")
+//    private String videoLocation;
+//
+//    @GetMapping("/video-list")
+//    String index(Model model) throws IOException {
+//
+//        log.info(videoLocation);
+//
+//        ClassPathResource resource = new ClassPathResource(videoLocation);
+//
+//        Object[] videos = Files.list(Paths.get(resource.getURI()))
+//                            .map(f -> f.getFileName().toString())
+//                            .toArray();
+//
+//        model.addAttribute("videos", videos);
+//        return "index";
+//    }
 
     @GetMapping("/{videoName}")
     public String video(@PathVariable String videoName, Model model){
