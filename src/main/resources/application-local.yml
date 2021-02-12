@@ -1,4 +1,7 @@
 spring:
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
   h2:
     console:
       enabled: true
@@ -21,3 +24,6 @@ cloud:
       static: ap-northeast-2
     stack:
       auto: false
+
+video:
+  location: videos/
