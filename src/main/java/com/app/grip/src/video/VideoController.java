@@ -22,16 +22,10 @@ import java.net.MalformedURLException;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
 public class VideoController {
 
     private static final String IMAGE_PNG_FORMAT = "png";
-    private final ResourceLoader resourceLoader;
-
-    @Autowired
-    public VideoController(ResourceLoader resourceLoader) {
-        this.resourceLoader = resourceLoader;
-    }
 
     @GetMapping("/videos/{name}/full")
     public ResponseEntity<UrlResource> getFullVideo(@PathVariable String name) throws MalformedURLException {
@@ -45,7 +39,6 @@ public class VideoController {
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
         String path = "/home/ubuntu/video/";
-        //UrlResource
         UrlResource video = new UrlResource(path+name);
         log.info(video.toString());
         ResourceRegion region = resourceRegion(video, headers);
@@ -53,15 +46,6 @@ public class VideoController {
                             .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
                             .body(region);
     }
-
-    @GetMapping("/{videoName}")
-    public String video(@PathVariable String videoName, Model model){
-        model.addAttribute("videoName", videoName);
-        return "video";
-    }
-    
-
-
 
     @GetMapping("/videos/getThumbNail/{name}")
     public File getSumNail(@PathVariable String name,
