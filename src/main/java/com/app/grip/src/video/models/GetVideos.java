@@ -19,4 +19,5 @@ public class GetVideos {
     private final Integer watchUserCount;
     private final Long categoryId;
     private final Long hostNo;
+
 }

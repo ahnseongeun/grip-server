@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
             registry.addResourceHandler("/api/**")
-                    .addResourceLocations("file:/home/ubuntu/video/");
+                    .addResourceLocations("file:/home/ubuntu/");
         }
 
 }
