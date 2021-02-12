@@ -39,7 +39,7 @@ public class VideoController {
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
         String path = "/home/ubuntu/video/";
-        UrlResource video = new UrlResource("classpath:/videos/"+name);
+        UrlResource video = new UrlResource("file:"+path+name);
         log.info(video.toString());
         ResourceRegion region = resourceRegion(video, headers);
         return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
