@@ -4,7 +4,6 @@ import com.app.grip.config.BaseEntity;
 import com.app.grip.src.user.models.User;
 import lombok.*;
 import lombok.experimental.Accessors;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
