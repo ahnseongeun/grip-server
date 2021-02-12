@@ -95,10 +95,10 @@ public class GripApplication implements CommandLineRunner {
         /**
          * 영상 카테고리 더미 데이터 삽입
          */
-        VideoCategory videoCategory1 = new VideoCategory("라이브 예고","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory2 = new VideoCategory("내 팔로잉","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory3 = new VideoCategory("전체 LIVE","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory4 = new VideoCategory("소호몰 언니","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
+        VideoCategory videoCategory1 = new VideoCategory("라이브예고","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
+        VideoCategory videoCategory2 = new VideoCategory("내팔로잉","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
+        VideoCategory videoCategory3 = new VideoCategory("전체LIVE","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
+        VideoCategory videoCategory4 = new VideoCategory("소호몰언니","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory5 = new VideoCategory("스타일링","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory6 = new VideoCategory("신인","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory7 = new VideoCategory("뷰티꿀팁","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
@@ -137,68 +137,68 @@ public class GripApplication implements CommandLineRunner {
         final List<Video> videoList =
                 Arrays.asList(
                         //라이브 예고
-                        new Video("곽스타","Y","2-12 20:00","22:00",""
+                        new Video("곽스타","N","2-12 20:00","N",""
                                 ,"",0,videoCategory1,grapher1),
-                        new Video("네이플 본사 공식몰","Y","2-12 20:00","23:00",""
+                        new Video("네이플 본사 공식몰","N","2-12 20:00","N",""
                                 ,"",0,videoCategory1,grapher2),
-                        new Video("고랭고랭","Y","2-13 20:00","22:00",""
+                        new Video("고랭고랭","N","2-13 20:00","N",""
                                 ,"",0,videoCategory1,grapher3),
 
                         //전체 라이브
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher1),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher2),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher3),
+                        new Video("2부시작5초전","Y","2-12 17:00","N",""
+                                ,"",0,videoCategory3,grapher1),
+                        new Video("오버티 55-88까지 맨투맨","Y","2-12 15:00","N",""
+                                ,"",0,videoCategory3,grapher2),
+                        new Video("짧은라방, 구두가방","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory3,grapher3),
 
                         //소호몰 언니
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher1),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher2),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher4),
+                        new Video("째즈언니","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory4,grapher1),
+                        new Video("신사%세일해용, 10만원이상 선물","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory4,grapher2),
+                        new Video("반지할인, 새해복_언니들","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory4,grapher4),
 
-                        //스타일링링
-                       new Video("","","","",""
-                                ,"",0,videoCategory1,grapher2),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher3),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher4),
+                        //스타일링
+                       new Video("2부시작5초전","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory5,grapher2),
+                        new Video("짧은라방, 구두가방","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory5,grapher3),
+                        new Video("올해는 나 장가갈꺼래...","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory5,grapher4),
 
                         //신인
-                       new Video("","","","",""
-                                ,"",0,videoCategory1,grapher1),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher3),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher4),
+                       new Video("오늘도 수고했어~","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory6,grapher1),
+                        new Video("다시 소통 방송 들어와요ㅠㅠ","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory6,grapher3),
+                        new Video("소통과 판매 논녀와용...","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory6,grapher4),
 
                         //뷰티 꿀팁
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher4),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher3),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher2),
+                        new Video("복주머니!!!","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory7,grapher4),
+                        new Video("셀로니아 줄기세포 샴푸!!","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory7,grapher3),
+                        new Video("피부에 양보하세요","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory7,grapher2),
 
                         //먹방쿡방
-                       new Video("","","","",""
-                                ,"",0,videoCategory1,grapher1),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher4),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher2),
+                       new Video("크로플+누텔라","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory8,grapher1),
+                        new Video("쭈꾸미 품절!!!일보직전!!","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory8,grapher4),
+                        new Video("피자나라 치킨공주","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory8,grapher2),
 
                         //알쓸신템
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher4),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher2),
-                        new Video("","","","",""
-                                ,"",0,videoCategory1,grapher3)
+                        new Video("사라 사라 사라 양말좀 사라~~","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory9,grapher4),
+                        new Video("이걸 안들어와??","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory9,grapher2),
+                        new Video("롱패딩 딱대!!","Y","2-12 16:00","N",""
+                                ,"",0,videoCategory9,grapher3)
                         );
 
 

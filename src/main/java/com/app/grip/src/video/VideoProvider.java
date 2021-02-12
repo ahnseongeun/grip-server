@@ -38,7 +38,7 @@ public class VideoProvider {
                         .title(video.getTitle())
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
-                        .endLiveTime(video.getEndLiveTime())
+                        .endLiveStatus(video.getEndLiveStatus())
                         .videoURL(video.getVideoURL())
                         .thumbnailURL(video.getThumbnailURL())
                         .watchUserCount(video.getVideoWatchUserCount())

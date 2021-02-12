@@ -10,6 +10,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Accessors(chain = true)
@@ -49,10 +50,10 @@ public class Video extends BaseEntity {
     private String startLiveTime;
 
     /**
-     * 생방송 종료 시간
+     * 생방송 종료 여부
      */
-    @Column(name = "endLiveTime", nullable = false, length = 100)
-    private String endLiveTime;
+    @Column(name = "endLiveStatus", nullable = false, length = 1)
+    private String endLiveStatus;
 
     /**
      * 비디오 경로
@@ -95,13 +96,13 @@ public class Video extends BaseEntity {
     @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
     private List<WatchMyVideo> watchMyVideoList;
 
-    public Video(String title,String liveCheck,String startLiveTime,String endLiveTime,String videoURL,
+    public Video(String title,String liveCheck,String startLiveTime,String endLiveStatus,String videoURL,
                  String thumbnailURL,Integer videoWatchUserCount,VideoCategory videoCategory,
                  User user){
         this.title = title;
         this.liveCheck = liveCheck;
         this.startLiveTime = startLiveTime;
-        this.endLiveTime = endLiveTime;
+        this.endLiveStatus = endLiveStatus;
         this.videoURL = videoURL;
         this.thumbnailURL = thumbnailURL;
         this.videoWatchUserCount = videoWatchUserCount;

@@ -13,7 +13,7 @@ public class GetVideos {
     private final String title;
     private final String liveCheck;
     private final String startLiveTime;
-    private final String endLiveTime;
+    private final String endLiveStatus;
     private final String videoURL;
     private final String thumbnailURL;
     private final Integer watchUserCount;

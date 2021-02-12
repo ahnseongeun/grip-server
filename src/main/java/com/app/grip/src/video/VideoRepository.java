@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface VideoRepository extends CrudRepository<Video, Long> {
     List<Video> findByStatus(String y);
+    List<Video> findByVideoCategory_NameAndStatus(String name,String status);
+
+    List<Video> findByVideoCategory_IdAndStatus(Long id, String y);
 }

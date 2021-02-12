@@ -5,10 +5,12 @@ import com.app.grip.src.advertisement.models.Advertisement;
 import com.app.grip.src.advertisement.models.GetAdvertisement;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_ADVERTISEMENT;
+import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
 
 @Service
 public class AdvertisementProvider {

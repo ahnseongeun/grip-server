@@ -1,6 +1,7 @@
 package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
+import com.app.grip.src.video.VideoRepository;
 import com.app.grip.src.video.models.GetVideoListByCategory;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.src.videoCategory.models.GetVideoCategory;
@@ -9,23 +10,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_VIDEO_CATEGORY;
-import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
+import static com.app.grip.config.BaseResponseStatus.*;
 
 @Service
 public class VideoCategoryProvider {
 
 
     private final VideoCategoryRepository videoCategoryRepository;
+    private final VideoRepository videoRepository;
 
     @Autowired
-    public VideoCategoryProvider(VideoCategoryRepository videoCategoryRepository) {
+    public VideoCategoryProvider(VideoCategoryRepository videoCategoryRepository,
+                                 VideoRepository videoRepository) {
         this.videoCategoryRepository = videoCategoryRepository;
+        this.videoRepository = videoRepository;
     }
 
     public List<GetVideoCategory> retrieveVideoCategoryList() throws BaseException {
@@ -65,16 +66,16 @@ public class VideoCategoryProvider {
         List<Video> videoList7;
         List<Video> videoList8;
         try {
-            videoList1 = videoCategoryRepository.findByNameAndStatus("라이브 예고", "Y");
-            videoList2 = videoCategoryRepository.findByNameAndStatus("전체 LIVE", "Y");
-            videoList3 = videoCategoryRepository.findByNameAndStatus("소호몰 언니", "Y");
-            videoList4 = videoCategoryRepository.findByNameAndStatus("스타일링", "Y");
-            videoList5 = videoCategoryRepository.findByNameAndStatus("신인", "Y");
-            videoList6 = videoCategoryRepository.findByNameAndStatus("뷰티꿀팁", "Y");
-            videoList7 = videoCategoryRepository.findByNameAndStatus("먹방쿡방", "Y");
-            videoList8 = videoCategoryRepository.findByNameAndStatus("알쓸신템", "Y");
+            videoList1 = videoRepository.findByVideoCategory_IdAndStatus(1L, "Y");
+            videoList2 = videoRepository.findByVideoCategory_IdAndStatus(3L, "Y");
+            videoList3 = videoRepository.findByVideoCategory_IdAndStatus(4L, "Y");
+            videoList4 = videoRepository.findByVideoCategory_IdAndStatus(5L, "Y");
+            videoList5 = videoRepository.findByVideoCategory_IdAndStatus(6L, "Y");
+            videoList6 = videoRepository.findByVideoCategory_IdAndStatus(7L, "Y");
+            videoList7 = videoRepository.findByVideoCategory_IdAndStatus(8L, "Y");
+            videoList8 = videoRepository.findByVideoCategory_IdAndStatus(9L, "Y");
         }catch (Exception e){
-            throw new BaseException(NOT_FOUND_USER);
+            throw new BaseException(FAILED_TO_GET_VIDEO);
         }
 
         GetVideosCategory getVideosCategory1 = new GetVideosCategory("라이브 예고",videoList1.stream()
@@ -88,7 +89,9 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory2 = new GetVideosCategory("전체 LIVE",videoList1.stream()
+        System.out.println(getVideosCategory1.getVideoList().get(0));
+
+        GetVideosCategory getVideosCategory2 = new GetVideosCategory("전체 LIVE",videoList2.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -99,7 +102,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory3 = new GetVideosCategory("소호몰 언니",videoList1.stream()
+        GetVideosCategory getVideosCategory3 = new GetVideosCategory("소호몰 언니",videoList3.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -110,7 +113,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory4 = new GetVideosCategory("스타일링",videoList1.stream()
+        GetVideosCategory getVideosCategory4 = new GetVideosCategory("스타일링",videoList4.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -121,7 +124,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory5 = new GetVideosCategory("신인",videoList1.stream()
+        GetVideosCategory getVideosCategory5 = new GetVideosCategory("신인",videoList5.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -132,7 +135,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory6 = new GetVideosCategory("뷰티꿀팁",videoList1.stream()
+        GetVideosCategory getVideosCategory6 = new GetVideosCategory("뷰티꿀팁",videoList6.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -143,7 +146,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory7 = new GetVideosCategory("먹방쿡방",videoList1.stream()
+        GetVideosCategory getVideosCategory7 = new GetVideosCategory("먹방쿡방",videoList7.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -154,7 +157,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getId())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory8 = new GetVideosCategory("알쓸신템",videoList1.stream()
+        GetVideosCategory getVideosCategory8 = new GetVideosCategory("알쓸신템",videoList8.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())

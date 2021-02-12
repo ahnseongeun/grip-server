@@ -3,11 +3,13 @@ package com.app.grip.src.video;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.video.models.GetVideos;
+import com.app.grip.src.video.models.PatchVideo;
 import com.app.grip.src.video.models.PostVideoAndThumbNail;
 import com.app.grip.utils.S3Service;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
+import org.hibernate.annotations.Fetch;
 import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
 import org.jcodec.common.model.Picture;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -46,7 +49,7 @@ public class VideoController {
         this.s3Service = s3Service;
     }
 
-    @GetMapping("/videos/")
+    @GetMapping("/videos")
     @ApiOperation(value = "전체 영상 리스트 조회", notes = "전체 영상 리스트 조회")
     public BaseResponse<List<GetVideos>> getVideos()  {
 
@@ -54,6 +57,19 @@ public class VideoController {
         try{
             getVideoList = videoProvider.retrieveVideos();
             return new BaseResponse<>(SUCCESS, getVideoList);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    @PatchMapping("/videos/{videoId}")
+    @ApiOperation(value = "방송 종료", notes = "방송 종료")
+    public BaseResponse<PatchVideo> updateVideo(@PathVariable Long videoId)  {
+
+        PatchVideo patchVideo;
+        try{
+            patchVideo = videoService.updateVideo(videoId);
+            return new BaseResponse<>(SUCCESS, patchVideo);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
