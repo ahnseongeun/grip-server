@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class GetStoresRes {
+public class GetStoreRes {
     private final Long storeId;
     private final String name;
     private final String introduction;

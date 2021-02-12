@@ -1,7 +1,7 @@
 package com.app.grip.src.store;
 
 import com.app.grip.config.BaseException;
-import com.app.grip.src.store.models.GetStoresRes;
+import com.app.grip.src.store.models.GetStoreRes;
 import com.app.grip.src.store.models.Store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class StoreProvider {
      * @Auther shine
      */
     @Transactional
-    public List<GetStoresRes> retrieveStores() throws BaseException {
+    public List<GetStoreRes> retrieveStores() throws BaseException {
         List<Store> storeList;
 
         try {
@@ -34,7 +34,7 @@ public class StoreProvider {
         }
 
         return storeList.stream().map(store -> {
-            return new GetStoresRes(store.getId(), store.getName(),
+            return new GetStoreRes(store.getId(), store.getName(),
                     store.getIntroduction(), store.getPictureURL(), store.getUserNo().getNo());
         }).collect(Collectors.toList());
 
@@ -48,7 +48,7 @@ public class StoreProvider {
      * @Auther shine
      */
     @Transactional
-    public GetStoresRes retrieveStore(Long storeId) throws BaseException {
+    public GetStoreRes retrieveStore(Long storeId) throws BaseException {
         Store store;
 
         try {
@@ -57,7 +57,7 @@ public class StoreProvider {
             throw new BaseException(FAILED_TO_GET_STORE);
         }
 
-        return new GetStoresRes(store.getId(), store.getName(),
+        return new GetStoreRes(store.getId(), store.getName(),
                 store.getIntroduction(), store.getPictureURL(), store.getUserNo().getNo());
     }
 

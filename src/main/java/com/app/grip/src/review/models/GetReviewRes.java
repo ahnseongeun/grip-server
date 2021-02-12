@@ -10,7 +10,7 @@ import java.util.List;
 public class GetReviewRes {
     private final Long reviewId;
     private final Long storeId;
-    private final Long userId;
+    private final Long userNo;
     private final Integer star;
     private final String content;
     private final List<PictureRes> picture;

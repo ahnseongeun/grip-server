@@ -36,7 +36,12 @@ public enum BaseResponseStatus {
     EMPTY_INTRODUCTION(false, 2102, "소개말을 입력해주세요."),
     EMPTY_STAR(false, 2103, "별점을 입력해주세요."),
     EMPTY_CONTENT(false, 2104, "내용을 입력해주세요."),
-    INVALID_PHONENUMBER(false, 2105, "휴대전화번호 형식을 확인해주세요."),
+    EMPTY_DISCOUNT(false, 2105, "할인금액을 입력해주세요."),
+    EMPTY_MINIMUMPRICE(false, 2106, "최저 사용금액을 입력해주세요."),
+    EMPTY_EFFECTIVEDATE(false, 2107, "쿠폰 유효일자를 입력해주세요."),
+    INVALID_PHONENUMBER(false, 2108, "휴대전화번호 형식을 확인해주세요."),
+    INVALID_EFFECTIVEDATE(false, 2109, "쿠폰 유효일자 형식을 확인해주세요."),
+
 
 
     // divi
@@ -63,6 +68,8 @@ public enum BaseResponseStatus {
     FAILED_TO_POST_STORE(false, 3108, "상점 등록에 실패하였습니다."),
     FAILED_TO_GET_REVIEW(false, 3109, "리뷰 검색에 실패하였습니다."),
     FAILED_TO_POST_REVIEW(false, 3110, "리뷰 등록에 실패하였습니다."),
+    FAILED_TO_GET_COUPON(false, 3111, "쿠폰 검색에 실패하였습니다."),
+    FAILED_TO_POST_COUPON(false, 3112, "쿠폰 등록에 실패하였습니다."),
 
     
     // divi
