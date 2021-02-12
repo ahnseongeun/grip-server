@@ -34,8 +34,8 @@ public class CouponController {
     @GetMapping("/admin/coupons")
     public BaseResponse<List<GetCouponRes>> getCoupons() {
         try {
-            List<GetCouponRes> couponResLisC = couponProvider.retrieveCoupons();
-            return new BaseResponse<>(SUCCESS, couponResLisC);
+            List<GetCouponRes> couponList = couponProvider.retrieveCoupons();
+            return new BaseResponse<>(SUCCESS, couponList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -52,8 +52,8 @@ public class CouponController {
     @GetMapping("/coupons")
     public BaseResponse<List<GetCouponRes>> getCoupon() {
         try {
-            List<GetCouponRes> couponResLisC = couponProvider.retrieveCoupon();
-            return new BaseResponse<>(SUCCESS, couponResLisC);
+            List<GetCouponRes> couponList = couponProvider.retrieveCoupon();
+            return new BaseResponse<>(SUCCESS, couponList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -88,8 +88,8 @@ public class CouponController {
         }
 
         try {
-            PostCouponRes couponRes = couponService.createCoupon(parameters);
-            return new BaseResponse<>(SUCCESS, couponRes);
+            PostCouponRes coupon = couponService.createCoupon(parameters);
+            return new BaseResponse<>(SUCCESS, coupon);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

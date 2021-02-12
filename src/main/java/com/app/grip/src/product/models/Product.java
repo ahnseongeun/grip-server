@@ -30,12 +30,12 @@ public class Product extends BaseEntity {
     @Column(name = "price", nullable = false)
     private Integer price;
 
+    @Column(name = "pictureURL", nullable = false, columnDefinition = "TEXT")
+    private String pictureURL;
+
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
-
-    @Column(name = "pictureURL", nullable = false, columnDefinition = "TEXT")
-    private String pictureURL;
 
     @ManyToOne
     @JoinColumn(name = "productCategory_id")

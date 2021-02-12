@@ -39,8 +39,10 @@ public enum BaseResponseStatus {
     EMPTY_DISCOUNT(false, 2105, "할인금액을 입력해주세요."),
     EMPTY_MINIMUMPRICE(false, 2106, "최저 사용금액을 입력해주세요."),
     EMPTY_EFFECTIVEDATE(false, 2107, "쿠폰 유효일자를 입력해주세요."),
-    INVALID_PHONENUMBER(false, 2108, "휴대전화번호 형식을 확인해주세요."),
-    INVALID_EFFECTIVEDATE(false, 2109, "쿠폰 유효일자 형식을 확인해주세요."),
+    EMPTY_PRICE(false, 2108, "가격을 입력해주세요."),
+    EMPTY_CATEGORY(false, 2109, "카테고리를 입력해주세요."),
+    INVALID_PHONENUMBER(false, 2110, "휴대전화번호 형식을 확인해주세요."),
+    INVALID_EFFECTIVEDATE(false, 2111, "쿠폰 유효일자 형식을 확인해주세요."),
 
 
 
@@ -70,7 +72,10 @@ public enum BaseResponseStatus {
     FAILED_TO_POST_REVIEW(false, 3110, "리뷰 등록에 실패하였습니다."),
     FAILED_TO_GET_COUPON(false, 3111, "쿠폰 검색에 실패하였습니다."),
     FAILED_TO_POST_COUPON(false, 3112, "쿠폰 등록에 실패하였습니다."),
-
+    FAILED_TO_GET_PRODUCT(false, 3113, "상품 검색에 실패하였습니다."),
+    FAILED_TO_POST_PRODUCT(false, 3114, "상품 등록에 실패하였습니다."),
+    FAILED_TO_GET_PRODUCTCATEGORY(false, 3115, "상품 카타로그 검색에 실패하였습니다."),
+    FAILED_TO_POST_PRODUCTCATEGORY(false, 3116, "상품 카타로그 등록에 실패하였습니다."),
     
     // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),
