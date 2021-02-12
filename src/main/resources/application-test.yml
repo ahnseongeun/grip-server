@@ -36,6 +36,9 @@ spring:
     template-loader-path: classpath:/templates
     suffix: .ftl
 
+video:
+  location: videos/
+
 cloud:
   aws:
     credentials:
