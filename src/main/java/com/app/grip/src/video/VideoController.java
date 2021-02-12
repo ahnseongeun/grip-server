@@ -22,7 +22,7 @@ import java.net.MalformedURLException;
 
 @Slf4j
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/api")
 public class VideoController {
 
     private static final String IMAGE_PNG_FORMAT = "png";
