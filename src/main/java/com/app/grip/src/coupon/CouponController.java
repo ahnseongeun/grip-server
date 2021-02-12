@@ -5,7 +5,6 @@ import com.app.grip.config.BaseResponse;
 import com.app.grip.src.coupon.models.GetCouponRes;
 import com.app.grip.src.coupon.models.PostCouponReq;
 import com.app.grip.src.coupon.models.PostCouponRes;
-import com.app.grip.src.store.models.GetStoreRes;
 import com.app.grip.utils.ValidationRegex;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +35,24 @@ public class CouponController {
     public BaseResponse<List<GetCouponRes>> getCoupons() {
         try {
             List<GetCouponRes> couponResLisC = couponProvider.retrieveCoupons();
+            return new BaseResponse<>(SUCCESS, couponResLisC);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 내 쿠폰 조회 API
+     * [GET] /api/coupons
+     * @return List<GetCouponRes>
+     * @Auther shine
+     */
+    @ApiOperation(value = "내 쿠폰 조회", notes = "내 쿠폰 조회")
+    @ResponseBody
+    @GetMapping("/coupons")
+    public BaseResponse<List<GetCouponRes>> getCoupon() {
+        try {
+            List<GetCouponRes> couponResLisC = couponProvider.retrieveCoupon();
             return new BaseResponse<>(SUCCESS, couponResLisC);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

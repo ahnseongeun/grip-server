@@ -24,6 +24,9 @@ public class CouponService {
     private final CouponRepository couponRepository;
     private final JwtService jwtService;
 
+    SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+
     /**
      * 쿠폰 생성
      * @param PostCouponReq parameters
@@ -33,9 +36,6 @@ public class CouponService {
      */
     public PostCouponRes createCoupon(PostCouponReq parameters) throws BaseException {
         User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
-
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
-        SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
         Date effectiveDate = new Date();
 
         try {
@@ -43,8 +43,7 @@ public class CouponService {
         } catch (ParseException exception) {
             exception.printStackTrace();
         }
-        System.out.println(effectiveDate);
-        
+
         Coupon newCoupon = Coupon.builder()
                 .user(user)
                 .content(parameters.getContent())
