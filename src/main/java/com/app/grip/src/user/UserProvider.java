@@ -144,11 +144,11 @@ public class UserProvider {
         }
 
         if (user == null) {
-            return new PostLoginFacebookRes("true", null, null, appId);
+            return new PostLoginFacebookRes(true, null, null, appId);
         }
 
         String jwt = jwtService.createJwt(user.getNo());
-        return new PostLoginFacebookRes("false", user.getNo(), jwt, null);
+        return new PostLoginFacebookRes(false, user.getNo(), jwt, null);
     }
 
 

@@ -1,4 +1,81 @@
 package com.app.grip.src.coupon;
 
+import com.app.grip.config.BaseException;
+import com.app.grip.config.BaseResponse;
+import com.app.grip.src.coupon.models.GetCouponRes;
+import com.app.grip.src.coupon.models.PostCouponReq;
+import com.app.grip.src.coupon.models.PostCouponRes;
+import com.app.grip.src.store.models.GetStoreRes;
+import com.app.grip.utils.ValidationRegex;
+import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.app.grip.config.BaseResponseStatus.*;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api")
 public class CouponController {
+    private final CouponService couponService;
+    private final CouponProvider couponProvider;
+    private final ValidationRegex validationRegex;
+
+    /**
+     * 쿠폰 전체조회 API
+     * [GET] /api/admin/coupons
+     * @PathVariable
+     * @return
+     * @Auther shine
+     */
+    @ApiOperation(value = "쿠폰 전체조회", notes = "쿠폰 전체조회")
+    @ResponseBody
+    @GetMapping("/admin/coupons")
+    public BaseResponse<List<GetCouponRes>> getCoupons() {
+        try {
+            List<GetCouponRes> couponResLisC = couponProvider.retrieveCoupons();
+            return new BaseResponse<>(SUCCESS, couponResLisC);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 쿠폰 등록 API
+     * [POST] /api/coupons
+     * @RequestBody PostCouponReq parameters
+     * @return BaseResponse<PostCouponRes>
+     * @Auther shine
+     */
+    @ApiOperation(value = "쿠폰 등록", notes = "쿠폰 등록")
+    @ResponseBody
+    @PostMapping("/coupons")
+    public BaseResponse<PostCouponRes> postCoupon(@RequestBody(required = false) PostCouponReq parameters) {
+        if(parameters.getContent() == null || parameters.getContent().length() == 0) {
+            return new BaseResponse<>(EMPTY_CONTENT);
+        }
+        if(parameters.getDiscount() == null) {
+            return new BaseResponse<>(EMPTY_DISCOUNT);
+        }
+        if(parameters.getMinimumPrice() == null) {
+            return new BaseResponse<>(EMPTY_MINIMUMPRICE);
+        }
+        if(parameters.getEffectiveDate() == null) {
+            return new BaseResponse<>(EMPTY_EFFECTIVEDATE);
+        }
+
+        if(!validationRegex.isRegexEffectiveDate(parameters.getEffectiveDate())) {
+            return new BaseResponse<>(INVALID_EFFECTIVEDATE);
+        }
+
+        try {
+            PostCouponRes couponRes = couponService.createCoupon(parameters);
+            return new BaseResponse<>(SUCCESS, couponRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 }

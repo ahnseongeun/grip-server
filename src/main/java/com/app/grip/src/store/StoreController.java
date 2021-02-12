@@ -2,7 +2,7 @@ package com.app.grip.src.store;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
-import com.app.grip.src.store.models.GetStoresRes;
+import com.app.grip.src.store.models.GetStoreRes;
 import com.app.grip.src.store.models.PostStoreReq;
 import com.app.grip.src.store.models.PostStoreRes;
 import io.swagger.annotations.ApiOperation;
@@ -15,24 +15,24 @@ import static com.app.grip.config.BaseResponseStatus.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/stores")
+@RequestMapping("/api")
 public class StoreController {
     private final StoreService storeService;
     private final StoreProvider storeProvider;
 
     /**
      * 상점 전체조회 API
-     * [GET] /api/stores
+     * [GET] /api/admin/stores
      * @PathVariable userId
      * @return BaseResponse<GetUserRes>
      * @Auther shine
      */
     @ApiOperation(value = "상점 전체조회", notes = "상점 전체조회")
     @ResponseBody
-    @GetMapping("")
-    public BaseResponse<List<GetStoresRes>> getStores() {
+    @GetMapping("/admin/stores")
+    public BaseResponse<List<GetStoreRes>> getStores() {
         try {
-            List<GetStoresRes> storesResList = storeProvider.retrieveStores();
+            List<GetStoreRes> storesResList = storeProvider.retrieveStores();
             return new BaseResponse<>(SUCCESS, storesResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -48,10 +48,10 @@ public class StoreController {
      */
     @ApiOperation(value = "상점 조회", notes = "상점 조회")
     @ResponseBody
-    @GetMapping("/{storeId}")
-    public BaseResponse<GetStoresRes> getStore(@PathVariable Long storeId) {
+    @GetMapping("/stores/{storeId}")
+    public BaseResponse<GetStoreRes> getStore(@PathVariable Long storeId) {
         try {
-            GetStoresRes storesRes = storeProvider.retrieveStore(storeId);
+            GetStoreRes storesRes = storeProvider.retrieveStore(storeId);
             return new BaseResponse<>(SUCCESS, storesRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -67,7 +67,7 @@ public class StoreController {
      */
     @ApiOperation(value = "상점 등록", notes = "상점 등록")
     @ResponseBody
-    @PostMapping("")
+    @PostMapping("/stores")
     public BaseResponse<PostStoreRes> postStore(@RequestBody(required = false) PostStoreReq parameters) {
         if(parameters.getName() == null || parameters.getName().length() == 0) {
             return new BaseResponse<>(EMPTY_NAME);

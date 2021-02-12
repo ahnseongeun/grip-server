@@ -36,7 +36,6 @@ public class Coupon extends BaseEntity {
     @Column(name = "minimumPrice", nullable = false)
     private Integer minimumPrice;
 
-    @CreationTimestamp
     @Column(name = "effectiveDate", nullable = false)
     private Date effectiveDate;
 

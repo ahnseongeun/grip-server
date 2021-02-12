@@ -15,20 +15,20 @@ import static com.app.grip.config.BaseResponseStatus.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/reviews")
+@RequestMapping("/api")
 public class ReviewController {
     private final ReviewProvider reviewProvider;
     private final ReviewService reviewService;
 
     /**
      * 리뷰 전체조회 API
-     * [GET] /api/reviews
+     * [GET] /api/admin/reviews
      * @return BaseResponse<List<GetReviewRes>>
      * @Auther shine
      */
     @ApiOperation(value = "리뷰 전체조회", notes = "리뷰 전체조회")
     @ResponseBody
-    @GetMapping("")
+    @GetMapping("/admin/reviews")
     public BaseResponse<List<GetReviewRes>> getReviews() {
         try {
             List<GetReviewRes> reviewResList = reviewProvider.retrieveReviews();
@@ -47,7 +47,7 @@ public class ReviewController {
      */
     @ApiOperation(value = "리뷰 조회", notes = "리뷰 조회")
     @ResponseBody
-    @GetMapping("/{reviewId}")
+    @GetMapping("/reviews/{reviewId}")
     public BaseResponse<GetReviewRes> getReview(@PathVariable Long reviewId) {
         try {
             GetReviewRes reviewRes = reviewProvider.retrieveReview(reviewId);
@@ -67,7 +67,7 @@ public class ReviewController {
      */
     @ApiOperation(value = "리뷰 등록", notes = "리뷰 등록")
     @ResponseBody
-    @PostMapping("/{storeId}")
+    @PostMapping("/reviews/{storeId}")
     public BaseResponse<PostReviewRes> postReview(@RequestBody(required = false) PostReviewReq parameters, @PathVariable Long storeId) {
         if(parameters.getStar() == null) {
             return new BaseResponse<>(EMPTY_STAR);
