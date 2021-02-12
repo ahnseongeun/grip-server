@@ -117,9 +117,19 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<ChattingMessage> chattingMessageList;
 
-    public User(String email, String nickname, String phoneNumber) {
-        this.email = email;
+    public User(String name, String nickname,String profileImageURL ,String phoneNumber,
+                String birthday,String email,String gender,String snsDiv,Integer role,String imageStatus,
+                String id) {
+        this.name = name;
         this.nickname = nickname;
+        this.profileImageURL = profileImageURL;
         this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+        this.email = email;
+        this.gender = gender;
+        this.snsDiv = snsDiv;
+        this.role = role;
+        this.imageStatus = imageStatus;
+        this.id = id;
     }
 }

@@ -37,7 +37,7 @@ public class PageController {
     }
 
     @GetMapping("/stream/{videoName}")
-    @ApiOperation(value = "영상 불러오기(테스트 중)", notes = "영상 리스트 조회")
+    @ApiOperation(value = "영상 시청", notes = "영상 시청")
     public String video(@PathVariable String videoName, Model model){
         model.addAttribute("videoName", videoName);
         return "video";

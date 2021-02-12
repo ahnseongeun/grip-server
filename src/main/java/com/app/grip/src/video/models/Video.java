@@ -95,5 +95,19 @@ public class Video extends BaseEntity {
     @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
     private List<WatchMyVideo> watchMyVideoList;
 
+    public Video(String title,String liveCheck,String startLiveTime,String endLiveTime,String videoURL,
+                 String thumbnailURL,Integer videoWatchUserCount,VideoCategory videoCategory,
+                 User user){
+        this.title = title;
+        this.liveCheck = liveCheck;
+        this.startLiveTime = startLiveTime;
+        this.endLiveTime = endLiveTime;
+        this.videoURL = videoURL;
+        this.thumbnailURL = thumbnailURL;
+        this.videoWatchUserCount = videoWatchUserCount;
+        this.videoCategory = videoCategory;
+        this.user = user;
+    }
+
 
 }

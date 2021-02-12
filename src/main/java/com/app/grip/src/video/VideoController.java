@@ -60,7 +60,7 @@ public class VideoController {
     }
 
     @GetMapping("/videos/{name}")
-    @ApiOperation(value = "영상 불러오기(테스트 중)", notes = "영상 리스트 조회")
+    @ApiOperation(value = "서버에서 영상 불러올때 사용(서버 용도)", notes = "서버에서 영상 불러올때 사용(서버 용도)")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
         String path = "/home/ubuntu/video/";
@@ -91,7 +91,7 @@ public class VideoController {
 //    }
 
     @PostMapping("/upload-video")
-    @ApiOperation(value = "영상 업로드 및 썸네일 추출", notes = "영상 업로드(테스트 중)")
+    @ApiOperation(value = "영상 업로드 및 썸네일 추출 (서버측 데이터 삽입 용도)", notes = "영상 업로드(서버측 데이터 삽입 용도)")
     public BaseResponse<PostVideoAndThumbNail> upload(
             @RequestParam(value = "file",required = true) MultipartFile multipartFile
     ) throws IOException, JCodecException {
