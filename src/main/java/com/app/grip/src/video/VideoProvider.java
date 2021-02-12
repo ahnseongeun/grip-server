@@ -23,11 +23,14 @@ public class VideoProvider {
 
     public List<GetVideos> retrieveVideos() throws BaseException {
 
-        List<Video> videoList = (List<Video>) videoRepository.findAll();
+        List<Video> videoList;
 
-        if(videoList.get(0) == null){
+        try {
+            videoList = videoRepository.findByStatus("Y");
+        }catch (Exception exception){
             throw new BaseException(FAILED_TO_GET_VIDEO);
         }
+
 
         return videoList.stream()
                 .map(video -> GetVideos.builder()
