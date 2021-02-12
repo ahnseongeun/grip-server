@@ -34,7 +34,7 @@ public class PageController {
 //        return "index";
 //    }
 
-    @GetMapping("/{videoName}")
+    @GetMapping("/stream/{videoName}")
     public String video(@PathVariable String videoName, Model model){
         model.addAttribute("videoName", videoName);
         return "video";
