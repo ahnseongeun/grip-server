@@ -70,8 +70,8 @@ public class VideoController {
 
     @GetMapping("/videos/thumb-nail/{name}")
     @ApiOperation(value = "영상 썸네일 만들기(테스트 중)", notes = "영상 리스트 조회")
-    public File getSumNail(@PathVariable String name,
-                                                   @RequestHeader HttpHeaders headers) throws IOException, JCodecException {
+    public String getSumNail(@PathVariable String name,
+                             @RequestHeader HttpHeaders headers) throws IOException, JCodecException {
 
         log.info("getThumbNail");
         String videoPath = "/home/ubuntu/video/";
@@ -79,9 +79,12 @@ public class VideoController {
         String thumbNailPath = "/home/ubuntu/image/"+thumbNailName;
         File thumbNailFile = new File(thumbNailPath);
         File videoFile = new File(videoPath + name);
+        log.info("test1");
         File resultFile = getThumbnail(videoFile,thumbNailFile);
+        log.info("test2");
         s3Service.uploadFile(resultFile);
-        return getThumbnail(videoFile,thumbNailFile);
+        log.info("test3");
+        return s3Service.uploadFile(resultFile);
     }
 
     @PostMapping("/upload-video")
