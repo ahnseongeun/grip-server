@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -27,7 +28,7 @@ import static com.app.grip.utils.ApiExamMemberProfile.getNaverTokenResponse;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserController {
     private final UserProvider userProvider;
     private final UserService userService;
@@ -42,27 +43,24 @@ public class UserController {
         this.validationRegex = validationRegex;
     }
 
-//    /**
-//     * 회원 전체 조회 API
-//     * [GET] /users
-//     * 회원 닉네임 검색 조회 API
-//     * [GET] /users?word=
-//     * @return BaseResponse<List<GetUsersRes>>
-//     */
-//    @ResponseBody
-//    @GetMapping("") // (GET) 127.0.0.1:9000/users
-//    public BaseResponse<List<GetUsersRes>> getUsers(@RequestParam(required = false) String word) {
-//        try {
-//            List<GetUsersRes> getUsersResList = userInfoProvider.retrieveUserInfoList(word);
-//            if (word == null) {
-//                return new BaseResponse<>(SUCCESS_READ_USERS, getUsersResList);
-//            } else {
-//                return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
-//            }
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
+    /**
+     * 회원 전체 조회 API
+     * [GET] /users
+     * 회원 닉네임 검색 조회 API
+     * [GET] /users?word=
+     * @return BaseResponse<List<GetUsersRes>>
+     */
+    @ResponseBody
+    @GetMapping("/admin/users") // (GET) 127.0.0.1:9000/users
+    @ApiOperation(value = "회원 전체 조회", notes = "회원 전체 조회")
+    public BaseResponse<List<GetUserRes>> getUsers() {
+        try {
+            List<GetUserRes> getUsersResList = userProvider.retrieveUserList();
+            return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
     /**
      * 회원 조회 API
@@ -71,7 +69,7 @@ public class UserController {
      * @return BaseResponse<GetUserRes>
      */
     @ResponseBody
-    @GetMapping("")
+    @GetMapping("/users")
     @ApiOperation(value = "내 프로필 조회", notes = "내 프로필 조회")
     public BaseResponse<GetUserRes> getUser(
             @RequestHeader(value = "Jwt") String jwt) throws BaseException {
@@ -97,7 +95,7 @@ public class UserController {
      * @return BaseResponse<PostUserRes>
      */
     @ResponseBody
-    @PostMapping("/naver")
+    @PostMapping("/users/naver")
     @ApiOperation(value = "네이버 로그인 및 회원가입",
             notes = "네이버 로그인 및 회원가입\n"+"로그인은 login Y, 회원가입은 login N로 구분")
     @ApiImplicitParams({
@@ -142,6 +140,26 @@ public class UserController {
     }
 
     /**
+     * 관리자용 로그인 및 JWT 발급
+     * [POST] /api/users/naver
+     * @RequestBody PostUserReq
+     * @return BaseResponse<PostUserRes>
+     */
+    @ResponseBody
+    @PostMapping("/admin/users/{userId}")
+    @ApiOperation(value = "관리자용 로그인 및 JWT 발급(서버측 사용)", notes = "관리자용 로그인 및 JWT 발급")
+    public BaseResponse<PostUserFacebookRes> GetUsersByAdmin(@PathVariable Long userId) {
+        try {
+            PostUserFacebookRes postUserFacebookRes = userService.GetUserInfo(userId);
+
+            return new BaseResponse<>(SUCCESS, postUserFacebookRes);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
      * 페이스북 회원가입 API
      * [POST] /api/users/facebook
      * @RequestBody PostUserFacebookReq
@@ -150,7 +168,7 @@ public class UserController {
      */
     @ApiOperation(value = "페이스북 회원가입", notes = "페이스북 회원가입")
     @ResponseBody
-    @PostMapping("/facebook")
+    @PostMapping("/users/facebook")
     public BaseResponse<PostUserFacebookRes> postUsersByFacebook(@RequestBody(required = false) PostUserFacebookReq parameters) {
         if(parameters.getUserId() == null || parameters.getUserId().length() == 0) {
             return new BaseResponse<>(EMPTY_FACEBOOK_USERID);
@@ -189,7 +207,7 @@ public class UserController {
      * @Auther shine
      */
     @ApiOperation(value = "JWT 검증 (자동로그인)", notes = "JWT 검증 (자동로그인)")
-    @GetMapping("/jwt")
+    @GetMapping("/users/jwt")
     public BaseResponse<Void> jwt(@RequestHeader(value = "jwt") String jwt) {
         try {
             Long userNo = jwtService.getUserNo();
@@ -209,7 +227,7 @@ public class UserController {
      */
     @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인")
     @ResponseBody
-    @PostMapping("/login/facebook")
+    @PostMapping("/users/login/facebook")
     public BaseResponse<PostLoginFacebookRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
         HttpURLConnection conn = null;
         JSONObject responseJson = null;
@@ -283,7 +301,7 @@ public class UserController {
 
      */
     @ResponseBody
-    @PatchMapping("")
+    @PatchMapping("/users")
     @ApiOperation(value = "회원 정보 수정", notes = "회원 정보 수정")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "imageDelete", value = "Y일경우 image 삭제, N일 경우 기존 이미지 유지", required = false, dataType = "string", paramType = "query", defaultValue="N")
@@ -322,7 +340,7 @@ public class UserController {
      * @return BaseResponse<Void>
      */
     @ResponseBody
-    @PatchMapping("/delete")
+    @PatchMapping("/users/delete")
     @ApiOperation(value = "회원 정보 삭제", notes = "회원 정보 삭제")
     public BaseResponse<Void> deleteUsers(
             @RequestHeader(value = "Jwt") String jwt) {

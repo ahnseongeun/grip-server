@@ -2,6 +2,7 @@ package com.app.grip.src.video;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
+import com.app.grip.src.video.models.GetDetailVideo;
 import com.app.grip.src.video.models.GetVideos;
 import com.app.grip.src.video.models.PatchVideo;
 import com.app.grip.src.video.models.PostVideoAndThumbNail;
@@ -50,13 +51,28 @@ public class VideoController {
     }
 
     @GetMapping("/videos")
-    @ApiOperation(value = "전체 영상 리스트 조회", notes = "전체 영상 리스트 조회")
+    @ApiOperation(value = "전체 영상 리스트 조회 (서버 용도)", notes = "전체 영상 리스트 조회(용도)")
     public BaseResponse<List<GetVideos>> getVideos()  {
 
         List<GetVideos> getVideoList;
         try{
             getVideoList = videoProvider.retrieveVideos();
             return new BaseResponse<>(SUCCESS, getVideoList);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    @GetMapping("/videos-detail/{videoId}")
+    @ApiOperation(value = "영상 상세 조회", notes = "영상 상세 조회")
+    public BaseResponse<GetDetailVideo> getDetailVideo(
+            @PathVariable Long videoId,
+            @RequestHeader(value = "jwt") String jwt)  {
+
+        GetDetailVideo getDetailVideo;
+        try{
+            getDetailVideo = videoProvider.retrieveVideoDetail(videoId);
+            return new BaseResponse<>(SUCCESS, getDetailVideo);
         }catch (BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

@@ -35,7 +35,7 @@ public class StoreProvider {
 
         return storeList.stream().map(store -> {
             return new GetStoreRes(store.getId(), store.getName(),
-                    store.getIntroduction(), store.getPictureURL(), store.getUserNo().getNo());
+                    store.getIntroduction(), store.getPictureURL(), store.getUser().getNo());
         }).collect(Collectors.toList());
 
     }
@@ -58,7 +58,7 @@ public class StoreProvider {
         }
 
         return new GetStoreRes(store.getId(), store.getName(),
-                store.getIntroduction(), store.getPictureURL(), store.getUserNo().getNo());
+                store.getIntroduction(), store.getPictureURL(), store.getUser().getNo());
     }
 
 }

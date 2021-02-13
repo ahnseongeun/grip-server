@@ -7,15 +7,14 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class GetVideoListByCategory {
-    
-    private final Long videoId;
+public class GetDetailVideo {
+
     private final String title;
-    private final String liveCheck;
-    private final String startLiveTime;
-    private final String thumbnailURL;
-    private final String videoURL;
-    private final Integer watchUserCount;
     private final String hostName;
-    
+    private final String hostImageURL;
+    private final String liveCheck;
+    private final Integer watchUserCount;
+    private final Integer videoLikeCount;
+    private final Long storeId;
+    private final Integer CouponCount;
 }

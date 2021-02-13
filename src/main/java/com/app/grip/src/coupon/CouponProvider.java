@@ -58,7 +58,8 @@ public class CouponProvider {
     @Transactional
     public List<GetCouponRes> retrieveCoupon() throws BaseException {
         List<Coupon> couponList;
-        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
+        User user = userRepository.findByNoAndStatus(jwtService.getUserNo(),"Y")
+                .orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
 
         try {
             couponList = couponRepository.findByStatusAndUser("Y", user);

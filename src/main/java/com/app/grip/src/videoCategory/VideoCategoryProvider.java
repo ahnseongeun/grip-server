@@ -85,8 +85,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         System.out.println(getVideosCategory1.getVideoList().get(0));
@@ -98,8 +99,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory3 = new GetVideosCategory("소호몰 언니",videoList3.stream()
@@ -109,8 +111,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory4 = new GetVideosCategory("스타일링",videoList4.stream()
@@ -120,8 +123,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory5 = new GetVideosCategory("신인",videoList5.stream()
@@ -131,8 +135,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory6 = new GetVideosCategory("뷰티꿀팁",videoList6.stream()
@@ -142,8 +147,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory7 = new GetVideosCategory("먹방쿡방",videoList7.stream()
@@ -153,8 +159,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory8 = new GetVideosCategory("알쓸신템",videoList8.stream()
@@ -164,8 +171,9 @@ public class VideoCategoryProvider {
                         .liveCheck(video.getLiveCheck())
                         .startLiveTime(video.getStartLiveTime())
                         .thumbnailURL(video.getThumbnailURL())
+                        .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
-                        .hostName(video.getId())
+                        .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
         List<GetVideosCategory> getVideosCategoryList = new ArrayList<>();
