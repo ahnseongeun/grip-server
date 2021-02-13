@@ -63,7 +63,7 @@ public class VideoService {
         File videoFile = new File(videoPath + name);
         File resultFile = getThumbnail(videoFile,thumbNailFile);
         s3Service.uploadFile(resultFile);
-        String videoURL = "https://shine94.kr/stream/"+name;
+        String videoURL = "https://ahnbat.kr/stream/"+name;
         String imageURL = s3Service.uploadFile(resultFile);
 
         return PostVideoAndThumbNail.builder()
