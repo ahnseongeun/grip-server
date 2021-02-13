@@ -141,11 +141,16 @@ public class UserProvider {
     }
 
 
+    /**
+     * 전체 회원 조회
+     * @return
+     * @throws BaseException
+     */
     public List<GetUserRes> retrieveUserList() throws BaseException {
 
         List<User> userList;
 
-        // DB에 접근해서 email로 회원 정보 조회
+        // DB에 접근해서 전체 회원 조회
         try{
             userList = userRepository.findByStatus("Y");
         }catch (Exception e){

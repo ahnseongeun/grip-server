@@ -90,8 +90,6 @@ public class VideoCategoryProvider {
                         .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
-        System.out.println(getVideosCategory1.getVideoList().get(0));
-
         GetVideosCategory getVideosCategory2 = new GetVideosCategory("전체 LIVE",videoList2.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())

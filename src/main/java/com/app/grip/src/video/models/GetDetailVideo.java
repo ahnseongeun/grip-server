@@ -16,5 +16,5 @@ public class GetDetailVideo {
     private final Integer watchUserCount;
     private final Integer videoLikeCount;
     private final Long storeId;
-    private final Integer CouponCount;
+    private final Integer couponCount;
 }

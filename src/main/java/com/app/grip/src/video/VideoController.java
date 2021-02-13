@@ -50,7 +50,7 @@ public class VideoController {
         this.s3Service = s3Service;
     }
 
-    @GetMapping("/videos")
+    @GetMapping("/admin/videos")
     @ApiOperation(value = "전체 영상 리스트 조회 (서버 용도)", notes = "전체 영상 리스트 조회(용도)")
     public BaseResponse<List<GetVideos>> getVideos()  {
 
@@ -63,7 +63,7 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/videos-detail/{videoId}")
+    @GetMapping("/videos/{videoId}")
     @ApiOperation(value = "영상 상세 조회", notes = "영상 상세 조회")
     public BaseResponse<GetDetailVideo> getDetailVideo(
             @PathVariable Long videoId,
@@ -91,7 +91,7 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/videos/{name}")
+    @GetMapping("/video-stream/{name}")
     @ApiOperation(value = "서버에서 영상 불러올때 사용(서버 용도)", notes = "서버에서 영상 불러올때 사용(서버 용도)")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
