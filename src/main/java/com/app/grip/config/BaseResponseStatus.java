@@ -25,10 +25,6 @@ public enum BaseResponseStatus {
     INVALID_JWT(false, 2011, "유효하지 않은 JWT입니다."),
     EMPTY_EMAIL(false, 2020, "이메일을 입력해주세요."),
     INVALID_EMAIL(false, 2021, "이메일 형식을 확인해주세요."),
-    EMPTY_PASSWORD(false, 2030, "비밀번호를 입력해주세요."),
-    EMPTY_CONFIRM_PASSWORD(false, 2031, "비밀번호 확인을 입력해주세요."),
-    WRONG_PASSWORD(false, 2032, "비밀번호를 다시 입력해주세요."),
-    DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호와 비밀번호확인 값이 일치하지 않습니다."),
     EMPTY_NICKNAME(false, 2040, "닉네임을 입력해주세요."),
     // shine
     EMPTY_FACEBOOK_USERID(false, 2100, "페이스북 아이디가 누락되었습니다."),
