@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_USER;
 import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
@@ -152,8 +153,30 @@ public class UserProvider {
     }
 
 
+    public List<GetUserRes> retrieveUserList() throws BaseException {
+
+        List<User> userList;
+
+        // DB에 접근해서 email로 회원 정보 조회
+        try{
+            userList = userRepository.findByStatus("Y");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_GET_USER);
+        }
 
 
-
+        return userList.stream()
+                .map(user -> GetUserRes.builder()
+                        .userNo(user.getNo())
+                        .name(user.getName())
+                        .nickname(user.getNickname())
+                        .email(user.getEmail())
+                        .phoneNumber(user.getPhoneNumber())
+                        .birthday(user.getBirthday())
+                        .profileImageURL(user.getProfileImageURL())
+                        .gender(user.getGender())
+                        .build())
+                .collect(Collectors.toList());
+    }
 
 }

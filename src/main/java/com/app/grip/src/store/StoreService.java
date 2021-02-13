@@ -33,7 +33,7 @@ public class StoreService {
                 .name(parameters.getName())
                 .introduction(parameters.getIntroduction())
                 .pictureURL(parameters.getPictureURL())
-                .userNo(user)
+                .user(user)
                 .build();
 
         try {
@@ -42,7 +42,7 @@ public class StoreService {
             throw new BaseException(FAILED_TO_POST_STORE);
         }
 
-        return new PostStoreRes(newStore.getId(), newStore.getName(), newStore.getIntroduction(), newStore.getPictureURL(), newStore.getUserNo().getNo());
+        return new PostStoreRes(newStore.getId(), newStore.getName(), newStore.getIntroduction(), newStore.getPictureURL(), newStore.getUser().getNo());
     }
 
 

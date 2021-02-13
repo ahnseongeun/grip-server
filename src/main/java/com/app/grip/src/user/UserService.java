@@ -218,4 +218,13 @@ public class UserService {
 
     }
 
+    public PostUserFacebookRes GetUserInfo(Long userNo) throws BaseException {
+
+        User user = userRepository.findByNoAndStatus(userNo,"Y")
+                .orElseThrow(() -> new BaseException(NOT_FOUND_USER));
+
+        String jwt = jwtService.createJwt(user.getNo());
+        return new PostUserFacebookRes(user.getNo(), jwt);
+
+    }
 }
