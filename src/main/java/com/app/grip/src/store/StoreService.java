@@ -42,19 +42,8 @@ public class StoreService {
             throw new BaseException(FAILED_TO_POST_STORE);
         }
 
-        return new PostStoreRes(newStore.getId(), newStore.getName(), newStore.getIntroduction(), newStore.getPictureURL(), newStore.getUser().getNo());
+        return new PostStoreRes(newStore.getId(), newStore.getName(),
+                newStore.getIntroduction(), newStore.getPictureURL(), newStore.getUser().getNo());
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

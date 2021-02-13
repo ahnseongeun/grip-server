@@ -9,14 +9,8 @@ import lombok.Getter;
 public enum BaseResponseStatus {
     // 1000 : 요청 성공
     SUCCESS(true, 1000, "요청에 성공하였습니다."),
-    SUCCESS_READ_USERS(true, 1010, "회원 전체 정보 조회에 성공하였습니다."),
-    SUCCESS_READ_USER(true, 1011, "회원 정보 조회에 성공하였습니다."),
     SUCCESS_POST_USER(true, 1012, "회원가입에 성공하였습니다."),
     SUCCESS_LOGIN(true, 1013, "로그인에 성공하였습니다."),
-    SUCCESS_JWT(true, 1014, "JWT 검증에 성공하였습니다."),
-    SUCCESS_DELETE_USER(true, 1015, "회원 탈퇴에 성공하였습니다."),
-    SUCCESS_PATCH_USER(true, 1016, "회원정보 수정에 성공하였습니다."),
-    SUCCESS_READ_SEARCH_USERS(true, 1017, "회원 검색 조회에 성공하였습니다."),
 
     // 2000 : Request 오류
     REQUEST_ERROR(false, 2000, "입력값을 확인해주세요."),
@@ -25,10 +19,6 @@ public enum BaseResponseStatus {
     INVALID_JWT(false, 2011, "유효하지 않은 JWT입니다."),
     EMPTY_EMAIL(false, 2020, "이메일을 입력해주세요."),
     INVALID_EMAIL(false, 2021, "이메일 형식을 확인해주세요."),
-    EMPTY_PASSWORD(false, 2030, "비밀번호를 입력해주세요."),
-    EMPTY_CONFIRM_PASSWORD(false, 2031, "비밀번호 확인을 입력해주세요."),
-    WRONG_PASSWORD(false, 2032, "비밀번호를 다시 입력해주세요."),
-    DO_NOT_MATCH_PASSWORD(false, 2033, "비밀번호와 비밀번호확인 값이 일치하지 않습니다."),
     EMPTY_NICKNAME(false, 2040, "닉네임을 입력해주세요."),
     // shine
     EMPTY_FACEBOOK_USERID(false, 2100, "페이스북 아이디가 누락되었습니다."),
@@ -74,8 +64,8 @@ public enum BaseResponseStatus {
     FAILED_TO_POST_COUPON(false, 3112, "쿠폰 등록에 실패하였습니다."),
     FAILED_TO_GET_PRODUCT(false, 3113, "상품 검색에 실패하였습니다."),
     FAILED_TO_POST_PRODUCT(false, 3114, "상품 등록에 실패하였습니다."),
-    FAILED_TO_GET_PRODUCTCATEGORY(false, 3115, "상품 카타로그 검색에 실패하였습니다."),
-    FAILED_TO_POST_PRODUCTCATEGORY(false, 3116, "상품 카타로그 등록에 실패하였습니다."),
+    FAILED_TO_GET_PRODUCTCATEGORY(false, 3115, "상품 카테고리 검색에 실패하였습니다."),
+    FAILED_TO_POST_PRODUCTCATEGORY(false, 3116, "상품 카테고리 등록에 실패하였습니다."),
     
     // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "영상 카테고리 조회에 실패하였습니다."),

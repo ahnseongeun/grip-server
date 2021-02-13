@@ -10,6 +10,6 @@ public class PostProductReq {
     private String name;
     private String content;
     private Integer price;
+    private String productCategoryName;
     private String pictureURL;
-    private Long productCategoryId;
 }

@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface StoreRepository extends CrudRepository<Store, Long> {
-    List<Store> findByStatus(String status);
+    List<Store> findByStatusOrderByCreateDateDesc(String status);
     List<Store> findByStatusAndId(String status, Long id);
 }

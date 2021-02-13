@@ -159,6 +159,7 @@ public class UserController {
         }
     }
 
+
     /**
      * 페이스북 회원가입 API
      * [POST] /api/users/facebook
@@ -232,9 +233,6 @@ public class UserController {
         HttpURLConnection conn = null;
         JSONObject responseJson = null;
 
-        //String token = "EAAKZCD0ecOpcBAEaR4khZBjymOMSSHqs25SP0aIK3MRPGbQmnmvercV0xOpE6v2c0sOiUFpRcDGZCgk37AczG8S8ZBli4mBEYHVRmbnKtZBd6mAKNcZAtdRt0RY5ZBedVug41DcdfITZAv93qegHCeQC2hyLDzdpZBiRk6ksQZArfw761QlDciAbFPFBrzYSrMw0Caqs2bzTEMGViws96qhKZAQyySZCz7FFzNJPVlueU2xCYwZDZD";        // 유효한 토큰
-        //String token = "773022300256919%7C0f91a67de5f802547d97ee9f25484361asd";     // 유요하지 않은 토큰
-
         try {
             URL url = new URL("https://graph.facebook.com/debug_token?input_token=" + token
                     + "&access_token=" + "773022300256919|IcoV0PpB3NqIKrOBK6xDvawowuc");        // access_token => app_access_token
@@ -264,8 +262,7 @@ public class UserController {
         } catch (MalformedURLException exception) {
             return new BaseResponse<>(FACEBOOK_CONNECTION_URL);
         } catch (IOException exception) {
-            exception.printStackTrace();
-            return new BaseResponse<>(FACEBOOK_CONNECTION_INVALID_TOKEN);
+            return new BaseResponse<>(FACEBOOK_CONNECTION_IO);
         } catch (JSONException exception) {
             return new BaseResponse<>(FACEBOOK_CONNECTION_NOT_JSON_RESPONSE);
         }
@@ -277,8 +274,6 @@ public class UserController {
         } catch (Exception exception) {
             return new BaseResponse<>(FACEBOOK_CONNECTION_INVALID_TOKEN);
         }
-        //System.out.println(responseJson.toString());
-        //System.out.println(responseJson.getJSONObject("data").getString("user_id"));
 
         // 만약 회원 테이블에 있다면 회원가입으로 이동, 없다면 로그인
         try {
@@ -288,7 +283,6 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
 
 
     /**
@@ -328,10 +322,6 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
-
-
-
-
 
     /**
      * 회원 탈퇴 API

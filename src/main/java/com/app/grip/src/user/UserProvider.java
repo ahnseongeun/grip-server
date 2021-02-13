@@ -10,8 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_USER;
-import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
+import static com.app.grip.config.BaseResponseStatus.*;
 
 @Service
 public class UserProvider {
