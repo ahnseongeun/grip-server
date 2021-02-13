@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class PageController {
 
-    @Value("${video.location}")
-    private String videoLocation;
+//    @Value("${video.location}")
+//    private String videoLocation;
 
     private final VideoProvider videoProvider;
 
