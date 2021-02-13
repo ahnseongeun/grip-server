@@ -12,5 +12,6 @@ public class GetStoresRes {
     private final String pictureURL;
     private final Long userNo;
     private final String createDate;
+    private final String updateDate;
     private final String status;
 }

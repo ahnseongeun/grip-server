@@ -30,7 +30,7 @@ public class Product extends BaseEntity {
     @Column(name = "price", nullable = false)
     private Integer price;
 
-    @Column(name = "pictureURL", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "pictureURL", columnDefinition = "TEXT")
     private String pictureURL;
 
     @ManyToOne

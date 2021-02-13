@@ -59,7 +59,7 @@ public class ReviewController {
 
     /**
      * 리뷰 등록 API
-     * [POST] /api/reviews/:storeId
+     * [POST] /api/stores/:storeId/reviews
      * @RequestBody PostReviewReq parameters
      * @PathVariable Long storeId
      * @return BaseResponse<PostReviewRes>
@@ -67,7 +67,7 @@ public class ReviewController {
      */
     @ApiOperation(value = "리뷰 등록", notes = "리뷰 등록")
     @ResponseBody
-    @PostMapping("/reviews/{storeId}")
+    @PostMapping("/stores/{storeId}/reviews")
     public BaseResponse<PostReviewRes> postReview(@RequestBody(required = false) PostReviewReq parameters, @PathVariable Long storeId) {
         if(parameters.getStar() == null) {
             return new BaseResponse<>(EMPTY_STAR);

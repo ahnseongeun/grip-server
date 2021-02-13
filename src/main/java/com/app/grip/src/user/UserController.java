@@ -56,7 +56,7 @@ public class UserController {
     public BaseResponse<List<GetUserRes>> getUsers() {
         try {
             List<GetUserRes> getUsersResList = userProvider.retrieveUserList();
-            return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
+            return new BaseResponse<>(SUCCESS, getUsersResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -81,7 +81,7 @@ public class UserController {
 
         try {
             GetUserRes getUserRes = userProvider.retrieveUser(userNo);
-            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
+            return new BaseResponse<>(SUCCESS, getUserRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -343,7 +343,7 @@ public class UserController {
             }
 
             userService.deleteUser(userNo);
-            return new BaseResponse<>(SUCCESS_DELETE_USER);
+            return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

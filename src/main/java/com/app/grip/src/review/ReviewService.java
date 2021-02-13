@@ -39,7 +39,6 @@ public class ReviewService {
 
         if(parameters.getPicture() != null) {
             for (PictureReq picture : parameters.getPicture()) {
-                System.out.println(picture.toString());
                 ReviewPicture reviewPicture = new ReviewPicture(picture.getPictureURL());
                 reviewPictureList.add(reviewPicture);
             }

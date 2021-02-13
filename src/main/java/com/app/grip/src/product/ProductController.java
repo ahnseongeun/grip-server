@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.app.grip.config.BaseResponseStatus.*;
 
 @RequiredArgsConstructor
@@ -17,38 +19,43 @@ public class ProductController {
     private final ProductProvider productProvider;
 
     /**
-     * 상품 등록 API
-     * [POST] /api/products/:storeId
-     * @RequestBody PostProductReq parameters
-     * @PathVariable Long storeId
-     * @return BaseResponse<PostProductRes>
+     * 전체 상품카테고리 조회 API
+     * [GET] /api/admin/products-category
+     * @return BaseResponse<List<GetProductsCategoryRes>
      * @Auther shine
      */
-    @ApiOperation(value = "상품 등록", notes = "상품 등록")
+    @ApiOperation(value = "전체 상품카테고리 조회", notes = "전체 상품카테고리 조회")
     @ResponseBody
-    @PostMapping("/products/{storeId}")
-    public BaseResponse<PostProductRes> postProduct(@RequestBody(required = false) PostProductReq parameters, @PathVariable Long storeId) {
-        if(parameters.getName() == null || parameters.getName().length() == 0) {
-            return new BaseResponse<>(EMPTY_NAME);
-        }
-        if(parameters.getContent() == null || parameters.getContent().length() == 0) {
-            return new BaseResponse<>(EMPTY_CONTENT);
-        }
-        if(parameters.getPrice() == null) {
-            return new BaseResponse<>(EMPTY_PRICE);
-        }
-        if(parameters.getName() == null || parameters.getName().length() == 0) {
-            return new BaseResponse<>(EMPTY_CATEGORY);
-        }
-
+    @GetMapping("/admin/products-category")
+    public BaseResponse<List<GetProductCategoryRes>> getProductsCategory() {
         try {
-            PostProductRes product = productService.createProduct(parameters, storeId);
-            return new BaseResponse<>(SUCCESS, product);
+            List<GetProductCategoryRes> productCategoryList = productProvider.retrieveProductsCategory();
+            return new BaseResponse<>(SUCCESS, productCategoryList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
     }
 
+    /**
+     * 상품카테고리 조회 API
+     * [GET] /api/products-category/:categoryName
+     * @return
+     * @Auther shine
+     */
+    @ApiOperation(value = "상품카테고리 조회", notes = "상품카테고리 조회")
+    @ResponseBody
+    @GetMapping("/products-category/{categoryName}")
+    public BaseResponse<GetProductCategoryRes> getProductCategory(@PathVariable String categoryName) {
+        try {
+            ProductCategory productCategory = productProvider.retrieveProductCategoryByName(categoryName);
+            return new BaseResponse<>(SUCCESS, new GetProductCategoryRes(productCategory.getName(), productCategory.getStatus()));
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+    // TODO 상품 조회
 
 
     /**
@@ -73,4 +80,38 @@ public class ProductController {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
+    /**
+     * 상품 등록 API
+     * [POST] /api/products/:storeId
+     * @RequestBody PostProductReq parameters
+     * @PathVariable Long storeId
+     * @return BaseResponse<PostProductRes>
+     * @Auther shine
+     */
+    @ApiOperation(value = "상품 등록", notes = "상품 등록")
+    @ResponseBody
+    @PostMapping("/products/{storeId}")
+    public BaseResponse<PostProductRes> postProduct(@RequestBody(required = false) PostProductReq parameters, @PathVariable Long storeId) {
+        if(parameters.getName() == null || parameters.getName().length() == 0) {
+            return new BaseResponse<>(EMPTY_NAME);
+        }
+        if(parameters.getContent() == null || parameters.getContent().length() == 0) {
+            return new BaseResponse<>(EMPTY_CONTENT);
+        }
+        if(parameters.getPrice() == null) {
+            return new BaseResponse<>(EMPTY_PRICE);
+        }
+        if(parameters.getProductCategoryName() == null || parameters.getProductCategoryName().length() == 0) {
+            return new BaseResponse<>(EMPTY_CATEGORY);
+        }
+
+        try {
+            PostProductRes product = productService.createProduct(parameters, storeId);
+            return new BaseResponse<>(SUCCESS, product);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 }

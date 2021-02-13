@@ -2,10 +2,7 @@ package com.app.grip.src.store;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
-import com.app.grip.src.store.models.GetStoreRes;
-import com.app.grip.src.store.models.GetStoresRes;
-import com.app.grip.src.store.models.PostStoreReq;
-import com.app.grip.src.store.models.PostStoreRes;
+import com.app.grip.src.store.models.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -51,8 +48,9 @@ public class StoreController {
     @GetMapping("/stores/{storeId}")
     public BaseResponse<GetStoreRes> getStore(@PathVariable Long storeId) {
         try {
-            GetStoreRes storesRes = storeProvider.retrieveStore(storeId);
-            return new BaseResponse<>(SUCCESS, storesRes);
+            Store store = storeProvider.retrieveStoreById(storeId);
+            return new BaseResponse<>(SUCCESS, new GetStoreRes(store.getId(), store.getName(),
+                    store.getIntroduction(), store.getPictureURL(), store.getUser().getName()));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -60,9 +58,9 @@ public class StoreController {
 
     /**
      * 상점 등록 API
-     * [POST] /api/stores/
-     * @RequestBody 
-     * @return 
+     * [POST] /api/stores
+     * @RequestBody PostStoreReq parameters
+     * @return BaseResponse<PostStoreRes>
      * @Auther shine
      */
     @ApiOperation(value = "상점 등록", notes = "상점 등록")

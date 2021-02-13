@@ -41,19 +41,20 @@ public class StoreProvider {
         return storeList.stream().map(store -> {
             return new GetStoresRes(store.getId(), store.getName(),
                     store.getIntroduction(), store.getPictureURL(), store.getUser().getNo(),
-                    outputDateFormat.format(store.getCreateDate()), store.getStatus());
+                    outputDateFormat.format(store.getCreateDate()), outputDateFormat.format(store.getUpdateDate()),
+                    store.getStatus());
         }).collect(Collectors.toList());
     }
 
     /**
      * 상점 조회
      * @Param Long storeId
-     * @return GetStoreRes
+     * @return Store
      * @throws BaseException
      * @Auther shine
      */
     @Transactional
-    public GetStoreRes retrieveStore(Long storeId) throws BaseException {
+    public Store retrieveStoreById(Long storeId) throws BaseException {
         Store store;
 
         try {
@@ -62,8 +63,7 @@ public class StoreProvider {
             throw new BaseException(FAILED_TO_GET_STORE);
         }
 
-        return new GetStoreRes(store.getId(), store.getName(),
-                store.getIntroduction(), store.getPictureURL(), store.getUser().getName());
+        return store;
     }
 
 }
