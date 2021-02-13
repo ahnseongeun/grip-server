@@ -3,6 +3,7 @@ package com.app.grip.src.store;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.store.models.GetStoreRes;
+import com.app.grip.src.store.models.GetStoresRes;
 import com.app.grip.src.store.models.PostStoreReq;
 import com.app.grip.src.store.models.PostStoreRes;
 import io.swagger.annotations.ApiOperation;
@@ -23,16 +24,15 @@ public class StoreController {
     /**
      * 상점 전체조회 API
      * [GET] /api/admin/stores
-     * @PathVariable userId
-     * @return BaseResponse<GetUserRes>
+     * @return BaseResponse<List<GetStoresRes>>
      * @Auther shine
      */
     @ApiOperation(value = "상점 전체조회", notes = "상점 전체조회")
     @ResponseBody
     @GetMapping("/admin/stores")
-    public BaseResponse<List<GetStoreRes>> getStores() {
+    public BaseResponse<List<GetStoresRes>> getStores() {
         try {
-            List<GetStoreRes> storesResList = storeProvider.retrieveStores();
+            List<GetStoresRes> storesResList = storeProvider.retrieveStores();
             return new BaseResponse<>(SUCCESS, storesResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -42,8 +42,8 @@ public class StoreController {
     /**
      * 상점 조회 API
      * [GET] /api/stores/:storeId
-     * @PathVariable
-     * @return
+     * @PathVariable Long storeId
+     * @return BaseResponse<GetStoreRes>
      * @Auther shine
      */
     @ApiOperation(value = "상점 조회", notes = "상점 조회")
