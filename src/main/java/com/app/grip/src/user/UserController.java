@@ -56,7 +56,7 @@ public class UserController {
     public BaseResponse<List<GetUserRes>> getUsers() {
         try {
             List<GetUserRes> getUsersResList = userProvider.retrieveUserList();
-            return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
+            return new BaseResponse<>(SUCCESS, getUsersResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -72,7 +72,7 @@ public class UserController {
     @GetMapping("/users")
     @ApiOperation(value = "내 프로필 조회", notes = "내 프로필 조회")
     public BaseResponse<GetUserRes> getUser(
-            @RequestHeader(value = "Jwt") String jwt) throws BaseException {
+            @RequestHeader(value = "jwt") String jwt) throws BaseException {
         Long userNo = jwtService.getUserNo();
 
         if (userNo == null || userNo <= 0) {
@@ -81,7 +81,7 @@ public class UserController {
 
         try {
             GetUserRes getUserRes = userProvider.retrieveUser(userNo);
-            return new BaseResponse<>(SUCCESS_READ_USER, getUserRes);
+            return new BaseResponse<>(SUCCESS, getUserRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -307,7 +307,7 @@ public class UserController {
             @ApiImplicitParam(name = "imageDelete", value = "Y일경우 image 삭제, N일 경우 기존 이미지 유지", required = false, dataType = "string", paramType = "query", defaultValue="N")
     })
     public BaseResponse<PatchUserRes> patchUsers(
-            @RequestHeader(value = "Jwt") String jwt,
+            @RequestHeader(value = "jwt") String jwt,
             @RequestParam(value = "profileImage",required = false) MultipartFile profileImage,
             @RequestParam(value = "nickname",required = false) String nickname,
             @RequestParam(value = "phoneNumber",required = false) String phoneNumber,
@@ -343,7 +343,7 @@ public class UserController {
     @PatchMapping("/users/delete")
     @ApiOperation(value = "회원 정보 삭제", notes = "회원 정보 삭제")
     public BaseResponse<Void> deleteUsers(
-            @RequestHeader(value = "Jwt") String jwt) {
+            @RequestHeader(value = "jwt") String jwt) {
 
         try {
             Long userNo = jwtService.getUserNo();
@@ -353,7 +353,7 @@ public class UserController {
             }
 
             userService.deleteUser(userNo);
-            return new BaseResponse<>(SUCCESS_DELETE_USER);
+            return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

@@ -73,13 +73,13 @@ public enum BaseResponseStatus {
 
     
     // divi
-    FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),
+    FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "영상 카테고리 조회에 실패하였습니다."),
     FAILED_TO_POST_IMAGE(false, 3501, "이미지 등록에 실패하였습니다."),
     NOT_FOUND_ADVERTISEMENT(false, 3502, "광고 조회 실패하였습니다."),
     FAILED_TO_UPLOAD_IMAGE(false, 3503, "이미지 등록에 실패하였습니다."),
     FAILED_TO_GET_VIDEO(false, 3504, "영상 조회에 실패하였습니다."),
-    END_TO_VIDEO(false, 3504, "라이브가 종료 되었습니다."),
-    NOT_START_VIDEO(false, 3505, "라이브가 아직 시작하지 않았습니다."),
+    END_TO_VIDEO(false, 3505, "라이브가 종료 되었습니다."),
+    NOT_START_VIDEO(false, 3506, "라이브가 아직 시작하지 않았습니다."),
 
 
     // 4000 : Database 오류

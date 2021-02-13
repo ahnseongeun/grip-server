@@ -83,7 +83,7 @@ public class VideoProvider {
                 .title(video.getTitle())
                 .hostName(video.getUser().getName())
                 .hostImageURL(video.getUser().getProfileImageURL())
-                .CouponCount(couponCount)
+                .couponCount(couponCount)
                 .liveCheck(video.getLiveCheck())
                 //.storeId(video.getUser().getStore().getId())
                 .storeId(2L)
