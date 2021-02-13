@@ -42,28 +42,6 @@ public class UserController {
         this.validationRegex = validationRegex;
     }
 
-//    /**
-//     * 회원 전체 조회 API
-//     * [GET] /users
-//     * 회원 닉네임 검색 조회 API
-//     * [GET] /users?word=
-//     * @return BaseResponse<List<GetUsersRes>>
-//     */
-//    @ResponseBody
-//    @GetMapping("") // (GET) 127.0.0.1:9000/users
-//    public BaseResponse<List<GetUsersRes>> getUsers(@RequestParam(required = false) String word) {
-//        try {
-//            List<GetUsersRes> getUsersResList = userInfoProvider.retrieveUserInfoList(word);
-//            if (word == null) {
-//                return new BaseResponse<>(SUCCESS_READ_USERS, getUsersResList);
-//            } else {
-//                return new BaseResponse<>(SUCCESS_READ_SEARCH_USERS, getUsersResList);
-//            }
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>(exception.getStatus());
-//        }
-//    }
-
     /**
      * 회원 조회 API
      * [GET] /users/:userId
@@ -207,7 +185,7 @@ public class UserController {
      * @return BaseResponse<PostLoginFacebookRes>
      * @Auther shine
      */
-    @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인")
+    @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인\nisMember false 회원가입 필요, isMember true 로그인 성공")
     @ResponseBody
     @PostMapping("/login/facebook")
     public BaseResponse<PostLoginFacebookRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
