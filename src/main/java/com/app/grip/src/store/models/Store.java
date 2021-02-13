@@ -31,8 +31,8 @@ public class Store extends BaseEntity {
     private String pictureURL;
 
     @OneToOne
-    @JoinColumn(name = "userNo", referencedColumnName = "no")
-    private User userNo;
+    @JoinColumn(name = "userNo",nullable = false)
+    private User user;
 
     public Store(String name, String introduction, String pictureURL) {
         this.name = name;

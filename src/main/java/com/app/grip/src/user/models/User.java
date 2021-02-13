@@ -3,6 +3,7 @@ package com.app.grip.src.user.models;
 import com.app.grip.config.BaseEntity;
 import com.app.grip.src.chattingMessage.models.ChattingMessage;
 import com.app.grip.src.coupon.models.Coupon;
+import com.app.grip.src.store.models.Store;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.src.video.videoLike.models.VideoLike;
 import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
@@ -99,6 +100,9 @@ public class User extends BaseEntity {
     @Column(name = "id", length = 100)
     private String id;
 
+    @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Store store;
+
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Coupon> couponList;
 
@@ -117,9 +121,19 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<ChattingMessage> chattingMessageList;
 
-    public User(String email, String nickname, String phoneNumber) {
-        this.email = email;
+    public User(String name, String nickname,String profileImageURL ,String phoneNumber,
+                String birthday,String email,String gender,String snsDiv,Integer role,String imageStatus,
+                String id) {
+        this.name = name;
         this.nickname = nickname;
+        this.profileImageURL = profileImageURL;
         this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+        this.email = email;
+        this.gender = gender;
+        this.snsDiv = snsDiv;
+        this.role = role;
+        this.imageStatus = imageStatus;
+        this.id = id;
     }
 }

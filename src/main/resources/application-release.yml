@@ -9,7 +9,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
       # create, update, create-drop, none 등의 옵션이 있습니다.
       # create: 기존테이블 삭제 후 다시 생성
       # update: 변경된 부분만 반영
@@ -31,6 +31,16 @@ spring:
     username: root
     password: 112233ll
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  freemarker:
+    template-loader-path: classpath:/templates
+    suffix: .ftl
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
 
 
 cloud:

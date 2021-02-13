@@ -3,6 +3,7 @@ package com.app.grip.src.videoCategory;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.videoCategory.models.GetVideoCategory;
+import com.app.grip.src.videoCategory.models.GetVideosCategory;
 import com.app.grip.utils.S3Service;
 import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,25 @@ public class VideoCategoryController {
 
             List<GetVideoCategory> getVideoCategoryList = videoCategoryProvider.retrieveVideoCategoryList();
             return new BaseResponse<>(SUCCESS, getVideoCategoryList);
+        }catch(BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 영상 카테고리 영상 조회
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/videos-category/videos",method = RequestMethod.GET)
+    @ApiOperation(value = "영상 카테고리 영상 조회", notes = "영상 카테고리 영상 조회")
+    public BaseResponse<List<GetVideosCategory>> GetVideosCategory() {
+
+        try{
+            log.info("영상 카테고리 영상 조회");
+
+            List<GetVideosCategory> getVideosCategoryList = videoCategoryProvider.retrieveVideosCategoryList();
+            return new BaseResponse<>(SUCCESS, getVideosCategoryList);
         }catch(BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }

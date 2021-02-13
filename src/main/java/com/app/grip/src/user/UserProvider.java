@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_USER;
 import static com.app.grip.config.BaseResponseStatus.NOT_FOUND_USER;
@@ -53,7 +54,7 @@ public class UserProvider {
 
     /**
      * 회원 조회
-     * @param id
+     * @param String id
      * @return User
      * @throws BaseException
      * @comment 페이스북 id 회원조회
@@ -80,7 +81,7 @@ public class UserProvider {
 
     /**
      * 회원 조회
-     * @param userNo
+     * @param Long userNo
      * @return GetUserRes
      * @throws BaseException
      * @comment 회원번호로 회원조회
@@ -114,7 +115,7 @@ public class UserProvider {
 
     /**
      * 페이스북 로그인
-     * @param userId
+     * @param String userId
      * @return PostLoginFacebookRes
      * @throws BaseException
      * @Auther shine
@@ -137,6 +138,33 @@ public class UserProvider {
 
         String jwt = jwtService.createJwt(user.getNo());
         return new PostLoginFacebookRes(true, user.getNo(), jwt, null);
+    }
+
+
+    public List<GetUserRes> retrieveUserList() throws BaseException {
+
+        List<User> userList;
+
+        // DB에 접근해서 email로 회원 정보 조회
+        try{
+            userList = userRepository.findByStatus("Y");
+        }catch (Exception e){
+            throw new BaseException(FAILED_TO_GET_USER);
+        }
+
+
+        return userList.stream()
+                .map(user -> GetUserRes.builder()
+                        .userNo(user.getNo())
+                        .name(user.getName())
+                        .nickname(user.getNickname())
+                        .email(user.getEmail())
+                        .phoneNumber(user.getPhoneNumber())
+                        .birthday(user.getBirthday())
+                        .profileImageURL(user.getProfileImageURL())
+                        .gender(user.getGender())
+                        .build())
+                .collect(Collectors.toList());
     }
 
 }
