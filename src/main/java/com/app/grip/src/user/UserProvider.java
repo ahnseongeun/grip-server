@@ -24,18 +24,6 @@ public class UserProvider {
         this.jwtService = jwtService;
     }
 
-//    public List<GetUsersRes> retrieveUserInfoList(String word) throws BaseException {
-//        return null;
-//    }
-//
-//    public GetUserRes retrieveUserInfo(Integer userId) throws BaseException {
-//        return null;
-//    }
-//
-//    public PostLoginRes login(PostLoginReq parameters) throws BaseException {
-//        return null;
-//    }
-
     /**
      * email로 중복된 회원 조회
      * @param phoneNumber
@@ -66,7 +54,7 @@ public class UserProvider {
 
     /**
      * 회원 조회
-     * @param id
+     * @param String id
      * @return User
      * @throws BaseException
      * @comment 페이스북 id 회원조회
@@ -93,7 +81,7 @@ public class UserProvider {
 
     /**
      * 회원 조회
-     * @param userNo
+     * @param Long userNo
      * @return GetUserRes
      * @throws BaseException
      * @comment 회원번호로 회원조회
@@ -127,17 +115,17 @@ public class UserProvider {
 
     /**
      * 페이스북 로그인
-     * @param appId
+     * @param String userId
      * @return PostLoginFacebookRes
      * @throws BaseException
      * @Auther shine
      */
     @Transactional
-    public PostLoginFacebookRes login(String appId) throws BaseException {
+    public PostLoginFacebookRes login(String userId) throws BaseException {
         User user = null;
 
         try {
-            user = retrieveFacebookUserById(appId);
+            user = retrieveFacebookUserById(userId);
         } catch (BaseException exception) {
             if (exception.getStatus() != NOT_FOUND_USER) {
                 throw exception;
@@ -145,11 +133,11 @@ public class UserProvider {
         }
 
         if (user == null) {
-            return new PostLoginFacebookRes(true, null, null, appId);
+            return new PostLoginFacebookRes(false, null, null, userId);
         }
 
         String jwt = jwtService.createJwt(user.getNo());
-        return new PostLoginFacebookRes(false, user.getNo(), jwt, null);
+        return new PostLoginFacebookRes(true, user.getNo(), jwt, null);
     }
 
 

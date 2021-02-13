@@ -51,7 +51,7 @@ public class UserController {
      * @return BaseResponse<List<GetUsersRes>>
      */
     @ResponseBody
-    @GetMapping("/admin/users") // (GET) 127.0.0.1:9000/users
+    @GetMapping("/admin/users")
     @ApiOperation(value = "회원 전체 조회", notes = "회원 전체 조회")
     public BaseResponse<List<GetUserRes>> getUsers() {
         try {
@@ -225,7 +225,7 @@ public class UserController {
      * @return BaseResponse<PostLoginFacebookRes>
      * @Auther shine
      */
-    @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인")
+    @ApiOperation(value = "페이스북 로그인", notes = "페이스북 로그인\nisMember false 회원가입 필요, isMember true 로그인 성공")
     @ResponseBody
     @PostMapping("/users/login/facebook")
     public BaseResponse<PostLoginFacebookRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
