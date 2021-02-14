@@ -3,7 +3,6 @@ package com.app.grip.src.product;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.product.models.*;
 import com.app.grip.src.store.StoreProvider;
-import com.app.grip.src.store.StoreRepository;
 import com.app.grip.src.store.models.Store;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,14 +14,13 @@ import static com.app.grip.config.BaseResponseStatus.*;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
-    private final StoreRepository storeRepository;
-    private final StoreProvider storeProvider;
     private final ProductProvider productProvider;
+    private final StoreProvider storeProvider;
 
     /**
      * 상품카테고리 생성
-     * @param PostProductsCategoryReq parameters
-     * @return PostProductsCategoryRes
+     * @param PostProductCategoryReq parameters
+     * @return PostProductCategoryRes
      * @throws BaseException
      * @Auther shine
      */
@@ -49,7 +47,7 @@ public class ProductService {
      */
     public PostProductRes createProduct(PostProductReq parameters, Long storeId) throws BaseException {
         Store store = storeProvider.retrieveStoreById(storeId);
-        ProductCategory productCategory = productProvider.retrieveProductCategoryByName(parameters.getProductCategoryName());
+        ProductCategory productCategory = productProvider.retrieveProductCategoryByNameAndStatusY(parameters.getProductCategoryName());
 
         Product newProduct = Product.builder()
                 .name(parameters.getName())
@@ -69,6 +67,31 @@ public class ProductService {
         return new PostProductRes(newProduct.getId(), newProduct.getName(),
                 newProduct.getContent(), newProduct.getPrice(), newProduct.getPictureURL(),
                 newProduct.getStore().getId(), newProduct.getProductCategory().getId());
+    }
+
+    /**
+     * 판매 종료된 상품 처리
+     * @param Long productId
+     * @return void
+     * @throws BaseException
+     * @Auther shine
+     */
+    public void patchProductCompleted(Long productId) throws BaseException {
+        Product product = productProvider.retrieveProductsById(productId);
+
+        if(product.getStatus().equals("Y")) {
+            product.setStatus("C");
+        } else if(product.getStatus().equals("C")) {
+            throw new BaseException(ALREADY_COMPLETED);
+        } else if(product.getStatus().equals("N")) {
+            throw new BaseException(ALREADY_DELETE_PRODUCT);
+        }
+
+        try {
+            productRepository.save(product);
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_PATCH_PRODUCT);
+        }
     }
 
 }

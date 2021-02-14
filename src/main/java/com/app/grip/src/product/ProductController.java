@@ -29,7 +29,7 @@ public class ProductController {
     @GetMapping("/admin/products-category")
     public BaseResponse<List<GetProductCategoryRes>> getProductsCategory() {
         try {
-            List<GetProductCategoryRes> productCategoryList = productProvider.retrieveProductsCategory();
+            List<GetProductCategoryRes> productCategoryList = productProvider.retrieveProductsCategoryByStatusY();
             return new BaseResponse<>(SUCCESS, productCategoryList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -39,15 +39,20 @@ public class ProductController {
     /**
      * 상품카테고리 조회 API
      * [GET] /api/products-category/:categoryName
-     * @return
+     * @PathVariable String categoryName
+     * @return BaseResponse<GetProductCategoryRes>
      * @Auther shine
      */
     @ApiOperation(value = "상품카테고리 조회", notes = "상품카테고리 조회")
     @ResponseBody
     @GetMapping("/products-category/{categoryName}")
     public BaseResponse<GetProductCategoryRes> getProductCategory(@PathVariable String categoryName) {
+        if(categoryName == null || categoryName.length() == 0) {
+            return new BaseResponse<>(EMPTY_CATEGORY);
+        }
+
         try {
-            ProductCategory productCategory = productProvider.retrieveProductCategoryByName(categoryName);
+            ProductCategory productCategory = productProvider.retrieveProductCategoryByNameAndStatusY(categoryName);
             return new BaseResponse<>(SUCCESS, new GetProductCategoryRes(productCategory.getName(), productCategory.getStatus()));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -55,7 +60,23 @@ public class ProductController {
     }
 
 
-    // TODO 상품 조회
+    /**
+     * 전체 상품 조회 API
+     * [GET] /api/admin/products
+     * @return BaseResponse<List<GetProductRes>>
+     * @Auther shine
+     */
+    @ApiOperation(value = "전체 상품카테고리 조회", notes = "전체 상품카테고리 조회")
+    @ResponseBody
+    @GetMapping("/admin/products")
+    public BaseResponse<List<GetProductRes>> getProducts() {
+        try {
+            List<GetProductRes> productList = productProvider.retrieveProductsByStatusYAndStatusC();
+            return new BaseResponse<>(SUCCESS, productList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
 
 
     /**
@@ -81,6 +102,7 @@ public class ProductController {
         }
     }
 
+
     /**
      * 상품 등록 API
      * [POST] /api/products/:storeId
@@ -93,6 +115,9 @@ public class ProductController {
     @ResponseBody
     @PostMapping("/products/{storeId}")
     public BaseResponse<PostProductRes> postProduct(@RequestBody(required = false) PostProductReq parameters, @PathVariable Long storeId) {
+        if (storeId == null) {
+            return new BaseResponse<>(EMPTY_STORE);
+        }
         if(parameters.getName() == null || parameters.getName().length() == 0) {
             return new BaseResponse<>(EMPTY_NAME);
         }
@@ -109,6 +134,29 @@ public class ProductController {
         try {
             PostProductRes product = productService.createProduct(parameters, storeId);
             return new BaseResponse<>(SUCCESS, product);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 판매 종료된 상품 처리 API
+     * [PATCH] /api/products/:productId/completed
+     * @PathVariable Long productId
+     * @return BaseResponse<Void>
+     * @Auther shine
+     */
+    @ApiOperation(value = "판매 종료된 상품 처리", notes = "판매 종료된 상품 처리")
+    @ResponseBody
+    @PatchMapping("/products/{productId}/completed")
+    public BaseResponse<Void> patchProductCompleted(@PathVariable Long productId) {
+        if (productId == null) {
+            return new BaseResponse<>(EMPTY_PRODUCT);
+        }
+
+        try {
+            productService.patchProductCompleted(productId);
+            return new BaseResponse<>(SUCCESS);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
