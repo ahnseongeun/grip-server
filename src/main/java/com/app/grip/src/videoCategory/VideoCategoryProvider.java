@@ -102,7 +102,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory3 = new GetVideosCategory("소호몰 언니",videoList3.stream()
+        GetVideosCategory getVideosCategory3 = new GetVideosCategory("신인 그리퍼",videoList4.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -114,7 +114,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory4 = new GetVideosCategory("스타일링",videoList4.stream()
+        GetVideosCategory getVideosCategory4 = new GetVideosCategory("스타일링",videoList5.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
@@ -126,7 +126,7 @@ public class VideoCategoryProvider {
                         .hostName(video.getUser().getName())
                         .build()).collect(Collectors.toList()));
 
-        GetVideosCategory getVideosCategory5 = new GetVideosCategory("신인",videoList5.stream()
+        GetVideosCategory getVideosCategory5 = new GetVideosCategory("소호몰 언니",videoList3.stream()
                 .map(video -> GetVideoListByCategory.builder()
                         .videoId(video.getId())
                         .title(video.getTitle())
