@@ -80,7 +80,6 @@ public class UserProvider {
 
     /**
      * 회원 조회
-     * @param Long userNo
      * @return GetUserRes
      * @throws BaseException
      * @comment 회원번호로 회원조회

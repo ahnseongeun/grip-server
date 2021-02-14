@@ -2,7 +2,6 @@ package com.app.grip.src.video;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.coupon.CouponRepository;
-import com.app.grip.src.coupon.models.Coupon;
 import com.app.grip.src.user.UserRepository;
 import com.app.grip.src.user.models.User;
 import com.app.grip.src.video.models.GetDetailVideo;
@@ -12,6 +11,7 @@ import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,14 +24,17 @@ public class VideoProvider {
     private final CouponRepository couponRepository;
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final HashMap<Long,Integer> LikeRepository;
 
     @Autowired
     public VideoProvider(VideoRepository videoRepository, CouponRepository couponRepository,
-                         JwtService jwtService, UserRepository userRepository) {
+                         JwtService jwtService, UserRepository userRepository,
+                         HashMap<Long, Integer> likeRepository) {
         this.videoRepository = videoRepository;
         this.couponRepository = couponRepository;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.LikeRepository = likeRepository;
     }
 
     public List<GetVideos> retrieveVideos() throws BaseException {
@@ -79,6 +82,8 @@ public class VideoProvider {
             throw new BaseException(END_TO_VIDEO);
         }
 
+        int likeCount = LikeRepository.get(video.getId()) == null ? 0 : LikeRepository.get(video.getId());
+
         return GetDetailVideo.builder()
                 .title(video.getTitle())
                 .hostName(video.getUser().getName())
@@ -87,7 +92,7 @@ public class VideoProvider {
                 .liveCheck(video.getLiveCheck())
                 //.storeId(video.getUser().getStore().getId())
                 .storeId(2L)
-                .videoLikeCount(video.getVideoLikeList().size())
+                .videoLikeCount(likeCount)
                 .watchUserCount(video.getVideoWatchUserCount())
                 .build();
     }

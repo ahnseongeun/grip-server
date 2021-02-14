@@ -90,8 +90,8 @@ public class Video extends BaseEntity {
     @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
     private List<VideoParticipant> videoParticipantList;
 
-    @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<VideoLike> videoLikeList;
+    @OneToOne(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
+    private VideoLike videoLike;
 
     @OneToMany(mappedBy = "video",orphanRemoval = true, cascade = CascadeType.ALL)
     private List<WatchMyVideo> watchMyVideoList;
