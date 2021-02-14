@@ -66,7 +66,7 @@ public class ProductController {
      * @return BaseResponse<List<GetProductRes>>
      * @Auther shine
      */
-    @ApiOperation(value = "전체 상품카테고리 조회", notes = "전체 상품카테고리 조회")
+    @ApiOperation(value = "전체 상품 조회", notes = "전체 상품 조회")
     @ResponseBody
     @GetMapping("/admin/products")
     public BaseResponse<List<GetProductRes>> getProducts() {

@@ -4,6 +4,7 @@ import com.app.grip.config.BaseException;
 import com.app.grip.src.product.models.*;
 import com.app.grip.src.store.StoreProvider;
 import com.app.grip.src.store.models.Store;
+import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ public class ProductService {
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductProvider productProvider;
     private final StoreProvider storeProvider;
+    private final JwtService jwtService;
 
     /**
      * 상품카테고리 생성
@@ -49,6 +51,10 @@ public class ProductService {
         Store store = storeProvider.retrieveStoreById(storeId);
         ProductCategory productCategory = productProvider.retrieveProductCategoryByNameAndStatusY(parameters.getProductCategoryName());
 
+        if(store.getUser().getNo() != jwtService.getUserNo()) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
+
         Product newProduct = Product.builder()
                 .name(parameters.getName())
                 .content(parameters.getContent())
@@ -80,6 +86,9 @@ public class ProductService {
         Product product = productProvider.retrieveProductsById(productId);
 
         if(product.getStatus().equals("Y")) {
+            if(product.getStore().getUser().getNo() != jwtService.getUserNo()) {
+                throw new BaseException(DO_NOT_AUTH_USER);
+            }
             product.setStatus("C");
         } else if(product.getStatus().equals("C")) {
             throw new BaseException(ALREADY_COMPLETED);

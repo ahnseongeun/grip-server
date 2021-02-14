@@ -69,9 +69,10 @@ public enum BaseResponseStatus {
     FAILED_TO_PATCH_PRODUCT(false, 3114, "상품 수정에 실패하였습니다."),
     FAILED_TO_GET_PRODUCTCATEGORY(false, 3115, "상품 카테고리 검색에 실패하였습니다."),
     FAILED_TO_POST_PRODUCTCATEGORY(false, 3116, "상품 카테고리 등록에 실패하였습니다."),
-    NOT_FOUND_PRODUCT(false, 3017, "존재하지 않는 상품입니다."),
-    ALREADY_COMPLETED(false, 3018, "이미 판매종료된 상품입니다."),
-    ALREADY_DELETE_PRODUCT(false, 3019, "이미 삭제된 상품입니다."),
+    NOT_FOUND_PRODUCT(false, 3117, "존재하지 않는 상품입니다."),
+    ALREADY_COMPLETED(false, 3118, "이미 판매종료된 상품입니다."),
+    ALREADY_DELETE_PRODUCT(false, 3119, "이미 삭제된 상품입니다."),
+    DO_NOT_AUTH_USER(false, 3120, "작성 권한이 없는 사용자입니다."),
 
     // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "비디오 카테고리 조회에 실패하였습니다."),

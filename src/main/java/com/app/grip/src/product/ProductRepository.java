@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
-    List<Product> findByStatusAndStatusOrderByCreateDateDesc(String statusY, String statusC);
+    List<Product> findByStatusOrStatusOrderByCreateDateDesc(String statusY, String statusC);
 }

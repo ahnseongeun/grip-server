@@ -73,7 +73,7 @@ public class ProductProvider {
         List<Product> productList;
 
         try {
-            productList = productRepository.findByStatusAndStatusOrderByCreateDateDesc("Y", "C");
+            productList = productRepository.findByStatusOrStatusOrderByCreateDateDesc("Y", "C");
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_PRODUCTCATEGORY);
         }
