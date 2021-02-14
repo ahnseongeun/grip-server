@@ -1,4 +1,4 @@
-package com.app.grip.src.video.models;
+package com.app.grip.src.video.videoLike.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,9 @@ import lombok.Getter;
 @Getter
 @Builder
 @AllArgsConstructor
-public class PatchVideo {
+public class GetVideoLike {
 
+    //private final Long videoLikeId;
     private final Long videoId;
-    private final Integer videoLikeCount;
-    private final String endLiveStatus;
+    private final Integer LikeCount;
 }

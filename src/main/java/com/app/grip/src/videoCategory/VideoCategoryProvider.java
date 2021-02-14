@@ -65,15 +65,25 @@ public class VideoCategoryProvider {
         List<Video> videoList6;
         List<Video> videoList7;
         List<Video> videoList8;
+        //List<Video> findByVideoCategory_IdAndStatusAndEndLiveStatus(Long id,String Status,String LiveStatus);
+        //LIVE 중인 방송만 조회
         try {
-            videoList1 = videoRepository.findByVideoCategory_IdAndStatus(1L, "Y");
-            videoList2 = videoRepository.findByVideoCategory_IdAndStatus(3L, "Y");
-            videoList3 = videoRepository.findByVideoCategory_IdAndStatus(4L, "Y");
-            videoList4 = videoRepository.findByVideoCategory_IdAndStatus(5L, "Y");
-            videoList5 = videoRepository.findByVideoCategory_IdAndStatus(6L, "Y");
-            videoList6 = videoRepository.findByVideoCategory_IdAndStatus(7L, "Y");
-            videoList7 = videoRepository.findByVideoCategory_IdAndStatus(8L, "Y");
-            videoList8 = videoRepository.findByVideoCategory_IdAndStatus(9L, "Y");
+            //라이브 예고
+            videoList1 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(1L, "Y","N");
+            //전체 라이브
+            videoList2 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(3L, "Y","N");
+            //소호몰 언니
+            videoList3 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(4L, "Y","N");
+            //신인 그리퍼
+            videoList4 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(5L, "Y","N");
+            //스타일링
+            videoList5 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(6L, "Y","N");
+            //뷰티꿀팁
+            videoList6 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(7L, "Y","N");
+            //먹방쿡방
+            videoList7 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(8L, "Y","N");
+            //알뜰신템
+            videoList8 = videoRepository.findByVideoCategory_IdAndStatusAndEndLiveStatus(9L, "Y","N");
         }catch (Exception e){
             throw new BaseException(FAILED_TO_GET_VIDEO);
         }

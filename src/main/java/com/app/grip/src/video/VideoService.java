@@ -5,6 +5,8 @@ import com.app.grip.config.BaseResponseStatus;
 import com.app.grip.src.video.models.PatchVideo;
 import com.app.grip.src.video.models.PostVideoAndThumbNail;
 import com.app.grip.src.video.models.Video;
+import com.app.grip.src.video.videoLike.VideoLikeRepository;
+import com.app.grip.src.video.videoLike.models.VideoLike;
 import com.app.grip.utils.S3Service;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -21,8 +23,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
-import static com.app.grip.config.BaseResponseStatus.FAILED_TO_GET_VIDEO;
+import static com.app.grip.config.BaseResponseStatus.*;
 
 @Slf4j
 @Service
@@ -31,10 +34,16 @@ public class VideoService {
     private static final String IMAGE_PNG_FORMAT = "png";
     private final S3Service s3Service;
     private final VideoRepository videoRepository;
+    private final HashMap<Long,Integer>  likeRepository;
+    private final VideoLikeRepository videoLikeRepository;
 
-    public VideoService(S3Service s3Service, VideoRepository videoRepository) {
+    public VideoService(S3Service s3Service, VideoRepository videoRepository,
+                        HashMap<Long, Integer> likeRepository,
+                        VideoLikeRepository videoLikeRepository) {
         this.s3Service = s3Service;
         this.videoRepository = videoRepository;
+        this.likeRepository = likeRepository;
+        this.videoLikeRepository = videoLikeRepository;
     }
 
     public PostVideoAndThumbNail createVideoAndThumbNail(MultipartFile multipartFile)
@@ -88,10 +97,24 @@ public class VideoService {
     public PatchVideo updateVideo(Long videoId) throws BaseException {
         Video video = videoRepository.findById(videoId)
                 .orElseThrow(() -> new BaseException(FAILED_TO_GET_VIDEO));
+
+        VideoLike videoLike = VideoLike.builder()
+                .video(video)
+                .count(likeRepository.get(videoId))
+                .build();
+
+        try{
+            videoLike = videoLikeRepository.save(videoLike);
+        }catch (Exception exception){
+            throw new BaseException(FAILED_TO_POST_VIDEO_LIKE);
+        }
+
+        video.setVideoLike(videoLike);
         video.setEndLiveStatus("Y");
 
         return PatchVideo.builder()
                 .videoId(videoId)
+                .videoLikeCount(video.getVideoLike().getCount())
                 .endLiveStatus(video.getEndLiveStatus())
                 .build();
     }

@@ -23,11 +23,14 @@ public class VideoLike extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "userNo",nullable = false)
-    private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "userNo",nullable = false)
+//    private User user;
 
-    @ManyToOne
+    @Column(name = "likeCount",nullable = false)
+    private Integer count;
+
+    @OneToOne
     @JoinColumn(name = "videoId",nullable = false)
     private Video video;
 
