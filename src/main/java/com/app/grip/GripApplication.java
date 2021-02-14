@@ -100,7 +100,7 @@ public class GripApplication implements CommandLineRunner {
         VideoCategory videoCategory3 = new VideoCategory("전체LIVE","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory4 = new VideoCategory("소호몰언니","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory5 = new VideoCategory("스타일링","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory6 = new VideoCategory("신인","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
+        VideoCategory videoCategory6 = new VideoCategory("신인그리퍼","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory7 = new VideoCategory("뷰티꿀팁","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory8 = new VideoCategory("먹방쿡방","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
         VideoCategory videoCategory9 = new VideoCategory("알쓸신템","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
@@ -110,6 +110,7 @@ public class GripApplication implements CommandLineRunner {
                         videoCategory1,videoCategory2,videoCategory3,
                         videoCategory4,videoCategory5,videoCategory6,
                         videoCategory7,videoCategory8,videoCategory9);
+
 
         List<VideoCategory> savedVideoCategory = (List<VideoCategory>) videoCategoryRepository.saveAll(videoCategoryList);
 
