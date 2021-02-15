@@ -1,6 +1,7 @@
 package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
+import com.app.grip.src.product.models.GetProductInfo;
 import com.app.grip.src.video.VideoRepository;
 import com.app.grip.src.video.models.GetVideoListByCategory;
 import com.app.grip.src.video.models.Video;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -110,6 +112,18 @@ public class VideoCategoryProvider {
                         .videoURL(video.getVideoURL())
                         .watchUserCount(video.getVideoWatchUserCount())
                         .hostName(video.getUser().getName())
+//                        .productInfo(video.getUser().getStore().getProductList().stream().findFirst()
+//                                .map(product -> GetProductInfo.builder()
+//                                        .productPrice(product.getPrice())
+//                                        .productContent(product.getContent())
+//                                        .productImageURL(product.getPictureURL())
+//                                        .build())
+//                                .orElse(null))
+                        .productInfo(GetProductInfo.builder()
+                                .productPrice("30000원")
+                                .productImageURL("https://cdn.imweb.me/thumbnail/20200924/e1f059d0cb20b.jpg")
+                                .productContent("신상 팔아요")
+                                .build())
                         .build()).collect(Collectors.toList()));
 
         GetVideosCategory getVideosCategory3 = new GetVideosCategory("신인 그리퍼",videoList4.stream()

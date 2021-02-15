@@ -1,5 +1,6 @@
 package com.app.grip.src.video.models;
 
+import com.app.grip.src.product.models.GetProductInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +18,6 @@ public class GetVideoListByCategory {
     private final String videoURL;
     private final Integer watchUserCount;
     private final String hostName;
-    
+    private final GetProductInfo productInfo;
+
 }
