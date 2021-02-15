@@ -91,24 +91,28 @@ public class GripApplication implements CommandLineRunner {
 
         User userFace1 = new User("김도윤","도윤입니다"
                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
-                "010-1111-1111", "1991-03-10", "test1@gmail.com", "M",
-                "F", 1, "Y", "111111");
+                "010-1111-1100", "1990-03-10", "test1@gmail.com", "M",
+                "F", 1, "Y", "222221");
 
         User userFace2 = new User("윤서윤","서윤입니다"
                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
-                "010-1111-1113", "1996-03-13", "test3@gmail.com", "W",
-                "F", 1, "Y", "111113");
+                "010-1111-1122", "1996-03-13", "test2@gmail.com", "W",
+                "F", 1, "Y", "222222");
 
         User grapherFace1 = new User("김하준","하준입니다"
                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
-                "010-1111-1112", "1993-03-12", "test2@gmail.com", "M",
-                "F", 50, "Y", "111112");
+                "010-1111-1133", "1993-03-12", "test3@gmail.com", "M",
+                "F", 50, "Y", "222223");
 
+        User grapherFace2 = new User("정수아","수아입니다"
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                "010-1111-1144", "1997-03-12", "test4@gmail.com", "W",
+                "F", 50, "Y", "222224");
 
 
         final List<User> userList =
                 Arrays.asList(user1,user2,user3,grapher1,grapher2,grapher3,grapher4,admin,
-                        userFace1,userFace2,grapherFace1);
+                        userFace1,userFace2,grapherFace1,grapherFace2);
 
         List<User> savedUser = (List<User>) userRepository.saveAll(userList);
 
@@ -140,6 +144,7 @@ public class GripApplication implements CommandLineRunner {
                 "세상 모든 핫한 제품만 모아 모아 팝니다!\n구경하러 오세요~",
                 "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
         store5.setUser(grapherFace1);
+
 
         final List<Store> storeList = Arrays.asList(store1,store2,store3,store4,store5);
         List<Store> savedStore = (List<Store>) storeRepository.saveAll(storeList);
