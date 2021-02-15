@@ -31,8 +31,6 @@ public enum BaseResponseStatus {
     EMPTY_EFFECTIVEDATE(false, 2107, "쿠폰 유효일자를 입력해주세요."),
     EMPTY_PRICE(false, 2108, "가격을 입력해주세요."),
     EMPTY_CATEGORY(false, 2109, "카테고리를 입력해주세요."),
-    EMPTY_STORE(false, 2110, "상점 정보를 입력해주세요."),
-    EMPTY_PRODUCT(false, 2111, "상품 정보를 입력해주세요."),
     INVALID_PHONENUMBER(false, 2112, "휴대전화번호 형식을 확인해주세요."),
     INVALID_EFFECTIVEDATE(false, 2113, "쿠폰 유효일자 형식을 확인해주세요."),
 
@@ -70,8 +68,10 @@ public enum BaseResponseStatus {
     FAILED_TO_GET_PRODUCTCATEGORY(false, 3115, "상품 카테고리 검색에 실패하였습니다."),
     FAILED_TO_POST_PRODUCTCATEGORY(false, 3116, "상품 카테고리 등록에 실패하였습니다."),
     NOT_FOUND_PRODUCT(false, 3117, "존재하지 않는 상품입니다."),
+    NOT_FOUND_REVIEW(false, 3117, "존재하지 않는 리뷰입니다."),
     ALREADY_COMPLETED(false, 3118, "이미 판매종료된 상품입니다."),
     ALREADY_DELETE_PRODUCT(false, 3119, "이미 삭제된 상품입니다."),
+    ALREADY_DELETE_REVIEW(false, 3119, "이미 삭제된 리뷰입니다."),
     DO_NOT_AUTH_USER(false, 3120, "작성 권한이 없는 사용자입니다."),
 
     // divi

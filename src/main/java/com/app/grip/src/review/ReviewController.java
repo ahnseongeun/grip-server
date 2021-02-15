@@ -2,14 +2,15 @@ package com.app.grip.src.review;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
-import com.app.grip.src.review.models.GetReviewRes;
-import com.app.grip.src.review.models.PostReviewReq;
-import com.app.grip.src.review.models.PostReviewRes;
+import com.app.grip.src.review.models.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -50,8 +51,8 @@ public class ReviewController {
     @GetMapping("/reviews/{reviewId}")
     public BaseResponse<GetReviewRes> getReview(@PathVariable Long reviewId) {
         try {
-            GetReviewRes reviewRes = reviewProvider.retrieveReview(reviewId);
-            return new BaseResponse<>(SUCCESS, reviewRes);
+            Review review = reviewProvider.retrieveReview(reviewId);
+            return new BaseResponse<>(SUCCESS, reviewProvider.retrieveReviewRes(review));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

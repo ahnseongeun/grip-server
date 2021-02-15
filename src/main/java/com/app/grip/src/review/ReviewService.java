@@ -37,6 +37,10 @@ public class ReviewService {
 
         List<ReviewPicture> reviewPictureList = new ArrayList<>();
 
+        if(user.getNo() == store.getUser().getNo()) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
+
         if(parameters.getPicture() != null) {
             for (PictureReq picture : parameters.getPicture()) {
                 ReviewPicture reviewPicture = new ReviewPicture(picture.getPictureURL());

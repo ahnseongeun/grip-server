@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long> {
-    List<Review> findByStatus(String status);
-    List<Review> findByStatusAndId(String status, Long reviewNo);
+    List<Review> findByStatusOrderByCreateDateDesc(String status);
 }
