@@ -125,14 +125,28 @@ public class UserService {
      * @throws BaseException
      * @Auther shine
      */
-    public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq) throws BaseException {
+    public PostUserFacebookRes createUserFacebook(PostUserFacebookReq postUserReq, String userId) throws BaseException {
+        User user = null;
+
+        try {
+            user = userProvider.retrieveFacebookUserById(userId);
+        } catch (BaseException exception) {
+            if (exception.getStatus() != NOT_FOUND_USER) {
+                throw exception;
+            }
+        }
+
+        if (user != null) {
+            throw new BaseException(DUPLICATED_USER);
+        }
+
         User newUser = User.builder()
                 .name(postUserReq.getName())
                 .nickname(postUserReq.getNickname())
                 .birthday(postUserReq.getBirthday())
                 .email(postUserReq.getEmail())
                 .gender(postUserReq.getGender())
-                .id(postUserReq.getUserId())
+                .id(userId)
                 .imageStatus("Y")
                 .phoneNumber(postUserReq.getPhoneNumber())
                 .profileImageURL(postUserReq.getProfileImage())

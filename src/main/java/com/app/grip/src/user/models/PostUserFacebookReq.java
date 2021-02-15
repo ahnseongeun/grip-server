@@ -5,7 +5,6 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 public class PostUserFacebookReq {
-    private String userId;
     private String nickname;
     private String phoneNumber;
     private String gender;

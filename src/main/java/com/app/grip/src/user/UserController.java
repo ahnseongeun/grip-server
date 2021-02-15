@@ -3,22 +3,17 @@ package com.app.grip.src.user;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.user.models.*;
+import com.app.grip.utils.SNSLogin;
 import com.app.grip.utils.ValidationRegex;
 import com.app.grip.utils.jwt.JwtService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +29,16 @@ public class UserController {
     private final UserService userService;
     private final JwtService jwtService;
     private final ValidationRegex validationRegex;
+    private final SNSLogin snsLogin;
 
     @Autowired
-    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService, ValidationRegex validationRegex) {
+    public UserController(UserProvider userProvider, UserService userService, JwtService jwtService,
+                          ValidationRegex validationRegex, SNSLogin snsLogin) {
         this.userProvider = userProvider;
         this.userService = userService;
         this.jwtService = jwtService;
         this.validationRegex = validationRegex;
+        this.snsLogin = snsLogin;
     }
 
     /**
@@ -170,10 +168,14 @@ public class UserController {
     @ApiOperation(value = "페이스북 회원가입", notes = "페이스북 회원가입")
     @ResponseBody
     @PostMapping("/users/facebook")
-    public BaseResponse<PostUserFacebookRes> postUsersByFacebook(@RequestBody(required = false) PostUserFacebookReq parameters) {
-        if(parameters.getUserId() == null || parameters.getUserId().length() == 0) {
-            return new BaseResponse<>(EMPTY_FACEBOOK_USERID);
+    public BaseResponse<PostUserFacebookRes> postUsersByFacebook(@RequestHeader(value = "token") String token, @RequestBody(required = false) PostUserFacebookReq parameters) {
+        String userId = "";
+        try {
+            userId = snsLogin.FaceBookAuthentication(token);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
         }
+
         if(parameters.getNickname() == null || parameters.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
         }
@@ -193,7 +195,7 @@ public class UserController {
         }
 
         try {
-            PostUserFacebookRes postUserFacebookRes = userService.createUserFacebook(parameters);
+            PostUserFacebookRes postUserFacebookRes = userService.createUserFacebook(parameters, userId);
             return new BaseResponse<>(SUCCESS, postUserFacebookRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -230,49 +232,11 @@ public class UserController {
     @ResponseBody
     @PostMapping("/users/login/facebook")
     public BaseResponse<PostLoginFacebookRes> postLoginByFacebook(@RequestHeader(value = "token") String token) {
-        HttpURLConnection conn = null;
-        JSONObject responseJson = null;
-
-        try {
-            URL url = new URL("https://graph.facebook.com/debug_token?input_token=" + token
-                    + "&access_token=" + "773022300256919|IcoV0PpB3NqIKrOBK6xDvawowuc");        // access_token => app_access_token
-                                                                                                // 개발자가 프로젝트 설정에서 따로 app-secret, id 같은 것들을 변경하지않는한 영구히 유효
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
-            conn.setDoOutput(true);
-
-            // 클라에서 전달받은 결과값 json으로 받기
-            int responseCode = conn.getResponseCode();
-            if(responseCode == 200) {
-                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                StringBuilder sb = new StringBuilder();
-                String line = "";
-                while ((line = br.readLine()) != null) {
-                    sb.append(line);
-                }
-                responseJson = new JSONObject(sb.toString());
-            } else if (responseCode == 400) {
-                return new BaseResponse<>(FACEBOOK_CONNECTION_400);
-            } else if (responseCode == 500) {
-                return new BaseResponse<>(FACEBOOK_CONNECTION_500);
-            } else {
-                return new BaseResponse<>(FACEBOOK_CONNECTION);
-            }
-
-        } catch (MalformedURLException exception) {
-            return new BaseResponse<>(FACEBOOK_CONNECTION_URL);
-        } catch (IOException exception) {
-            return new BaseResponse<>(FACEBOOK_CONNECTION_IO);
-        } catch (JSONException exception) {
-            return new BaseResponse<>(FACEBOOK_CONNECTION_NOT_JSON_RESPONSE);
-        }
-
-        // 전달받은 값이 유효한지 검사
         String userId = "";
         try {
-            userId = responseJson.getJSONObject("data").getString("user_id");
-        } catch (Exception exception) {
-            return new BaseResponse<>(FACEBOOK_CONNECTION_INVALID_TOKEN);
+            userId = snsLogin.FaceBookAuthentication(token);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
         }
 
         // 만약 회원 테이블에 있다면 회원가입으로 이동, 없다면 로그인
