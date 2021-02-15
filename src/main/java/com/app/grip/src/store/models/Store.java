@@ -1,11 +1,13 @@
 package com.app.grip.src.store.models;
 
 import com.app.grip.config.BaseEntity;
+import com.app.grip.src.product.models.Product;
 import com.app.grip.src.user.models.User;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Accessors(chain = true)
 @Builder
@@ -33,6 +35,9 @@ public class Store extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "userNo",nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Product> productList;
 
     public Store(String name, String introduction, String pictureURL) {
         this.name = name;
