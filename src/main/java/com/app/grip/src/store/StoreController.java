@@ -49,8 +49,7 @@ public class StoreController {
     public BaseResponse<GetStoreRes> getStore(@PathVariable Long storeId) {
         try {
             Store store = storeProvider.retrieveStoreById(storeId);
-            return new BaseResponse<>(SUCCESS, new GetStoreRes(store.getId(), store.getName(),
-                    store.getIntroduction(), store.getPictureURL(), store.getUser().getName()));
+            return new BaseResponse<>(SUCCESS, storeProvider.retrieveGetStoreRes(store));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

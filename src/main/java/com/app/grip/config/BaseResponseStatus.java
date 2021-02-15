@@ -73,6 +73,7 @@ public enum BaseResponseStatus {
     ALREADY_DELETE_PRODUCT(false, 3119, "이미 삭제된 상품입니다."),
     ALREADY_DELETE_REVIEW(false, 3119, "이미 삭제된 리뷰입니다."),
     DO_NOT_AUTH_USER(false, 3120, "작성 권한이 없는 사용자입니다."),
+    DUPLICATED_STORE(false, 3121, "해당 사용자의 상점은 이미 존재합니다."),
 
     // divi
     FAILED_TO_GET_VIDEO_CATEGORY(false, 3500, "영상 카테고리 조회에 실패하였습니다."),

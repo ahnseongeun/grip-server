@@ -4,7 +4,9 @@ import com.app.grip.config.BaseException;
 import com.app.grip.src.store.models.GetStoreRes;
 import com.app.grip.src.store.models.GetStoresRes;
 import com.app.grip.src.store.models.Store;
+import com.app.grip.src.user.models.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +35,7 @@ public class StoreProvider {
         List<Store> storeList;
 
         try {
-            storeList = storeRepository.findByStatusOrderByCreateDateDesc("Y");
+            storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_STORE);
         }
@@ -51,6 +53,7 @@ public class StoreProvider {
      * @Param Long storeId
      * @return Store
      * @throws BaseException
+     * @comment storeId로 상점 조회
      * @Auther shine
      */
     @Transactional
@@ -64,6 +67,40 @@ public class StoreProvider {
         }
 
         return store;
+    }
+
+    /**
+     * 상점 조회
+     * @Param User user
+     * @return Store
+     * @throws BaseException
+     * @comment user로 상점 조회
+     * @Auther shine
+     */
+    @Transactional
+    public Store retrieveStoreByUser(User user) throws BaseException {
+        Store store;
+
+        try {
+            store = storeRepository.findByUser(user).get(0);
+        } catch (IndexOutOfBoundsException exception) {
+            return null;
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_GET_STORE);
+        }
+
+        return store;
+    }
+
+    /**
+     * Store -> GetStoreRes 변경
+     * @Param Store store
+     * @return GetStoreRes
+     * @Auther shine
+     */
+    public GetStoreRes retrieveGetStoreRes(Store store) {
+        return new GetStoreRes(store.getId(), store.getName(),
+                store.getIntroduction(), store.getPictureURL(), store.getUser().getName());
     }
 
 }

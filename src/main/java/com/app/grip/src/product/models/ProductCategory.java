@@ -26,4 +26,8 @@ public class ProductCategory extends BaseEntity {
 
     @OneToMany(mappedBy = "productCategory", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Product> productList;
+
+    public ProductCategory(String name) {
+        this.name = name;
+    }
 }

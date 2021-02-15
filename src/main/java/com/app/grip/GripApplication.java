@@ -2,6 +2,10 @@ package com.app.grip;
 
 import com.app.grip.src.advertisement.AdvertisementRepository;
 import com.app.grip.src.advertisement.models.Advertisement;
+import com.app.grip.src.product.ProductCategoryRepository;
+import com.app.grip.src.product.ProductRepository;
+import com.app.grip.src.product.models.Product;
+import com.app.grip.src.product.models.ProductCategory;
 import com.app.grip.src.store.StoreRepository;
 import com.app.grip.src.store.models.Store;
 import com.app.grip.src.user.UserRepository;
@@ -27,16 +31,22 @@ public class GripApplication implements CommandLineRunner {
     private final UserRepository userRepository;
     private final VideoRepository videoRepository;
     private final StoreRepository storeRepository;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final ProductRepository productRepository;
 
     public GripApplication(VideoCategoryRepository videoCategoryRepository,
                            AdvertisementRepository advertisementRepository,
                            UserRepository userRepository, VideoRepository videoRepository,
-                           StoreRepository storeRepository) {
+                           StoreRepository storeRepository,
+                           ProductCategoryRepository productCategoryRepository,
+                           ProductRepository productRepository) {
         this.videoCategoryRepository = videoCategoryRepository;
         this.advertisementRepository = advertisementRepository;
         this.userRepository = userRepository;
         this.videoRepository = videoRepository;
         this.storeRepository = storeRepository;
+        this.productCategoryRepository = productCategoryRepository;
+        this.productRepository = productRepository;
     }
 
     public static void main(String[] args) {
@@ -91,24 +101,28 @@ public class GripApplication implements CommandLineRunner {
 
         User userFace1 = new User("김도윤","도윤입니다"
                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
-                "010-1111-1111", "1991-03-10", "test1@gmail.com", "M",
-                "F", 1, "Y", "111111");
+                "010-1111-1100", "1990-03-10", "test1@gmail.com", "M",
+                "F", 1, "Y", "222221");
 
         User userFace2 = new User("윤서윤","서윤입니다"
                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
-                "010-1111-1113", "1996-03-13", "test3@gmail.com", "W",
-                "F", 1, "Y", "111113");
+                "010-1111-1122", "1996-03-13", "test2@gmail.com", "W",
+                "F", 1, "Y", "222222");
 
         User grapherFace1 = new User("김하준","하준입니다"
                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
-                "010-1111-1112", "1993-03-12", "test2@gmail.com", "M",
-                "F", 50, "Y", "111112");
+                "010-1111-1133", "1993-03-12", "test3@gmail.com", "M",
+                "F", 50, "Y", "222223");
 
+        User grapherFace2 = new User("정수아","수아입니다"
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                "010-1111-1144", "1997-03-12", "test4@gmail.com", "W",
+                "F", 50, "Y", "222224");
 
 
         final List<User> userList =
                 Arrays.asList(user1,user2,user3,grapher1,grapher2,grapher3,grapher4,admin,
-                        userFace1,userFace2,grapherFace1);
+                        userFace1,userFace2,grapherFace1,grapherFace2);
 
         List<User> savedUser = (List<User>) userRepository.saveAll(userList);
 
@@ -141,8 +155,60 @@ public class GripApplication implements CommandLineRunner {
                 "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
         store5.setUser(grapherFace1);
 
+
         final List<Store> storeList = Arrays.asList(store1,store2,store3,store4,store5);
         List<Store> savedStore = (List<Store>) storeRepository.saveAll(storeList);
+        
+        
+        /**
+         * 상품 카테고리 더미 데이터 삽입
+         */
+        ProductCategory productCategory1 = new ProductCategory("패션");
+        ProductCategory productCategory2 = new ProductCategory("화장품/미용");
+        ProductCategory productCategory3 = new ProductCategory("디지털/가전");
+        ProductCategory productCategory4 = new ProductCategory("가구/인테리어");
+        ProductCategory productCategory5 = new ProductCategory("출산/육아");
+        ProductCategory productCategory6 = new ProductCategory("식품");
+        ProductCategory productCategory7 = new ProductCategory("스포츠/레저");
+        ProductCategory productCategory8 = new ProductCategory("생활/건강");
+        ProductCategory productCategory9 = new ProductCategory("여가/생활편의");
+
+        final List<ProductCategory> productCategoryList = Arrays.asList(productCategory1,
+                productCategory2, productCategory3, productCategory4, productCategory5, productCategory6,
+                productCategory7, productCategory8, productCategory9);
+        List<ProductCategory> savedProductCategory = (List<ProductCategory>) productCategoryRepository.saveAll(productCategoryList);
+
+
+        /**
+         * 상품 더미 데이터 삽입
+         */
+        Product product1 = new Product("블링 블링 금목걸이 팔아요~", "멀리서봐도 아름답고 반짝 반짝 빛나는 24K 금목걸이 팝니다~", 200000,
+                "https://spng.subpng.com/20180906/vqw/kisspng-earring-jewellery-necklace-kalyan-jewellers-gold-jewellery-transparent-png-arts-5b91ec7d692563.1314281415362899174307.jpg");
+        product1.setStore(store1);
+        product1.setProductCategory(productCategory1);
+
+        Product product2 = new Product("핫이슈~ 땡땡이 원피스~", "요즘 핫한 그 원피스! 품질 좋고 싸게 팝니다~", 88000,
+                "https://img1.daumcdn.net/thumb/R720x0/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fliveboard%2Ftag%2Fa9d8ddfca41d4139ad073089a4d6958e.jpg");
+        product2.setStore(store2);
+        product2.setProductCategory(productCategory1);
+
+        Product product3 = new Product("품절 임박! 핸드메이드 주스~", "직접 만든 핸드메이드 주스~ 품절되기 전에 빨리와서 구매해주세요!", 50000,
+                "http://bompack.com/web/product/extra/small/201809/dd9b17fb93e8ee27b0875fef7768fb0e.jpg");
+        product3.setStore(store3);
+        product3.setProductCategory(productCategory6);
+
+        Product product4 = new Product("신제품! 노트북 팝니다", "출시 기념으로 싸게 팝니다~ 많이들 사러 와주세용~~", 1000000,
+                "https://byline.network/wp-content/uploads/2020/05/ASUS-ExpertBook-B9-side.jpg");
+        product4.setStore(store4);
+        product4.setProductCategory(productCategory3);
+
+        Product product5 = new Product("올겨울 인싸템! 양털 팝니다", "요즘 인싸라면 없어서는 안되는 아이템! 양털 겉옷! 싸게 판매할때 장만하세요~", 59999,
+                "https://i.ytimg.com/vi/kUmHOpg_UZY/hqdefault.jpg");
+        product5.setStore(store5);
+        product5.setProductCategory(productCategory1);
+
+        final List<Product> productList = Arrays.asList(product1,product2,product3,product4,product5);
+        List<Product> savedProduct = (List<Product>) productRepository.saveAll(productList);
 
 
         /**

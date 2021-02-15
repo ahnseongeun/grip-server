@@ -17,6 +17,7 @@ import static com.app.grip.config.BaseResponseStatus.*;
 public class StoreService {
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
+    private final StoreProvider storeProvider;
     private final JwtService jwtService;
 
     /**
@@ -28,6 +29,14 @@ public class StoreService {
      */
     public PostStoreRes createStore(PostStoreReq parameters) throws BaseException {
         User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
+
+        if(user.getRole() != 50) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
+
+        if(storeProvider.retrieveStoreByUser(user) != null) {
+            throw new BaseException(DUPLICATED_STORE);
+        }
 
         Store newStore = Store.builder()
                 .name(parameters.getName())
