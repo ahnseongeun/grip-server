@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -39,14 +40,16 @@ public class ProductController {
     /**
      * 상품카테고리 조회 API
      * [GET] /api/products-category/:categoryName
-     * @PathVariable String categoryName
+     * @RequestBody String categoryName
      * @return BaseResponse<GetProductCategoryRes>
      * @Auther shine
      */
     @ApiOperation(value = "상품카테고리 조회", notes = "상품카테고리 조회")
     @ResponseBody
-    @GetMapping("/products-category/{categoryName}")
-    public BaseResponse<GetProductCategoryRes> getProductCategory(@PathVariable String categoryName) {
+    @GetMapping("/products-category")
+    public BaseResponse<GetProductCategoryRes> getProductCategory(@RequestBody(required = false) HashMap<String, String> parameter) {
+        String categoryName = parameter.get("categoryName");
+
         if(categoryName == null || categoryName.length() == 0) {
             return new BaseResponse<>(EMPTY_CATEGORY);
         }
@@ -115,9 +118,6 @@ public class ProductController {
     @ResponseBody
     @PostMapping("/products/{storeId}")
     public BaseResponse<PostProductRes> postProduct(@RequestBody(required = false) PostProductReq parameters, @PathVariable Long storeId) {
-        if (storeId == null) {
-            return new BaseResponse<>(EMPTY_STORE);
-        }
         if(parameters.getName() == null || parameters.getName().length() == 0) {
             return new BaseResponse<>(EMPTY_NAME);
         }
@@ -150,10 +150,6 @@ public class ProductController {
     @ResponseBody
     @PatchMapping("/products/{productId}/completed")
     public BaseResponse<Void> patchProductCompleted(@PathVariable Long productId) {
-        if (productId == null) {
-            return new BaseResponse<>(EMPTY_PRODUCT);
-        }
-
         try {
             productService.patchProductCompleted(productId);
             return new BaseResponse<>(SUCCESS);
