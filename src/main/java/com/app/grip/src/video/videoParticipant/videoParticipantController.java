@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class videoParticipantController {
 
     /**
-     * 비디오 참여시 하나 증가
+     * 비디오 참여시 참여자 증가
      */
     //HashMap을 이용해서 Inmemory DB로 구현하자.
 }

@@ -27,9 +27,9 @@ spring:
 
   datasource:
     platform: mysql
-    url: jdbc:mysql://database-1.cszqh4k3n47k.ap-northeast-2.rds.amazonaws.com:3306/PR2_shine_divi
-    username: admin
-    password: shine1234
+    url: jdbc:mysql://mywebserverrdstest1.caf5bqcjx6lw.ap-northeast-2.rds.amazonaws.com:3306/grip
+    username: root
+    password: 112233ll
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 #  datasource:
