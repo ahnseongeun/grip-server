@@ -2,6 +2,8 @@ package com.app.grip;
 
 import com.app.grip.src.advertisement.AdvertisementRepository;
 import com.app.grip.src.advertisement.models.Advertisement;
+import com.app.grip.src.store.StoreRepository;
+import com.app.grip.src.store.models.Store;
 import com.app.grip.src.user.UserRepository;
 import com.app.grip.src.user.models.User;
 import com.app.grip.src.video.VideoRepository;
@@ -24,15 +26,17 @@ public class GripApplication implements CommandLineRunner {
     private final AdvertisementRepository advertisementRepository;
     private final UserRepository userRepository;
     private final VideoRepository videoRepository;
+    private final StoreRepository storeRepository;
 
     public GripApplication(VideoCategoryRepository videoCategoryRepository,
                            AdvertisementRepository advertisementRepository,
-                           UserRepository userRepository,
-                           VideoRepository videoRepository) {
+                           UserRepository userRepository, VideoRepository videoRepository,
+                           StoreRepository storeRepository) {
         this.videoCategoryRepository = videoCategoryRepository;
         this.advertisementRepository = advertisementRepository;
         this.userRepository = userRepository;
         this.videoRepository = videoRepository;
+        this.storeRepository = storeRepository;
     }
 
     public static void main(String[] args) {
@@ -85,12 +89,61 @@ public class GripApplication implements CommandLineRunner {
                 "010-1111-1118", "1995-03-18", "test8@naver.com", "M",
                 "N", 100, "Y", "111118");
 
+        User userFace1 = new User("김도윤","도윤입니다"
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                "010-1111-1111", "1991-03-10", "test1@gmail.com", "M",
+                "F", 1, "Y", "111111");
+
+        User userFace2 = new User("윤서윤","서윤입니다"
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                "010-1111-1113", "1996-03-13", "test3@gmail.com", "W",
+                "F", 1, "Y", "111113");
+
+        User grapherFace1 = new User("김하준","하준입니다"
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                "010-1111-1112", "1993-03-12", "test2@gmail.com", "M",
+                "F", 50, "Y", "111112");
+
 
 
         final List<User> userList =
-                Arrays.asList(user1,user2,user3,grapher1,grapher2,grapher3,grapher4,admin);
+                Arrays.asList(user1,user2,user3,grapher1,grapher2,grapher3,grapher4,admin,
+                        userFace1,userFace2,grapherFace1);
 
         List<User> savedUser = (List<User>) userRepository.saveAll(userList);
+
+
+        /**
+         * 상점 더미 데이터 삽입
+         */
+        Store store1 = new Store("블링 블링 액세서리",
+                "아름다운 액세서리들이 모여 있습니다.\n구경하러 오세요~",
+                "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
+        store1.setUser(grapher1);
+
+        Store store2 = new Store("머리부터 발끝까지 핫이슈~",
+                "핫하고 요즘 인기있는 옷과 아이템들이 구비되어 있습니다~\n구경하러 오세요~",
+                "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
+        store2.setUser(grapher2);
+
+        Store store3 = new Store("핸드메이드 주스",
+                "직접 재배한 유기농 채소와 과일로 만든 핸드메이드 주스!\n구경하러 오세요~",
+                "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
+        store3.setUser(grapher3);
+
+        Store store4 = new Store("최신 전자기기 여기 다있다!",
+                "세상에 있는 모든 최신 전자기기 모여있는 곳!\n세상에서 가장 핫한 기기! 구경하러 오세요~",
+                "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
+        store4.setUser(grapher4);
+
+        Store store5 = new Store("하태 하태",
+                "세상 모든 핫한 제품만 모아 모아 팝니다!\n구경하러 오세요~",
+                "https://cdn.icon-icons.com/icons2/1993/PNG/512/ecommerce_home_market_mart_shop_shopping_store_icon_123207.png");
+        store5.setUser(grapherFace1);
+
+        final List<Store> storeList = Arrays.asList(store1,store2,store3,store4,store5);
+        List<Store> savedStore = (List<Store>) storeRepository.saveAll(storeList);
+
 
         /**
          * 영상 카테고리 더미 데이터 삽입
