@@ -30,7 +30,7 @@ public class ProductController {
     @GetMapping("/admin/products-category")
     public BaseResponse<List<GetProductCategoryRes>> getProductsCategory() {
         try {
-            List<GetProductCategoryRes> productCategoryList = productProvider.retrieveProductsCategoryByStatusY();
+            List<GetProductCategoryRes> productCategoryList = productProvider.retrieveProductsCategory();
             return new BaseResponse<>(SUCCESS, productCategoryList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -56,7 +56,7 @@ public class ProductController {
 
         try {
             ProductCategory productCategory = productProvider.retrieveProductCategoryByNameAndStatusY(categoryName);
-            return new BaseResponse<>(SUCCESS, new GetProductCategoryRes(productCategory.getName(), productCategory.getStatus()));
+            return new BaseResponse<>(SUCCESS, productProvider.retrieveGetProductCategoryRes(productCategory));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

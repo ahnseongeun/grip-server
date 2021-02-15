@@ -6,6 +6,7 @@ import com.app.grip.src.product.models.GetProductRes;
 import com.app.grip.src.product.models.Product;
 import com.app.grip.src.product.models.ProductCategory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -29,11 +30,11 @@ public class ProductProvider {
      * @throws BaseException
      * @Auther shine
      */
-    public List<GetProductCategoryRes> retrieveProductsCategoryByStatusY() throws BaseException {
+    public List<GetProductCategoryRes> retrieveProductsCategory() throws BaseException {
         List<ProductCategory> productCategoryList;
 
         try {
-            productCategoryList = productCategoryRepository.findByStatusOrderByCreateDateDesc("Y");
+            productCategoryList = productCategoryRepository.findAll(Sort.by("id"));
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_PRODUCTCATEGORY);
         }
@@ -62,6 +63,16 @@ public class ProductProvider {
         return productCategory;
     }
 
+    /**
+     * ProductCategory -> GetProductCategoryRes 변경
+     * @Param ProductCategory productCategory
+     * @return GetProductCategoryRes
+     * @Auther shine
+     */
+    public GetProductCategoryRes retrieveGetProductCategoryRes(ProductCategory productCategory) {
+        return new GetProductCategoryRes(productCategory.getName(), productCategory.getStatus());
+    }
+
 
     /**
      * 전체 상품 조회
@@ -73,7 +84,7 @@ public class ProductProvider {
         List<Product> productList;
 
         try {
-            productList = productRepository.findByStatusOrStatusOrderByCreateDateDesc("Y", "C");
+            productList = productRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_PRODUCTCATEGORY);
         }
@@ -104,5 +115,7 @@ public class ProductProvider {
 
         return product;
     }
+
+
     
 }
