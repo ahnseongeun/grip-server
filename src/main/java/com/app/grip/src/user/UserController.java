@@ -10,16 +10,10 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -182,9 +176,6 @@ public class UserController {
             return new BaseResponse<>(exception.getStatus());
         }
 
-        if(parameters.getUserId() == null || parameters.getUserId().length() == 0) {
-            return new BaseResponse<>(EMPTY_FACEBOOK_USERID);
-        }
         if(parameters.getNickname() == null || parameters.getNickname().length() == 0) {
             return new BaseResponse<>(EMPTY_NICKNAME);
         }
@@ -204,7 +195,7 @@ public class UserController {
         }
 
         try {
-            PostUserFacebookRes postUserFacebookRes = userService.createUserFacebook(parameters);
+            PostUserFacebookRes postUserFacebookRes = userService.createUserFacebook(parameters, userId);
             return new BaseResponse<>(SUCCESS, postUserFacebookRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

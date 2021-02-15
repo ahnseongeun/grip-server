@@ -9,5 +9,4 @@ public class PostLoginFacebookRes {
     private final Boolean isMember;
     private final Long userNo;
     private final String jwt;
-    private final String userId;
 }
