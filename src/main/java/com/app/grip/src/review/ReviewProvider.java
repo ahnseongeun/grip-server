@@ -1,8 +1,8 @@
 package com.app.grip.src.review;
 
 import com.app.grip.config.BaseException;
+import com.app.grip.src.product.ProductCategoryRepository;
 import com.app.grip.src.product.ProductProvider;
-import com.app.grip.src.product.models.ProductCategory;
 import com.app.grip.src.review.models.GetReviewRes;
 import com.app.grip.src.review.models.GetReviewsRes;
 import com.app.grip.src.review.models.PictureRes;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewProvider {
     private final ReviewRepository reviewRepository;
-    private final ProductProvider productProvider;
+    private final ProductCategoryRepository productCategoryRepository;
 
     SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
 
@@ -94,13 +94,14 @@ public class ReviewProvider {
      */
     @Transactional
     public List<Review> retrieveReviewsByCategoryNameAndStatusY(String categoryName) throws BaseException {
-        productProvider.retrieveProductCategoryByNameAndStatusY(categoryName);
         List<Review> reviewList;
 
         try {
+            productCategoryRepository.findByStatusAndName("Y", categoryName).get(0);
             reviewList = reviewRepository.findByStatusAndProduct_ProductCategory_Name("Y", categoryName);
+        } catch (IndexOutOfBoundsException exception) {
+            throw new BaseException(FAILED_TO_GET_PRODUCTCATEGORY);
         } catch (Exception exception) {
-            exception.printStackTrace();
             throw new BaseException(FAILED_TO_GET_REVIEW);
         }
 
