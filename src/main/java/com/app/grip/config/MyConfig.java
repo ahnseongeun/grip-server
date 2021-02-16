@@ -14,4 +14,8 @@ public class MyConfig {
         return new HashMap<>();
     }
 
+    @Bean
+    public HashMap<String, Long> StreamingRepository(){
+        return new HashMap<>();
+    }
 }
