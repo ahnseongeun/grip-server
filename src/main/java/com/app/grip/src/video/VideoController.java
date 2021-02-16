@@ -9,25 +9,16 @@ import com.app.grip.src.video.models.PostVideoAndThumbNail;
 import com.app.grip.utils.S3Service;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
-import org.hibernate.annotations.Fetch;
-import org.jcodec.api.FrameGrab;
 import org.jcodec.api.JCodecException;
-import org.jcodec.common.model.Picture;
-import org.jcodec.scale.AWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.app.grip.config.BaseResponseStatus.SUCCESS;
@@ -40,14 +31,17 @@ public class VideoController {
     private final VideoProvider videoProvider;
     private final VideoService videoService;
     private final S3Service s3Service;
+    private final HashMap<String,Long> StreamingRepository;
 
     @Autowired
     public VideoController(VideoProvider videoProvider,
                            VideoService videoService,
-                           S3Service s3Service) {
+                           S3Service s3Service,
+                           HashMap<String, Long> streamingRepository) {
         this.videoProvider = videoProvider;
         this.videoService = videoService;
         this.s3Service = s3Service;
+        StreamingRepository = streamingRepository;
     }
 
     @GetMapping("/admin/videos")
@@ -91,17 +85,6 @@ public class VideoController {
         }
     }
 
-    @GetMapping("/video-stream/{name}")
-    @ApiOperation(value = "서버에서 영상 불러올때 사용(서버 용도)", notes = "서버에서 영상 불러올때 사용(서버 용도)")
-    public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
-                                                   @RequestHeader HttpHeaders headers) throws IOException {
-        String path = "/home/ubuntu/video/";
-        UrlResource video = new UrlResource("file:"+path+name);
-        ResourceRegion region = resourceRegion(video, headers);
-        return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
-                            .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
-                            .body(region);
-    }
 
 //    @GetMapping("/videos/thumb-nail/{name}")
 //    @ApiOperation(value = "영상 썸네일 만들기(테스트 중)", notes = "영상 리스트 조회")
@@ -121,7 +104,6 @@ public class VideoController {
 //        log.info("test3");
 //        return s3Service.uploadFile(resultFile);
 //    }
-
     @PostMapping("/upload-video")
     @ApiOperation(value = "영상 업로드 및 썸네일 추출 (서버측 데이터 삽입 용도)", notes = "영상 업로드(서버측 데이터 삽입 용도)")
     public BaseResponse<PostVideoAndThumbNail> upload(
@@ -137,6 +119,22 @@ public class VideoController {
         }
     }
 
+    @GetMapping("/video-stream/{name}")
+    @ApiOperation(value = "서버에서 영상 불러올때 사용(서버 용도)", notes = "서버에서 영상 불러올때 사용(서버 용도)")
+    public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
+                                                   @RequestHeader HttpHeaders headers) throws IOException {
+        //String path = "/home/ubuntu/video/";
+        String path = "C:\\Users\\ahn\\OneDrive\\바탕 화면\\";
+        UrlResource video = new UrlResource("file:"+path+name);
+        //range를 담을 그릇과 현재 range를 나타내는 변수가 필요하다.
+        log.info(headers.toString());
+
+        ResourceRegion region = resourceRegion(video, headers);
+        return ResponseEntity.status(HttpStatus.PARTIAL_CONTENT)
+                .contentType(MediaTypeFactory.getMediaType(video).orElse(MediaType.APPLICATION_OCTET_STREAM))
+                .body(region);
+    }
+
     private ResourceRegion resourceRegion(UrlResource video, HttpHeaders headers) throws IOException {
 
         final long chunkSize = 1000000L;
@@ -145,10 +143,15 @@ public class VideoController {
         HttpRange httpRange = headers.getRange().stream().findFirst().get();
         if(httpRange != null) {
             long start = httpRange.getRangeStart(contentLength);
+            log.info(String.valueOf(start));
             long end = httpRange.getRangeEnd(contentLength);
+            log.info(String.valueOf(end));
             long rangeLength = Long.min(chunkSize, end - start + 1);
+            log.info(String.valueOf(rangeLength));
             return new ResourceRegion(video, start, rangeLength);
-        } else {
+        }
+        else {
+            log.info("when");
             long rangeLength = Long.min(chunkSize, contentLength);
             return new ResourceRegion(video, 0, rangeLength);
         }

@@ -2,11 +2,21 @@ package com.app.grip.src.video;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.probe.FFmpegFormat;
+import net.bramp.ffmpeg.probe.FFmpegProbeResult;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import static java.time.LocalDateTime.now;
 
 @Slf4j
 @Controller
@@ -39,8 +49,25 @@ public class PageController {
 
     @GetMapping("/stream/{videoName}")
     @ApiOperation(value = "영상 시청", notes = "영상 시청")
-    public String video(@PathVariable String videoName, Model model){
+    public String video(@PathVariable String videoName, Model model) throws MalformedURLException {
         model.addAttribute("videoName", videoName);
+//        String path = "C:\\Users\\ahn\\OneDrive\\바탕 화면\\";
+//        String file = path+videoName;
+//        String returnData = "0";
+//
+//        try {
+//            FFprobe ffprobe = new FFprobe(file); // window에 설치된  ffprobe.exe 경로
+//            FFmpegProbeResult probeResult = ffprobe.probe(file); // 동영상 경로
+//            FFmpegFormat format = probeResult.getFormat();
+//            double second = ((FFmpegFormat) format).duration; // 초단위
+//
+//            returnData = second + "";
+//            System.out.println("second==" + second);
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+  //      //model.addAttribute("start", now().getSecond());
         return "video";
     }
 
