@@ -50,9 +50,10 @@ public class PageController {
     @GetMapping("/stream/{videoName}")
     @ApiOperation(value = "영상 시청", notes = "영상 시청")
     public String video(@PathVariable String videoName, Model model) throws MalformedURLException {
+        //File file = new File("/home/ubuntu/video/"+ videoName);
         log.info("test1");
         log.info("test2");
-        //model.addAttribute("videoName", videoName);
+        model.addAttribute("videoName", videoName);
         log.info("test3");
   //      //model.addAttribute("start", now().getSecond());
         return "video";
