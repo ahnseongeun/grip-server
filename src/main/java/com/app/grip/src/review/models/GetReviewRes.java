@@ -9,8 +9,8 @@ import java.util.List;
 @AllArgsConstructor
 public class GetReviewRes {
     private final Long reviewId;
-    private final String storeName;
     private final String userName;
+    private final String profileImageURL;
     private final Integer star;
     private final String content;
     private final List<PictureRes> picture;

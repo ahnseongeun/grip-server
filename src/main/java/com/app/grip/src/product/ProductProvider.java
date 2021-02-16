@@ -1,10 +1,9 @@
 package com.app.grip.src.product;
 
 import com.app.grip.config.BaseException;
-import com.app.grip.src.product.models.GetProductCategoryRes;
-import com.app.grip.src.product.models.GetProductRes;
-import com.app.grip.src.product.models.Product;
-import com.app.grip.src.product.models.ProductCategory;
+import com.app.grip.src.product.models.*;
+import com.app.grip.src.review.models.GetReviewRes;
+import com.app.grip.src.review.models.PictureRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -80,7 +79,7 @@ public class ProductProvider {
      * @throws BaseException
      * @Auther shine
      */
-    public List<GetProductRes> retrieveProducts() throws BaseException {
+    public List<GetProductsRes> retrieveProducts() throws BaseException {
         List<Product> productList;
 
         try {
@@ -90,11 +89,38 @@ public class ProductProvider {
         }
 
         return productList.stream().map(product -> {
-            return new GetProductRes(product.getId(), product.getName(),
+            return new GetProductsRes(product.getId(), product.getName(),
                     product.getContent(), product.getPrice(), product.getPictureURL(),
                     product.getStore().getName(), product.getProductCategory().getName(),
                     outputDateFormat.format(product.getCreateDate()), product.getStatus());
         }).collect(Collectors.toList());
+    }
+
+    /**
+     * 상품 상세조회
+     * @return
+     * @throws
+     * @Auther shine
+     */
+    public GetProductRes retrieveProduct(Long productId) throws BaseException {
+        Product product;
+
+        try {
+            product = productRepository.findById(productId).orElseThrow(() -> new BaseException(FAILED_TO_GET_PRODUCT));
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_GET_PRODUCTCATEGORY);
+        }
+
+        return new GetProductRes(product.getId(), product.getName(),
+                product.getContent(), product.getPrice(), product.getPictureURL(),
+                product.getStore().getName(), product.getProductCategory().getName(),
+                outputDateFormat.format(product.getCreateDate()), product.getStatus(),
+                product.getReviewList().stream().map(review -> {
+                    new GetReviewRes(review.getId(), review.getUser().getName(), review.getUser().getProfileImageURL(),
+                            review.getStar(), review.getContent(), review.getReviewPictureList().stream().map(reviewPicture -> {
+                                new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
+                    }).collect(Collectors.toList()), outputDateFormat.format(review.getCreateDate()));
+                }).collect(Collectors.toList());
     }
 
     /**
