@@ -50,23 +50,10 @@ public class PageController {
     @GetMapping("/stream/{videoName}")
     @ApiOperation(value = "영상 시청", notes = "영상 시청")
     public String video(@PathVariable String videoName, Model model) throws MalformedURLException {
-        model.addAttribute("videoName", videoName);
-//        String path = "C:\\Users\\ahn\\OneDrive\\바탕 화면\\";
-//        String file = path+videoName;
-//        String returnData = "0";
-//
-//        try {
-//            FFprobe ffprobe = new FFprobe(file); // window에 설치된  ffprobe.exe 경로
-//            FFmpegProbeResult probeResult = ffprobe.probe(file); // 동영상 경로
-//            FFmpegFormat format = probeResult.getFormat();
-//            double second = ((FFmpegFormat) format).duration; // 초단위
-//
-//            returnData = second + "";
-//            System.out.println("second==" + second);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        log.info("test1");
+        log.info("test2");
+        //model.addAttribute("videoName", videoName);
+        log.info("test3");
   //      //model.addAttribute("start", now().getSecond());
         return "video";
     }
