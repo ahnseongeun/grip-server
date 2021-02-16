@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends CrudRepository<Review, Long> {
-    List<Review> findAll(Sort sort);
-    List<Review> findByStoreOrderByCreateDateDesc(Store store);
+    //List<Review> findAll(Sort sort);
+    //List<Review> findByStoreOrderByCreateDateDesc(Store store);
 }

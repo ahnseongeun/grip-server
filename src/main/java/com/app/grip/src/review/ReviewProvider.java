@@ -37,15 +37,16 @@ public class ReviewProvider {
     public List<GetReviewsRes> retrieveReviews() throws BaseException {
         List<Review> reviewList;
 
-        try {
-            reviewList = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        } catch (Exception exception) {
-            throw new BaseException(FAILED_TO_GET_REVIEW);
-        }
+//        try {
+//            reviewList = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+//        } catch (Exception exception) {
+//            throw new BaseException(FAILED_TO_GET_REVIEW);
+//        }
 
-        return reviewList.stream().map(review -> {
-            return retrieveGetReviewsRes(review);
-        }).collect(Collectors.toList());
+//        return reviewList.stream().map(review -> {
+//            return retrieveGetReviewsRes(review);
+//        }).collect(Collectors.toList());
+        return null;
     }
 
     /**
@@ -60,15 +61,16 @@ public class ReviewProvider {
         Store store = storeProvider.retrieveStoreById(storeId);
         List<Review> reviewList;
 
-        try {
-            reviewList = reviewRepository.findByStoreOrderByCreateDateDesc(store);
-        } catch (Exception exception) {
-            throw new BaseException(FAILED_TO_GET_REVIEW);
-        }
-
-        return reviewList.stream().map(review -> {
-            return retrieveGetReviewRes(review);
-        }).collect(Collectors.toList());
+//        try {
+//            reviewList = reviewRepository.findByStoreOrderByCreateDateDesc(store);
+//        } catch (Exception exception) {
+//            throw new BaseException(FAILED_TO_GET_REVIEW);
+//        }
+//
+//        return reviewList.stream().map(review -> {
+//            return retrieveGetReviewRes(review);
+//        }).collect(Collectors.toList());
+        return null;
     }
 
     /**

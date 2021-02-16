@@ -1,5 +1,6 @@
 package com.app.grip.src.product.models;
 
+import com.app.grip.src.store.models.GetStoresRes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,7 +12,7 @@ public class GetProductsRes {
     private final String content;
     private final Integer price;
     private final String pictureURL;
-    private final String storeName;
+    private final GetStoresRes store;
     private final String productCategoryName;
     private final String createDate;
     private final String status;
