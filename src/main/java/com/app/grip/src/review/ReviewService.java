@@ -49,7 +49,6 @@ public class ReviewService {
         }
 
         Review newReview = Review.builder()
-                .store(store)
                 .user(user)
                 .star(parameters.getStar())
                 .content(parameters.getContent())
@@ -62,7 +61,7 @@ public class ReviewService {
             throw new BaseException(FAILED_TO_POST_REVIEW);
         }
 
-        return new PostReviewRes(newReview.getId(), newReview.getStore().getId(), newReview.getUser().getNo(),
+        return new PostReviewRes(newReview.getId(), null, newReview.getUser().getNo(),
                 newReview.getStar(), newReview.getContent(),
                 newReview.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());

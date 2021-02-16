@@ -1,11 +1,13 @@
 package com.app.grip.src.product.models;
 
 import com.app.grip.config.BaseEntity;
+import com.app.grip.src.review.models.Review;
 import com.app.grip.src.store.models.Store;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Accessors(chain = true)
 @Builder
@@ -40,6 +42,9 @@ public class Product extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "productCategory_id")
     private ProductCategory productCategory;
+
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Review> reviewList;
 
     public Product(String name, String content, Integer price, String pictureURL) {
         this.name = name;

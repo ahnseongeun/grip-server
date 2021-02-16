@@ -25,7 +25,7 @@ public class ProductController {
      * @return BaseResponse<List<GetProductsCategoryRes>
      * @Auther shine
      */
-    @ApiOperation(value = "전체 상품카테고리 조회", notes = "전체 상품카테고리 조회")
+    @ApiOperation(value = "전체 상품카테고리 조회(관리자용)", notes = "전체 상품카테고리 조회")
     @ResponseBody
     @GetMapping("/admin/products-category")
     public BaseResponse<List<GetProductCategoryRes>> getProductsCategory() {
@@ -69,13 +69,32 @@ public class ProductController {
      * @return BaseResponse<List<GetProductRes>>
      * @Auther shine
      */
-    @ApiOperation(value = "전체 상품 조회", notes = "전체 상품 조회")
+    @ApiOperation(value = "전체 상품 조회(관리자용)", notes = "전체 상품 조회")
     @ResponseBody
     @GetMapping("/admin/products")
-    public BaseResponse<List<GetProductRes>> getProducts() {
+    public BaseResponse<List<GetProductsRes>> getProducts() {
         try {
-            List<GetProductRes> productList = productProvider.retrieveProducts();
+            List<GetProductsRes> productList = productProvider.retrieveProducts();
             return new BaseResponse<>(SUCCESS, productList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 상품 상세조회 API
+     * [GET] /api/products/:productId
+     * @PathVariable Long productId
+     * @return BaseResponse<GetProductRes>
+     * @Auther shine
+     */
+    @ApiOperation(value = "상품 상세조회", notes = "상품 상세조회")
+    @ResponseBody
+    @GetMapping("/products/{productId}")
+    public BaseResponse<GetProductRes> getProduct(@PathVariable Long productId) {
+        try {
+            Product productList = productProvider.retrieveProductsById(productId);
+            return new BaseResponse<>(SUCCESS, productProvider.retrieveGetProductRes(productList));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }

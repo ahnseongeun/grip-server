@@ -37,15 +37,16 @@ public class ReviewProvider {
     public List<GetReviewsRes> retrieveReviews() throws BaseException {
         List<Review> reviewList;
 
-        try {
-            reviewList = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-        } catch (Exception exception) {
-            throw new BaseException(FAILED_TO_GET_REVIEW);
-        }
+//        try {
+//            reviewList = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+//        } catch (Exception exception) {
+//            throw new BaseException(FAILED_TO_GET_REVIEW);
+//        }
 
-        return reviewList.stream().map(review -> {
-            return retrieveGetReviewsRes(review);
-        }).collect(Collectors.toList());
+//        return reviewList.stream().map(review -> {
+//            return retrieveGetReviewsRes(review);
+//        }).collect(Collectors.toList());
+        return null;
     }
 
     /**
@@ -60,15 +61,16 @@ public class ReviewProvider {
         Store store = storeProvider.retrieveStoreById(storeId);
         List<Review> reviewList;
 
-        try {
-            reviewList = reviewRepository.findByStoreOrderByCreateDateDesc(store);
-        } catch (Exception exception) {
-            throw new BaseException(FAILED_TO_GET_REVIEW);
-        }
-
-        return reviewList.stream().map(review -> {
-            return retrieveGetReviewRes(review);
-        }).collect(Collectors.toList());
+//        try {
+//            reviewList = reviewRepository.findByStoreOrderByCreateDateDesc(store);
+//        } catch (Exception exception) {
+//            throw new BaseException(FAILED_TO_GET_REVIEW);
+//        }
+//
+//        return reviewList.stream().map(review -> {
+//            return retrieveGetReviewRes(review);
+//        }).collect(Collectors.toList());
+        return null;
     }
 
     /**
@@ -98,7 +100,7 @@ public class ReviewProvider {
      * @Auther shine
      */
     public GetReviewsRes retrieveGetReviewsRes(Review review) {
-        return new GetReviewsRes(review.getId(), review.getStore().getName(), review.getUser().getName(),
+        return new GetReviewsRes(review.getId(), review.getUser().getName(),
                 review.getStar(), review.getContent(),
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
@@ -112,7 +114,8 @@ public class ReviewProvider {
      * @Auther shine
      */
     public GetReviewRes retrieveGetReviewRes(Review review) {
-        return new GetReviewRes(review.getId(), review.getStore().getName(), review.getUser().getName(),
+        return new GetReviewRes(review.getId(),
+                review.getUser().getName(), review.getUser().getProfileImageURL(),
                 review.getStar(), review.getContent(),
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());

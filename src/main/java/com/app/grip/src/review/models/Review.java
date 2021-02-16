@@ -1,7 +1,7 @@
 package com.app.grip.src.review.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.store.models.Store;
+import com.app.grip.src.product.models.Product;
 import com.app.grip.src.user.models.User;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -24,8 +24,8 @@ public class Review extends BaseEntity {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "store_id")
-    private Store store;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @ManyToOne
     @JoinColumn(name = "user_no")

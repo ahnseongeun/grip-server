@@ -225,31 +225,31 @@ public class GripApplication implements CommandLineRunner {
                 new ReviewPicture("https://previews.123rf.com/images/muralinathypr/muralinathypr1209/muralinathypr120900097/15123481-%EC%9D%B8%EB%8F%84%EC%9D%98-%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8-%EA%B8%88-%EB%AA%A9%EA%B1%B8%EC%9D%B4.jpg"),
                 new ReviewPicture("https://image.winudf.com/v2/image1/bGl0dGxlYXBwYXMuZ29sZGpld2VscnlkZXNpZ25fc2NyZWVuXzBfMTU3MzQ2ODAxMF8wMTA/screen-3.jpg?fakeurl=1&type=.jpg"));
         review1.setUser(user1);
-        review1.setStore(store1);
+        review1.setProduct(product1);
         review1.setReviewPictureList(reviewPictureList);
 
         Review review2 = new Review(4, "제가 원하던 원피스였으나 배송이 느린점이 아쉽습니다! 배송 부분만 감안하면 가격도 저렴하고 품질도 훌륭합니다!");
         reviewPictureList = Arrays.asList(new ReviewPicture("http://m.momoring.kr/web/product/big/201905/f19e479bc7827024257bb3723bea4611.gif"));
         review2.setUser(user2);
-        review2.setStore(store2);
+        review2.setProduct(product2);
         review2.setReviewPictureList(reviewPictureList);
 
         Review review3 = new Review(5, "식품같은 경우는 신선도가 생명인데 빠른 배송으로 하루만에 배송을 받았습니다! 유기농 재료로 직접 만들어서 먹는 순간 건강해지는 느낌! 정말 강추합니다.");
         reviewPictureList = Arrays.asList(new ReviewPicture("https://dimg.donga.com/wps/NEWS/IMAGE/2015/03/07/69995569.1.jpg"),
                 new ReviewPicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEosFKYRqlMvldH3Vkj2yIxKhYnBFMJ7vgGQ&usqp=CAU"));
         review3.setUser(user3);
-        review3.setStore(store3);
+        review3.setProduct(product3);
         review3.setReviewPictureList(reviewPictureList);
 
         Review review4 = new Review(5, "전에 쓰던 노트북과 차원이 다릅니다! 속도가 완전.... 이 노트북을 쓰면 다른 노트북을 못쓸 정도로 매우 쾌적하고 빠른 속도에 감탄했습니다!");
         reviewPictureList = Arrays.asList(new ReviewPicture("http://img.newspim.com/news/2019/11/20/1911201521166450.jpg"));
         review4.setUser(userFace1);
-        review4.setStore(store4);
+        review4.setProduct(product4);
         review4.setReviewPictureList(reviewPictureList);
 
         Review review5 = new Review(1, "배송도 느리고 생각보다 가격대비 품질이 그저 그러네요.");
         review5.setUser(userFace2);
-        review5.setStore(store5);
+        review5.setProduct(product5);
 
         final List<Review> reviewList = Arrays.asList(review1,review2,review3,review4,review5);
         List<Review> savedReview = (List<Review>) reviewRepository.saveAll(reviewList);
