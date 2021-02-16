@@ -1,32 +1,3 @@
-<!DOCTYPE html>
-<html lang="ko">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <!-- 최신버전 Alpha를 이용하고 싶다면 아래 스크립트를 사용 -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@alpha"></script> -->
-</head>
-
-<body onkeydown="return false" oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
-<video id="video"></video>
-<script>
-    var video = document.getElementById('video');
-    var videoSrc = 'https://test.dev/tmp/index.m3u8'; // <- 테스트 URL 이므로 본인의 URL 작성
-    //
-    // 우선 HLS를 지원하는지 체크
-    //
-    if (video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = videoSrc;
-        //
-        // HLS를 지원하지 않는다면 hls.js를 지원
-        //
-    } else if (Hls.isSupported()) {
-        var hls = new Hls();
-        hls.loadSource(videoSrc);
-        hls.attachMedia(video);
-    }
-</script>
-</body>
-</html>
+<video width="320" height="240" muted controls playsinline loop autoplay="autoplay">
+    <source src="/api/video-stream/${videoName}" type="application/x-mpegURL"/>
+</video>

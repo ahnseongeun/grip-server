@@ -123,8 +123,8 @@ public class VideoController {
     @ApiOperation(value = "서버에서 영상 불러올때 사용(서버 용도)", notes = "서버에서 영상 불러올때 사용(서버 용도)")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
                                                    @RequestHeader HttpHeaders headers) throws IOException {
-        //String path = "/home/ubuntu/video/";
-        String path = "C:\\Users\\ahn\\OneDrive\\바탕 화면\\";
+        String path = "/home/ubuntu/video/";
+        //String path = "C:\\Users\\ahn\\OneDrive\\바탕 화면\\";
         UrlResource video = new UrlResource("file:"+path+name);
         //range를 담을 그릇과 현재 range를 나타내는 변수가 필요하다.
         log.info(headers.toString());
