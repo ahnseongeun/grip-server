@@ -103,23 +103,23 @@ public class User extends BaseEntity {
     @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Store store;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Coupon> couponList;
+//    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+//    private List<Coupon> couponList;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Video> videoList;
+//    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+//    private List<Video> videoList;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<VideoParticipant> videoParticipantList ;
+ //   @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+ //   private List<VideoParticipant> videoParticipantList ;
 
 //    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
 //    private List<VideoLike> videoLikeList;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<WatchMyVideo> watchMyVideoList;
+//    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+//    private List<WatchMyVideo> watchMyVideoList;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<ChattingMessage> chattingMessageList;
+//    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+//    private List<ChattingMessage> chattingMessageList;
 
     public User(String name, String nickname,String profileImageURL ,String phoneNumber,
                 String birthday,String email,String gender,String snsDiv,Integer role,String imageStatus,

@@ -68,7 +68,7 @@ public enum BaseResponseStatus {
     FAILED_TO_GET_PRODUCTCATEGORY(false, 3115, "상품 카테고리 검색에 실패하였습니다."),
     FAILED_TO_POST_PRODUCTCATEGORY(false, 3116, "상품 카테고리 등록에 실패하였습니다."),
     NOT_FOUND_PRODUCT(false, 3117, "존재하지 않는 상품입니다."),
-    NOT_FOUND_REVIEW(false, 3117, "존재하지 않는 리뷰입니다."),
+    //NOT_FOUND_REVIEW(false, 3117, "존재하지 않는 리뷰입니다."),
     ALREADY_COMPLETED(false, 3118, "이미 판매종료된 상품입니다."),
     ALREADY_DELETE_PRODUCT(false, 3119, "이미 삭제된 상품입니다."),
     ALREADY_DELETE_REVIEW(false, 3119, "이미 삭제된 리뷰입니다."),

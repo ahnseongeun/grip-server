@@ -2,8 +2,7 @@ package com.app.grip.src.product;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.product.models.*;
-import com.app.grip.src.review.models.GetReviewRes;
-import com.app.grip.src.review.models.PictureRes;
+import com.app.grip.src.review.ReviewProvider;
 import com.app.grip.src.store.models.GetStoresRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -21,6 +20,7 @@ import static com.app.grip.config.BaseResponseStatus.*;
 public class ProductProvider {
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
+    private final ReviewProvider reviewProvider;
 
     SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
 
@@ -61,16 +61,6 @@ public class ProductProvider {
         }
 
         return productCategory;
-    }
-
-    /**
-     * ProductCategory -> GetProductCategoryRes 변경
-     * @Param ProductCategory productCategory
-     * @return GetProductCategoryRes
-     * @Auther shine
-     */
-    public GetProductCategoryRes retrieveGetProductCategoryRes(ProductCategory productCategory) {
-        return new GetProductCategoryRes(productCategory.getName(), productCategory.getStatus());
     }
 
 
@@ -126,6 +116,17 @@ public class ProductProvider {
         return product;
     }
 
+
+    /**
+     * ProductCategory -> GetProductCategoryRes 변경
+     * @Param ProductCategory productCategory
+     * @return GetProductCategoryRes
+     * @Auther shine
+     */
+    public GetProductCategoryRes retrieveGetProductCategoryRes(ProductCategory productCategory) {
+        return new GetProductCategoryRes(productCategory.getName(), productCategory.getStatus());
+    }
+
     /**
      * Product -> GetProductRes 변경
      * @Param Product product
@@ -133,16 +134,18 @@ public class ProductProvider {
      * @Auther shine
      */
     public GetProductRes retrieveGetProductRes(Product product) {
-        return new GetProductRes(product.getId(), product.getName(), product.getContent(),
-                product.getPrice(), product.getPictureURL(), product.getStore().getName(),
-                product.getProductCategory().getName(), outputDateFormat.format(product.getCreateDate()),
-                product.getStatus(), product.getReviewList().stream().map(review -> {
-                    return new GetReviewRes(review.getId(), review.getUser().getName(),
-                            review.getUser().getProfileImageURL(), review.getStar(), review.getContent(),
-                            review.getReviewPictureList().stream().map(reviewPicture -> {
-                                return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
-                            }).collect(Collectors.toList()),
-                            outputDateFormat.format(review.getCreateDate()));
+        return new GetProductRes(
+                product.getId(),
+                product.getName(),
+                product.getContent(),
+                product.getPrice(),
+                product.getPictureURL(),
+                product.getStore().getName(),
+                product.getProductCategory().getName(),
+                outputDateFormat.format(product.getCreateDate()),
+                product.getStatus(),
+                product.getReviewList().stream().map(review -> {
+                    return reviewProvider.retrieveGetReviewRes(review);
                 }).collect(Collectors.toList()));
     }
 
