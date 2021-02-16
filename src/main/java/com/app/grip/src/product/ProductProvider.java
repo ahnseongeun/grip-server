@@ -118,7 +118,7 @@ public class ProductProvider {
         Product product;
 
         try {
-            product = productRepository.findByIdOrderByReviewListContentDesc(productId).get(0);
+            product = productRepository.findByIdOrderByReviewList(productId).get(0);
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_PRODUCT);
         }

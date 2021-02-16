@@ -43,6 +43,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "productCategory_id")
     private ProductCategory productCategory;
 
+    @OrderBy("id DESC")
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Review> reviewList;
 
