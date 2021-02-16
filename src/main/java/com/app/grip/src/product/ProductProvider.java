@@ -80,7 +80,7 @@ public class ProductProvider {
      * @throws BaseException
      * @Auther shine
      */
-    public List<GetProductRes> retrieveProductsByStatusYAndStatusC() throws BaseException {
+    public List<GetProductRes> retrieveProducts() throws BaseException {
         List<Product> productList;
 
         try {

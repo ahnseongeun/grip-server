@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -24,15 +21,15 @@ public class ReviewController {
     /**
      * 리뷰 전체조회 API
      * [GET] /api/admin/reviews
-     * @return BaseResponse<List<GetReviewRes>>
+     * @return BaseResponse<List<GetReviewsRes>>
      * @Auther shine
      */
     @ApiOperation(value = "리뷰 전체조회", notes = "리뷰 전체조회")
     @ResponseBody
     @GetMapping("/admin/reviews")
-    public BaseResponse<List<GetReviewRes>> getReviews() {
+    public BaseResponse<List<GetReviewsRes>> getReviews() {
         try {
-            List<GetReviewRes> reviewResList = reviewProvider.retrieveReviews();
+            List<GetReviewsRes> reviewResList = reviewProvider.retrieveReviews();
             return new BaseResponse<>(SUCCESS, reviewResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -52,7 +49,26 @@ public class ReviewController {
     public BaseResponse<GetReviewRes> getReview(@PathVariable Long reviewId) {
         try {
             Review review = reviewProvider.retrieveReview(reviewId);
-            return new BaseResponse<>(SUCCESS, reviewProvider.retrieveReviewRes(review));
+            return new BaseResponse<>(SUCCESS, reviewProvider.retrieveGetReviewRes(review));
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 상품에 대한 리뷰 조회 API
+     * [GET] /api/stores/:storeId/reviews
+     * @PathVariable Long reviewId
+     * @return BaseResponse<GetReviewRes>
+     * @Auther shine
+     */
+    @ApiOperation(value = "상품에 대한 리뷰 조회", notes = "상품에 대한 리뷰 조회")
+    @ResponseBody
+    @GetMapping("/stores/{storeId}/reviews")
+    public BaseResponse<List<GetReviewRes>> getStoreReviews(@PathVariable Long storeId) {
+        try {
+            List<GetReviewRes> reviewResList = reviewProvider.retrieveByStoreReviews(storeId);
+            return new BaseResponse<>(SUCCESS, reviewResList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
