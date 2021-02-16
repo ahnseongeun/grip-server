@@ -1,14 +1,13 @@
 package com.app.grip.src.review;
 
 import com.app.grip.config.BaseException;
+import com.app.grip.src.product.ProductProvider;
+import com.app.grip.src.product.models.ProductCategory;
 import com.app.grip.src.review.models.GetReviewRes;
 import com.app.grip.src.review.models.GetReviewsRes;
 import com.app.grip.src.review.models.PictureRes;
 import com.app.grip.src.review.models.Review;
-import com.app.grip.src.store.StoreProvider;
-import com.app.grip.src.store.models.Store;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 @Service
 public class ReviewProvider {
     private final ReviewRepository reviewRepository;
-    private final StoreProvider storeProvider;
+    private final ProductProvider productProvider;
 
     SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
 
@@ -37,40 +36,15 @@ public class ReviewProvider {
     public List<GetReviewsRes> retrieveReviews() throws BaseException {
         List<Review> reviewList;
 
-//        try {
-//            reviewList = reviewRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
-//        } catch (Exception exception) {
-//            throw new BaseException(FAILED_TO_GET_REVIEW);
-//        }
+        try {
+            reviewList = reviewRepository.findAllByOrderByIdDesc();
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_GET_REVIEW);
+        }
 
-//        return reviewList.stream().map(review -> {
-//            return retrieveGetReviewsRes(review);
-//        }).collect(Collectors.toList());
-        return null;
-    }
-
-    /**
-     * 상점에 대한 리뷰 조회
-     * @return List<GetReviewRes>
-     * @Param Long storeId
-     * @throws BaseException
-     * @Auther shine
-     */
-    @Transactional
-    public List<GetReviewRes> retrieveByStoreReviews(Long storeId) throws BaseException {
-        Store store = storeProvider.retrieveStoreById(storeId);
-        List<Review> reviewList;
-
-//        try {
-//            reviewList = reviewRepository.findByStoreOrderByCreateDateDesc(store);
-//        } catch (Exception exception) {
-//            throw new BaseException(FAILED_TO_GET_REVIEW);
-//        }
-//
-//        return reviewList.stream().map(review -> {
-//            return retrieveGetReviewRes(review);
-//        }).collect(Collectors.toList());
-        return null;
+        return reviewList.stream().map(review -> {
+            return retrieveGetReviewsRes(review);
+        }).collect(Collectors.toList());
     }
 
     /**
@@ -85,7 +59,7 @@ public class ReviewProvider {
         Review review;
 
         try {
-            review = reviewRepository.findById(reviewId).orElseThrow(() -> new BaseException(NOT_FOUND_REVIEW));
+            review = reviewRepository.findById(reviewId).orElseThrow(() -> new BaseException(FAILED_TO_GET_REVIEW));
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_REVIEW);
         }
@@ -94,17 +68,66 @@ public class ReviewProvider {
     }
 
     /**
+     * 유효한 전체 리뷰 조회
+     * @return List<Review>
+     * @throws BaseException
+     * @Auther shine
+     */
+    @Transactional
+    public List<Review> retrieveReviewsByStatusY() throws BaseException {
+        List<Review> reviewList;
+
+        try {
+            reviewList = reviewRepository.findByStatusOrderByIdDesc("Y");
+        } catch (Exception exception) {
+            throw new BaseException(FAILED_TO_GET_REVIEW);
+        }
+
+        return reviewList;
+    }
+
+    /**
+     * 카테고리별 리뷰 조회
+     * @return List<Review>
+     * @throws BaseException
+     * @Auther shine
+     */
+    @Transactional
+    public List<Review> retrieveReviewsByCategoryNameAndStatusY(String categoryName) throws BaseException {
+        productProvider.retrieveProductCategoryByNameAndStatusY(categoryName);
+        List<Review> reviewList;
+
+        try {
+            reviewList = reviewRepository.findByStatusAndProduct_ProductCategory_Name("Y", categoryName);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            throw new BaseException(FAILED_TO_GET_REVIEW);
+        }
+
+        return reviewList;
+    }
+
+
+    /**
      * Review -> GetReviewsRes 변경
      * @Param Review review
      * @return GetReviewsRes
      * @Auther shine
      */
     public GetReviewsRes retrieveGetReviewsRes(Review review) {
-        return new GetReviewsRes(review.getId(), review.getUser().getName(),
-                review.getStar(), review.getContent(),
+        return new GetReviewsRes(
+                review.getId(),
+                review.getProduct().getId(),
+                review.getUser().getName(),
+                review.getUser().getProfileImageURL(),
+                review.getStar(),
+                review.getContent(),
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
-                }).collect(Collectors.toList()), outputDateFormat.format(review.getCreateDate()), outputDateFormat.format(review.getUpdateDate()), review.getStatus());
+                }).collect(Collectors.toList()),
+                outputDateFormat.format(review.getCreateDate()),
+                outputDateFormat.format(review.getUpdateDate()),
+                review.getStatus());
     }
 
     /**
@@ -114,12 +137,18 @@ public class ReviewProvider {
      * @Auther shine
      */
     public GetReviewRes retrieveGetReviewRes(Review review) {
-        return new GetReviewRes(review.getId(),
-                review.getUser().getName(), review.getUser().getProfileImageURL(),
-                review.getStar(), review.getContent(),
+        return new GetReviewRes(
+                review.getId(),
+                review.getProduct().getId(),
+                review.getUser().getNo(),
+                review.getUser().getName(),
+                review.getUser().getProfileImageURL(),
+                review.getStar(),
+                review.getContent(),
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
-                }).collect(Collectors.toList()), outputDateFormat.format(review.getCreateDate()));
+                }).collect(Collectors.toList()),
+                outputDateFormat.format(review.getCreateDate()));
     }
 
 }

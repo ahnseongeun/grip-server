@@ -251,7 +251,11 @@ public class GripApplication implements CommandLineRunner {
         review5.setUser(userFace2);
         review5.setProduct(product5);
 
-        final List<Review> reviewList = Arrays.asList(review1,review2,review3,review4,review5);
+        Review review6 = new Review(2, "배송은 빨랐으나 생각보다 상품이 별로네요. 비추합니다.");
+        review6.setUser(userFace1);
+        review6.setProduct(product1);
+
+        final List<Review> reviewList = Arrays.asList(review1,review2,review3,review4,review5,review6);
         List<Review> savedReview = (List<Review>) reviewRepository.saveAll(reviewList);
 
 

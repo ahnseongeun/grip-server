@@ -39,6 +39,14 @@ public class Store extends BaseEntity {
     @OneToMany(mappedBy = "store", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Product> productList;
 
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+
+        for (Product product : productList) {
+            product.setStore(this);
+        }
+    }
+
     public Store(String name, String introduction, String pictureURL) {
         this.name = name;
         this.introduction = introduction;

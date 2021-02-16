@@ -43,8 +43,17 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "productCategory_id")
     private ProductCategory productCategory;
 
+    @OrderBy("id DESC")
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Review> reviewList;
+
+    public void setReviewList(List<Review> reviewList) {
+        this.reviewList = reviewList;
+
+        for(Review review : reviewList) {
+            review.setProduct(this);
+        }
+    }
 
     public Product(String name, String content, Integer price, String pictureURL) {
         this.name = name;

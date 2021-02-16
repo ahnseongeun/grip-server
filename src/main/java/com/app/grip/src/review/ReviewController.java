@@ -7,7 +7,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.app.grip.config.BaseResponseStatus.*;
 
@@ -24,13 +26,33 @@ public class ReviewController {
      * @return BaseResponse<List<GetReviewsRes>>
      * @Auther shine
      */
-    @ApiOperation(value = "리뷰 전체조회", notes = "리뷰 전체조회")
+    @ApiOperation(value = "리뷰 전체조회(관리자용)", notes = "리뷰 전체조회")
     @ResponseBody
     @GetMapping("/admin/reviews")
-    public BaseResponse<List<GetReviewsRes>> getReviews() {
+    public BaseResponse<List<GetReviewsRes>> getAdminReviews() {
         try {
             List<GetReviewsRes> reviewResList = reviewProvider.retrieveReviews();
             return new BaseResponse<>(SUCCESS, reviewResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 리뷰 전체조회 API
+     * [GET] /api/reviews
+     * @return BaseResponse<List<GetReviewRes>>
+     * @Auther shine
+     */
+    @ApiOperation(value = "리뷰 전체조회", notes = "리뷰 전체조회")
+    @ResponseBody
+    @GetMapping("/reviews")
+    public BaseResponse<List<GetReviewRes>> getReviews() {
+        try {
+            List<Review> reviewList = reviewProvider.retrieveReviewsByStatusY();
+            return new BaseResponse<>(SUCCESS, reviewList.stream().map(review -> {
+                return reviewProvider.retrieveGetReviewRes(review);
+            }).collect(Collectors.toList()));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
@@ -56,23 +78,36 @@ public class ReviewController {
     }
 
     /**
-     * 상품에 대한 리뷰 조회 API
-     * [GET] /api/stores/:storeId/reviews
-     * @PathVariable Long reviewId
-     * @return BaseResponse<GetReviewRes>
+     * 카테고리별 리뷰 조회 API
+     * [GET] /api/reviews
+     * @RequestBody String categoryName
+     * @return BaseResponse<List<GetReviewRes>>
      * @Auther shine
      */
-    @ApiOperation(value = "상품에 대한 리뷰 조회", notes = "상품에 대한 리뷰 조회")
+    @ApiOperation(value = "카테고리별 리뷰 조회", notes = "카테고리별 리뷰 조회")
     @ResponseBody
-    @GetMapping("/stores/{storeId}/reviews")
-    public BaseResponse<List<GetReviewRes>> getStoreReviews(@PathVariable Long storeId) {
+    @GetMapping("/reviews/category")
+    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestBody(required = false) HashMap<String, String> parameter) {
+        String categoryName = "";
         try {
-            List<GetReviewRes> reviewResList = reviewProvider.retrieveByStoreReviews(storeId);
-            return new BaseResponse<>(SUCCESS, reviewResList);
+            categoryName = parameter.get("name");
+        } catch (Exception exception) {
+            return new BaseResponse<>(EMPTY_CATEGORY);
+        }
+        if(categoryName == null || categoryName.length() == 0) {
+            return new BaseResponse<>(EMPTY_CATEGORY);
+        }
+
+        try {
+            List<Review> reviewList = reviewProvider.retrieveReviewsByCategoryNameAndStatusY(categoryName);
+            return new BaseResponse<>(SUCCESS, reviewList.stream().map(review -> {
+                return reviewProvider.retrieveGetReviewRes(review);
+            }).collect(Collectors.toList()));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
     }
+
 
     /**
      * 리뷰 등록 API
