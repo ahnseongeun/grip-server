@@ -74,7 +74,7 @@ public class ProductController {
     @GetMapping("/admin/products")
     public BaseResponse<List<GetProductRes>> getProducts() {
         try {
-            List<GetProductRes> productList = productProvider.retrieveProductsByStatusYAndStatusC();
+            List<GetProductRes> productList = productProvider.retrieveProducts();
             return new BaseResponse<>(SUCCESS, productList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

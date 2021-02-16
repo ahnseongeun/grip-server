@@ -212,6 +212,11 @@ public class GripApplication implements CommandLineRunner {
 
 
         /**
+         * 리뷰 더미 데이터 삽입
+         */
+
+
+        /**
          * 영상 카테고리 더미 데이터 삽입
          */
         VideoCategory videoCategory1 = new VideoCategory("라이브예고","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
