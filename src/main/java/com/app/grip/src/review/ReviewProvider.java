@@ -98,7 +98,7 @@ public class ReviewProvider {
      * @Auther shine
      */
     public GetReviewsRes retrieveGetReviewsRes(Review review) {
-        return new GetReviewsRes(review.getId(), review.getStore().getName(), review.getUser().getName(),
+        return new GetReviewsRes(review.getId(), review.getUser().getName(),
                 review.getStar(), review.getContent(),
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
@@ -112,7 +112,7 @@ public class ReviewProvider {
      * @Auther shine
      */
     public GetReviewRes retrieveGetReviewRes(Review review) {
-        return new GetReviewRes(review.getId(), review.getStore().getName(),
+        return new GetReviewRes(review.getId(),
                 review.getUser().getName(), review.getUser().getProfileImageURL(),
                 review.getStar(), review.getContent(),
                 review.getReviewPictureList().stream().map(reviewPicture -> {
