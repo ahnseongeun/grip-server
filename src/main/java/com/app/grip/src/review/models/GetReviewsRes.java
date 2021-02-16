@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class GetReviewRes {
+public class GetReviewsRes {
     private final Long reviewId;
     private final String storeName;
     private final String userName;
@@ -15,4 +15,6 @@ public class GetReviewRes {
     private final String content;
     private final List<PictureRes> picture;
     private final String createDate;
+    private final String updateDate;
+    private final String status;
 }

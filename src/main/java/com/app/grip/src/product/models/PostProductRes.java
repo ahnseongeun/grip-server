@@ -11,6 +11,6 @@ public class PostProductRes {
     private final String content;
     private final Integer price;
     private final String pictureURL;
-    private final Long stroeId;
+    private final Long storeId;
     private final Long productCategoryId;
 }
