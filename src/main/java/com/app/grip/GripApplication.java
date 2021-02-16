@@ -17,7 +17,6 @@ import com.app.grip.src.video.VideoRepository;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.src.videoCategory.VideoCategory;
 import com.app.grip.src.videoCategory.VideoCategoryRepository;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

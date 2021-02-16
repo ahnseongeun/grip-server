@@ -71,6 +71,9 @@ dependencies {
     compile 'commons-fileupload:commons-fileupload:1.4'
     compile 'commons-io:commons-io:2.8.0'
 
+    //영상
+    compile 'net.bramp.ffmpeg:ffmpeg:0.6.2'
+
     sourceSets {
         main {
             resources {
