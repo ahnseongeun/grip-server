@@ -40,6 +40,14 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<ReviewPicture> reviewPictureList;
 
+    public void setReviewPictureList(List<ReviewPicture> reviewPictureList) {
+        this.reviewPictureList = reviewPictureList;
+
+        for (ReviewPicture picture : reviewPictureList) {
+            picture.setReview(this);
+        }
+    }
+
     public Review(Integer star, String content) {
         this.star = star;
         this.content = content;
