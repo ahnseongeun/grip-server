@@ -23,6 +23,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -111,11 +113,13 @@ public class VideoService {
 
         video.setVideoLike(videoLike);
         video.setEndLiveStatus("Y");
+        video.setEndLiveTime(LocalDateTime.now());
 
         return PatchVideo.builder()
                 .videoId(videoId)
                 .videoLikeCount(video.getVideoLike().getCount())
                 .endLiveStatus(video.getEndLiveStatus())
+                .EndLiveTime(video.getEndLiveTime())
                 .build();
     }
 }

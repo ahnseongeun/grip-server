@@ -27,7 +27,7 @@ public class VideoLike extends BaseEntity {
 //    @JoinColumn(name = "userNo",nullable = false)
 //    private User user;
 
-    @Column(name = "likeCount",nullable = false)
+    @Column(name = "likeCount",nullable = false,columnDefinition = "integer default 1")
     private Integer count;
 
     @OneToOne

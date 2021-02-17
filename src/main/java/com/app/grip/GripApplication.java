@@ -227,7 +227,12 @@ public class GripApplication implements CommandLineRunner {
         product5.setStore(store5);
         product5.setProductCategory(productCategory1);
 
-        final List<Product> productList = Arrays.asList(product1,product2,product3,product4,product5);
+        Product product6 = new Product("블링 블링 금목걸이 팔아요~", "멀리서봐도 아름답고 반짝 반짝 빛나는 24K 금목걸이 팝니다~", 200000,
+                "https://spng.subpng.com/20180906/vqw/kisspng-earring-jewellery-necklace-kalyan-jewellers-gold-jewellery-transparent-png-arts-5b91ec7d692563.1314281415362899174307.jpg");
+        product6.setStore(store1);
+        product6.setProductCategory(productCategory1);
+
+        final List<Product> productList = Arrays.asList(product1,product2,product3,product4,product5,product6);
         List<Product> savedProduct = (List<Product>) productRepository.saveAll(productList);
 
 

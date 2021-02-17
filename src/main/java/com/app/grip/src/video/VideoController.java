@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.jcodec.api.JCodecException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.ResourceRegion;
 import org.springframework.http.*;
@@ -31,17 +32,17 @@ public class VideoController {
     private final VideoProvider videoProvider;
     private final VideoService videoService;
     private final S3Service s3Service;
-    private final HashMap<String,Long> StreamingRepository;
+    private final HashMap<String,Integer> StreamingRepository;
 
     @Autowired
     public VideoController(VideoProvider videoProvider,
                            VideoService videoService,
                            S3Service s3Service,
-                           HashMap<String, Long> streamingRepository) {
+                           @Qualifier("streaming") HashMap<String, Integer> streamingRepository) {
         this.videoProvider = videoProvider;
         this.videoService = videoService;
         this.s3Service = s3Service;
-        StreamingRepository = streamingRepository;
+        this.StreamingRepository = streamingRepository;
     }
 
     @GetMapping("/admin/videos")
