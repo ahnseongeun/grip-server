@@ -30,19 +30,19 @@ public class TimeScheduler {
             return;
         if(list2 == null)
             return;
-        log.info(String.valueOf(list1.get(1)));
-        if(list1.get(0) <= list1.get(1)){
-            list1.add(0,list1.get(0)+1);
-        }else{
-            list1.add(0,0);
-        }
-        if(list2.get(0) <= list2.get(1)){
-            list2.add(0,list2.get(0)+1);
-        }else{
-            list2.add(0,0);
-        }
+        listTest(list1);
+        listTest(list2);
         StreamingRepository.put(video1,list1);
         StreamingRepository.put(video2,list2);
         log.info(list1.get(0) +" "+list2.get(0));
+    }
+
+    private void listTest(List<Integer> list) {
+        if(list.get(0) <= list.get(1)){
+            list.add(0,list.get(0)+1);
+        }else{
+            list.add(0,0);
+        }
+        list.add(1,list.get(1));
     }
 }
