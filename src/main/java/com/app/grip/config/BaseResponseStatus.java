@@ -85,6 +85,7 @@ public enum BaseResponseStatus {
     FAILED_TO_POST_VIDEO_LIKE(false, 3507, "좋아요 영구저장에 실패했습니다."),
     FAILED_TO_GET_VIDEO_LIKE(false,3508,"좋아요 조회에 실패했습니다."),
     FAILED_TO_POST_PARTICIPANT(false,3509,"참여자 등록에 실패했습니다."),
+    NOT_FOUND_PARTICIPANT(false,3510,"참여자 조회에 실패했습니다."),
 
 
     // 4000 : Database 오류

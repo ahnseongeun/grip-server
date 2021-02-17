@@ -11,6 +11,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Accessors(chain = true)
@@ -54,6 +56,12 @@ public class Video extends BaseEntity {
      */
     @Column(name = "endLiveStatus", nullable = false, length = 1)
     private String endLiveStatus;
+
+    /**
+     * 생방송 종료 시간
+     */
+    @Column(name = "endLiveTime")
+    private LocalDateTime endLiveTime;
 
     /**
      * 비디오 경로

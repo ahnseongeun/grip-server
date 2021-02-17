@@ -1,5 +1,6 @@
 package com.app.grip.src.video;
 
+import com.app.grip.src.user.models.User;
 import com.app.grip.src.video.models.Video;
 import org.springframework.data.repository.CrudRepository;
 
@@ -14,4 +15,6 @@ public interface VideoRepository extends CrudRepository<Video, Long> {
     List<Video> findByVideoCategory_IdAndStatusAndEndLiveStatus(Long id,String Status,String EndLiveStatus);
 
     Optional<Video> findByIdAndStatus(Long videoId, String y);
+
+    List<Video> findByUserAndStatus(User user, String y);
 }
