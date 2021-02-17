@@ -63,7 +63,7 @@ public class UserProvider {
     public User retrieveFacebookUserById(String id) throws BaseException {
         List<User> existsUserList;
         try {
-            existsUserList = userRepository.findByIdAndSnsDiv(id, "F");
+            existsUserList = userRepository.findByIdAndSnsDivAndStatus(id, "F", "Y");
         } catch (Exception ignored) {
             throw new BaseException(FAILED_TO_GET_USER);
         }

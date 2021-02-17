@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findByStatus(String status);
     List<User> findByStatusAndPhoneNumberIsContaining(String y, String phoneNumber);
-    List<User> findByIdAndSnsDiv(String id, String div);
+    List<User> findByIdAndSnsDivAndStatus(String id, String div, String status);
     Optional<User> findByNoAndStatus(Long userNo, String status);
 }
