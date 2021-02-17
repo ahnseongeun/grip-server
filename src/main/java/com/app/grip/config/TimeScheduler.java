@@ -31,6 +31,10 @@ public class TimeScheduler {
         //String video2 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video2\\videotest2.m3u8";
         String video1 = "https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8";
         String video2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
+        if(StreamingRepository.get(video1) == null)
+            return;
+        if(StreamingRepository.get(video2) == null)
+            return;
         int time1 = StreamingRepository.get(video1);
         int time1Size = StreamingSizeRepository.get(video1);
         int time2 = StreamingRepository.get(video2);
@@ -38,7 +42,7 @@ public class TimeScheduler {
 
         StreamingRepository.put(video1,timeCheck(time1,time1Size));
         StreamingRepository.put(video2,timeCheck(time2,time2Size));
-        log.info(StreamingRepository.get(video1) +" "+StreamingRepository.get(video2));
+        //log.info(StreamingRepository.get(video1) +" "+StreamingRepository.get(video2));
     }
 
     private int timeCheck(int time, int timeSize) {

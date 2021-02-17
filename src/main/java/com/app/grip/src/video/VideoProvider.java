@@ -77,7 +77,7 @@ public class VideoProvider {
         Video video = videoRepository.findByIdAndStatus(videoId,"Y")
                 .orElseThrow(() -> new BaseException(FAILED_TO_GET_VIDEO));
 
-        int startTime = streamingRepository.get(video.getVideoURL());
+        int startTime = streamingRepository.get(video.getVideoURL()) == null ? 0 : streamingRepository.get(video.getVideoURL());
 
         int couponCount = couponRepository.findByStatusAndUser("Y",user).size();
 
