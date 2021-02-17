@@ -59,7 +59,7 @@ public class CouponProvider {
         List<Coupon> couponList;
 
         try {
-            couponList = couponRepository.findByStatusOrderById("Y");
+            couponList = couponRepository.findByStatusOrderByIdDesc("Y");
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_COUPON);
         }
