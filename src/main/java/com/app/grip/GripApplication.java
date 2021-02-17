@@ -432,6 +432,7 @@ public class GripApplication implements CommandLineRunner {
         list2.add(0);
         list2.add(GetFileMetaData.fileMetaData(url2));
         StreamingRepository.put(url2,list2);
+        System.out.println(GetFileMetaData.fileMetaData(url2));
 
     }
 
