@@ -38,7 +38,7 @@ public class TimeScheduler {
 
         StreamingRepository.put(video1,timeCheck(time1,time1Size));
         StreamingRepository.put(video2,timeCheck(time2,time2Size));
-        log.info(StreamingRepository.get(video1) +" "+StreamingRepository.get(video2));
+        //log.info(StreamingRepository.get(video1) +" "+StreamingRepository.get(video2));
     }
 
     private int timeCheck(int time, int timeSize) {
