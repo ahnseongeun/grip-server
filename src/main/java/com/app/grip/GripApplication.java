@@ -426,6 +426,7 @@ public class GripApplication implements CommandLineRunner {
         list1.add(0);
         list1.add(GetFileMetaData.fileMetaData(url1));
         StreamingRepository.put(url1,list1);
+        System.out.println(GetFileMetaData.fileMetaData(url1));
 
         List<Integer> list2 = new ArrayList<>();
         String url2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
