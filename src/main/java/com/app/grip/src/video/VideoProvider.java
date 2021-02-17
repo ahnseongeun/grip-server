@@ -25,16 +25,19 @@ public class VideoProvider {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final HashMap<Long,Integer> LikeRepository;
+    private final HashMap<String, Integer> StreamingRepository;
 
     @Autowired
     public VideoProvider(VideoRepository videoRepository, CouponRepository couponRepository,
                          JwtService jwtService, UserRepository userRepository,
-                         HashMap<Long, Integer> likeRepository) {
+                         HashMap<Long, Integer> likeRepository,
+                         HashMap<String, Integer> streamingRepository) {
         this.videoRepository = videoRepository;
         this.couponRepository = couponRepository;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.LikeRepository = likeRepository;
+        this.StreamingRepository = streamingRepository;
     }
 
     public List<GetVideos> retrieveVideos() throws BaseException {
@@ -66,11 +69,16 @@ public class VideoProvider {
 
     public GetDetailVideo retrieveVideoDetail(Long videoId) throws BaseException {
 
+
         User user = userRepository.findByNoAndStatus(jwtService.getUserNo(),"Y")
                 .orElseThrow(() -> new BaseException(NOT_FOUND_USER));
 
         Video video = videoRepository.findByIdAndStatus(videoId,"Y")
                 .orElseThrow(() -> new BaseException(FAILED_TO_GET_VIDEO));
+
+        String videoURL = video.getVideoURL();
+        int startTime = StreamingRepository.get(videoURL);
+
 
         int couponCount = couponRepository.findByStatusAndUser("Y",user).size();
 
