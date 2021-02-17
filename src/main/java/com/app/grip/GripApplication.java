@@ -19,6 +19,7 @@ import com.app.grip.src.video.VideoRepository;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.src.videoCategory.VideoCategory;
 import com.app.grip.src.videoCategory.VideoCategoryRepository;
+import com.app.grip.utils.GetFileMetaData;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,10 +27,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -44,6 +42,8 @@ public class GripApplication implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
     private final CouponRepository couponRepository;
+    private final HashMap<String,List<Integer>> StreamingRepository;
+    private final GetFileMetaData getFileMetaData;
 
     public GripApplication(VideoCategoryRepository videoCategoryRepository,
                            AdvertisementRepository advertisementRepository,
@@ -51,7 +51,8 @@ public class GripApplication implements CommandLineRunner {
                            StoreRepository storeRepository,
                            ProductCategoryRepository productCategoryRepository,
                            ProductRepository productRepository, ReviewRepository reviewRepository,
-                           CouponRepository couponRepository) {
+                           CouponRepository couponRepository, HashMap<String,
+            List<Integer>> streamingRepository, GetFileMetaData getFileMetaData) {
         this.videoCategoryRepository = videoCategoryRepository;
         this.advertisementRepository = advertisementRepository;
         this.userRepository = userRepository;
@@ -61,6 +62,8 @@ public class GripApplication implements CommandLineRunner {
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
         this.couponRepository = couponRepository;
+        this.StreamingRepository = streamingRepository;
+        this.getFileMetaData = getFileMetaData;
     }
 
     public static void main(String[] args) {
@@ -417,6 +420,18 @@ public class GripApplication implements CommandLineRunner {
 
 
         List<Video> savedVideo = (List<Video>) videoRepository.saveAll(videoList);
+
+        List<Integer> list1 = new ArrayList<>();
+        String url1 = "https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8";
+        list1.add(0);
+        list1.add(GetFileMetaData.fileMetaData(url1));
+        StreamingRepository.put(url1,list1);
+
+        List<Integer> list2 = new ArrayList<>();
+        String url2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
+        list2.add(0);
+        list2.add(GetFileMetaData.fileMetaData(url2));
+        StreamingRepository.put(url2,list2);
 
     }
 

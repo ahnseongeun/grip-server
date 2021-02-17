@@ -104,6 +104,7 @@ public class VideoController {
 //        log.info("test3");
 //        return s3Service.uploadFile(resultFile);
 //    }
+
     @PostMapping("/upload-video")
     @ApiOperation(value = "영상 업로드 및 썸네일 추출 (서버측 데이터 삽입 용도)", notes = "영상 업로드(서버측 데이터 삽입 용도)")
     public BaseResponse<PostVideoAndThumbNail> upload(
@@ -119,6 +120,13 @@ public class VideoController {
         }
     }
 
+    /**
+     * mp4 영상 불러올때 사용
+     * @param name
+     * @param headers
+     * @return
+     * @throws IOException
+     */
     @GetMapping("/video-stream/{name}")
     @ApiOperation(value = "서버에서 영상 불러올때 사용(서버 용도)", notes = "서버에서 영상 불러올때 사용(서버 용도)")
     public ResponseEntity<ResourceRegion> getVideo(@PathVariable String name,
