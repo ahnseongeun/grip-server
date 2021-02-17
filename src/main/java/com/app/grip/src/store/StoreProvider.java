@@ -6,7 +6,6 @@ import com.app.grip.src.store.models.GetStoresRes;
 import com.app.grip.src.store.models.Store;
 import com.app.grip.src.user.models.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +34,7 @@ public class StoreProvider {
         List<Store> storeList;
 
         try {
-            storeList = storeRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
+            storeList = storeRepository.findAllByOrderByIdDesc();
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_STORE);
         }
