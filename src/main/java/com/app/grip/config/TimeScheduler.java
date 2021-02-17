@@ -30,7 +30,7 @@ public class TimeScheduler {
             return;
         if(list2 == null)
             return;
-        if(list1.get(0) <= list2.get(0)){
+        if(list1.get(0) <= list1.get(1)){
             list1.add(0,list1.get(0)+1);
         }else{
             list1.add(0,0);
