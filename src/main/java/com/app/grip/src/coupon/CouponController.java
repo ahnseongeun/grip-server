@@ -3,6 +3,7 @@ package com.app.grip.src.coupon;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.coupon.models.GetCouponRes;
+import com.app.grip.src.coupon.models.GetCouponsRes;
 import com.app.grip.src.coupon.models.PostCouponReq;
 import com.app.grip.src.coupon.models.PostCouponRes;
 import com.app.grip.utils.ValidationRegex;
@@ -25,16 +26,15 @@ public class CouponController {
     /**
      * 쿠폰 전체조회 API
      * [GET] /api/admin/coupons
-     * @PathVariable
      * @return
      * @Auther shine
      */
-    @ApiOperation(value = "쿠폰 전체조회", notes = "쿠폰 전체조회")
+    @ApiOperation(value = "전체 쿠폰조회(관리자용)", notes = "전체 쿠폰조회")
     @ResponseBody
     @GetMapping("/admin/coupons")
-    public BaseResponse<List<GetCouponRes>> getCoupons() {
+    public BaseResponse<List<GetCouponsRes>> getAdminCoupons() {
         try {
-            List<GetCouponRes> couponList = couponProvider.retrieveCoupons();
+            List<GetCouponsRes> couponList = couponProvider.retrieveCoupons();
             return new BaseResponse<>(SUCCESS, couponList);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
@@ -42,12 +42,12 @@ public class CouponController {
     }
 
     /**
-     * 내 쿠폰 조회 API
+     * 쿠폰 전체조회 API
      * [GET] /api/coupons
-     * @return List<GetCouponRes>
+     * @return
      * @Auther shine
      */
-    @ApiOperation(value = "내 쿠폰 조회", notes = "내 쿠폰 조회")
+    @ApiOperation(value = "쿠폰 전체조회(클라용)", notes = "내 쿠폰 조회(클라용)")
     @ResponseBody
     @GetMapping("/coupons")
     public BaseResponse<List<GetCouponRes>> getCoupon() {

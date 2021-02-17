@@ -8,6 +8,7 @@ import lombok.Getter;
 public class GetCouponRes {
     private final Long couponId;
     private final Long userNo;
+    private final String userName;
     private final String content;
     private final Integer discount;
     private final Integer minimumPrice;

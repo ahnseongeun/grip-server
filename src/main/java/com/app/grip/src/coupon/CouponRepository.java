@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface CouponRepository extends CrudRepository<Coupon, Long> {
-    List<Coupon> findByStatus(String status);
+    List<Coupon> findAllByOrderByIdDesc();
+    List<Coupon> findByStatusOrderById(String status);
     List<Coupon> findByStatusAndUser(String status, User user);
 }

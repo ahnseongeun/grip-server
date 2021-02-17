@@ -3,6 +3,7 @@ package com.app.grip.src.coupon;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.coupon.models.Coupon;
 import com.app.grip.src.coupon.models.GetCouponRes;
+import com.app.grip.src.coupon.models.GetCouponsRes;
 import com.app.grip.src.user.UserRepository;
 import com.app.grip.src.user.models.User;
 import com.app.grip.utils.jwt.JwtService;
@@ -27,30 +28,28 @@ public class CouponProvider {
     SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
     
     /**
-     * 쿠폰 전체 조회
+     * 쿠폰 전체 조회(관리자용)
      * @return List<GetCouponRes>
      * @throws BaseException
      * @Auther shine
      */
     @Transactional
-    public List<GetCouponRes> retrieveCoupons() throws BaseException {
+    public List<GetCouponsRes> retrieveCoupons() throws BaseException {
         List<Coupon> couponList;
 
         try {
-            couponList = couponRepository.findByStatus("Y");
+            couponList = couponRepository.findAllByOrderByIdDesc();
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_COUPON);
         }
 
         return couponList.stream().map(coupon -> {
-            return new GetCouponRes(coupon.getId(), coupon.getUser().getNo(),
-                    coupon.getContent(), coupon.getDiscount(), coupon.getMinimumPrice(),
-                    outputDateFormat.format(coupon.getEffectiveDate()));
+            return retrieveGetReviewsRes(coupon);
         }).collect(Collectors.toList());
     }
 
     /**
-     * 내 쿠폰 전체 조회
+     * 쿠폰 전체 조회(클라 조회용)
      * @return List<GetCouponRes>
      * @throws BaseException
      * @Auther shine
@@ -58,19 +57,53 @@ public class CouponProvider {
     @Transactional
     public List<GetCouponRes> retrieveCoupon() throws BaseException {
         List<Coupon> couponList;
-        User user = userRepository.findByNoAndStatus(jwtService.getUserNo(),"Y")
-                .orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
 
         try {
-            couponList = couponRepository.findByStatusAndUser("Y", user);
+            couponList = couponRepository.findByStatusOrderById("Y");
         } catch (Exception exception) {
             throw new BaseException(FAILED_TO_GET_COUPON);
         }
 
         return couponList.stream().map(coupon -> {
-            return new GetCouponRes(coupon.getId(), coupon.getUser().getNo(),
-                    coupon.getContent(), coupon.getDiscount(), coupon.getMinimumPrice(),
-                    outputDateFormat.format(coupon.getEffectiveDate()));
+            return retrieveGetCouponRes(coupon);
         }).collect(Collectors.toList());
     }
+
+    /**
+     * Coupon -> GetCouponsRes 변경
+     * @Param Coupon coupon
+     * @return GetCouponsRes
+     * @Auther shine
+     */
+    public GetCouponsRes retrieveGetReviewsRes(Coupon coupon) {
+        return new GetCouponsRes(
+                coupon.getId(),
+                coupon.getUser().getNo(),
+                coupon.getUser().getName(),
+                coupon.getContent(),
+                coupon.getDiscount(),
+                coupon.getMinimumPrice(),
+                outputDateFormat.format(coupon.getEffectiveDate()),
+                outputDateFormat.format(coupon.getCreateDate()),
+                outputDateFormat.format(coupon.getUpdateDate()),
+                coupon.getStatus());
+    }
+
+    /**
+     * Coupon -> GetCouponRes 변경
+     * @Param Coupon coupon
+     * @return GetCouponRes
+     * @Auther shine
+     */
+    public GetCouponRes retrieveGetCouponRes(Coupon coupon) {
+        return new GetCouponRes(
+                coupon.getId(),
+                coupon.getUser().getNo(),
+                coupon.getUser().getName(),
+                coupon.getContent(),
+                coupon.getDiscount(),
+                coupon.getMinimumPrice(),
+                outputDateFormat.format(coupon.getEffectiveDate()));
+    }
+
 }
