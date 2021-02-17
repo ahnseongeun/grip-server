@@ -47,7 +47,7 @@ public class TimeScheduler {
 
     private int timeCheck(int time, int timeSize) {
         if(time <= timeSize){
-            return time+1;
+            return time+5;
         }else{
             return 0;
         }
