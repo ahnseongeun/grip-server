@@ -1,8 +1,13 @@
 package com.app.grip.src.video.models;
 
+import com.app.grip.src.product.models.GetProductInfo;
+import com.app.grip.src.product.models.GetProductRes;
+import com.app.grip.src.product.models.Product;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+
+import java.util.List;
 
 @Getter
 @Builder
@@ -17,5 +22,6 @@ public class GetDetailVideo {
     private final Integer watchUserCount;
     private final Integer videoLikeCount;
     private final Long storeId;
+    private final Integer productCount;
     private final Integer couponCount;
 }

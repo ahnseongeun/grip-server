@@ -7,10 +7,13 @@ import com.app.grip.src.user.models.User;
 import com.app.grip.src.video.models.GetDetailVideo;
 import com.app.grip.src.video.models.GetVideos;
 import com.app.grip.src.video.models.Video;
+import com.app.grip.src.video.videoParticipant.VideoParticipantRepository;
+import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
 import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,18 +28,21 @@ public class VideoProvider {
     private final CouponRepository couponRepository;
     private final JwtService jwtService;
     private final UserRepository userRepository;
+    private final VideoParticipantRepository videoParticipantRepository;
     private final HashMap<Long,Integer> LikeRepository;
     private final HashMap<String, Integer> streamingRepository;
 
     @Autowired
     public VideoProvider(VideoRepository videoRepository, CouponRepository couponRepository,
                          JwtService jwtService, UserRepository userRepository,
+                         VideoParticipantRepository videoParticipantRepository,
                          HashMap<Long, Integer> likeRepository,
                          @Qualifier("streaming") HashMap<String, Integer> streamingRepository) {
         this.videoRepository = videoRepository;
         this.couponRepository = couponRepository;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
+        this.videoParticipantRepository = videoParticipantRepository;
         this.LikeRepository = likeRepository;
         this.streamingRepository = streamingRepository;
     }
@@ -68,6 +74,7 @@ public class VideoProvider {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public GetDetailVideo retrieveVideoDetail(Long videoId) throws BaseException {
 
 
@@ -76,6 +83,25 @@ public class VideoProvider {
 
         Video video = videoRepository.findByIdAndStatus(videoId,"Y")
                 .orElseThrow(() -> new BaseException(FAILED_TO_GET_VIDEO));
+
+        VideoParticipant videoParticipant = videoParticipantRepository.findByUserAndVideo(user,video)
+                .orElse(null);
+
+
+        if(videoParticipant == null){
+            try{
+                VideoParticipant newVideoParticipant = VideoParticipant.builder()
+                        .user(user)
+                        .video(video)
+                        .build();
+                videoParticipantRepository.save(newVideoParticipant);
+            }catch (Exception e){
+                throw new BaseException(FAILED_TO_POST_PARTICIPANT);
+            }
+        }
+
+        video.setVideoWatchUserCount(video.getVideoWatchUserCount()+1);
+
 
         int startTime = streamingRepository.get(video.getVideoURL()) == null ? 0 : streamingRepository.get(video.getVideoURL());
 
@@ -98,8 +124,8 @@ public class VideoProvider {
                 .startTime(startTime)
                 .couponCount(couponCount)
                 .liveCheck(video.getLiveCheck())
-                //.storeId(video.getUser().getStore().getId())
-                .storeId(2L)
+                .productCount(video.getUser().getStore().getProductList().size())
+                .storeId(video.getUser().getStore().getId())
                 .videoLikeCount(likeCount)
                 .watchUserCount(video.getVideoWatchUserCount())
                 .build();
