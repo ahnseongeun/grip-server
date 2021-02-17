@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class GetCouponRes {
+public class GetCouponsRes {
     private final Long couponId;
     private final Long userNo;
     private final String userName;
@@ -13,4 +13,7 @@ public class GetCouponRes {
     private final Integer discount;
     private final Integer minimumPrice;
     private final String effectiveDate;
+    private final String createDate;
+    private final String updateDate;
+    private final String status;
 }

@@ -2,6 +2,8 @@ package com.app.grip;
 
 import com.app.grip.src.advertisement.AdvertisementRepository;
 import com.app.grip.src.advertisement.models.Advertisement;
+import com.app.grip.src.coupon.CouponRepository;
+import com.app.grip.src.coupon.models.Coupon;
 import com.app.grip.src.product.ProductCategoryRepository;
 import com.app.grip.src.product.ProductRepository;
 import com.app.grip.src.product.models.Product;
@@ -22,8 +24,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 @EnableJpaAuditing
 @SpringBootApplication
@@ -37,13 +43,15 @@ public class GripApplication implements CommandLineRunner {
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
+    private final CouponRepository couponRepository;
 
     public GripApplication(VideoCategoryRepository videoCategoryRepository,
                            AdvertisementRepository advertisementRepository,
                            UserRepository userRepository, VideoRepository videoRepository,
                            StoreRepository storeRepository,
                            ProductCategoryRepository productCategoryRepository,
-                           ProductRepository productRepository, ReviewRepository reviewRepository) {
+                           ProductRepository productRepository, ReviewRepository reviewRepository,
+                           CouponRepository couponRepository) {
         this.videoCategoryRepository = videoCategoryRepository;
         this.advertisementRepository = advertisementRepository;
         this.userRepository = userRepository;
@@ -52,6 +60,7 @@ public class GripApplication implements CommandLineRunner {
         this.productCategoryRepository = productCategoryRepository;
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
+        this.couponRepository = couponRepository;
     }
 
     public static void main(String[] args) {
@@ -163,8 +172,8 @@ public class GripApplication implements CommandLineRunner {
 
         final List<Store> storeList = Arrays.asList(store1,store2,store3,store4,store5);
         List<Store> savedStore = (List<Store>) storeRepository.saveAll(storeList);
-        
-        
+
+
         /**
          * 상품 카테고리 더미 데이터 삽입
          */
@@ -257,6 +266,41 @@ public class GripApplication implements CommandLineRunner {
 
         final List<Review> reviewList = Arrays.asList(review1,review2,review3,review4,review5,review6);
         List<Review> savedReview = (List<Review>) reviewRepository.saveAll(reviewList);
+
+
+        /**
+         * 쿠폰 더미 데이터 삽입
+         */
+        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+        Date effectiveDate = new Date();
+        try {
+            effectiveDate = inputDateFormat.parse("2021-02-28 23:59:59");
+        } catch (ParseException exception) {
+            exception.printStackTrace();
+        }
+        Coupon coupon1 = new Coupon("회원가입 감사 할인 쿠폰", 1000, 10000, effectiveDate);
+        coupon1.setUser(grapher1);
+        Coupon coupon2 = new Coupon("2월 할인 쿠폰", 2000, 20000, effectiveDate);
+        coupon2.setUser(grapher2);
+        Coupon coupon3 = new Coupon("2월 할인쿠폰", 3000, 30000, effectiveDate);
+        coupon3.setUser(grapher3);
+        Coupon coupon4 = new Coupon("선착순 100명 할인 쿠폰", 4000, 40000, effectiveDate);
+        coupon4.setUser(grapher4);
+        Coupon coupon5 = new Coupon("첫 구매 감사 할인 쿠폰", 5000, 50000, effectiveDate);
+        coupon5.setUser(grapher1);
+        Coupon coupon6 = new Coupon("발렌타인 기념 할인 쿠폰", 6000, 60000, effectiveDate);
+        coupon6.setUser(grapher2);
+        Coupon coupon7 = new Coupon("이벤트 적용 할인 쿠폰", 7000, 70000, effectiveDate);
+        coupon7.setUser(grapher3);
+        Coupon coupon8 = new Coupon("5명 추천 감사 쿠폰", 8000, 80000, effectiveDate);
+        coupon8.setUser(grapher4);
+        Coupon coupon9 = new Coupon("10번 구매 감사 쿠폰", 9000, 90000, effectiveDate);
+        coupon9.setUser(grapher1);
+        Coupon coupon10 = new Coupon("VIP 전용 쿠폰", 10000, 1000000, effectiveDate);
+        coupon10.setUser(grapher2);
+
+        final List<Coupon> couponList = Arrays.asList(coupon1,coupon2,coupon3,coupon4,coupon5,coupon6,coupon7,coupon8,coupon9,coupon10);
+        List<Coupon> savedCoupon = (List<Coupon>) couponRepository.saveAll(couponList);
 
 
         /**
