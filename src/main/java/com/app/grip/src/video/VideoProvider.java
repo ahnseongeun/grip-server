@@ -9,6 +9,7 @@ import com.app.grip.src.video.models.GetVideos;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -25,19 +26,19 @@ public class VideoProvider {
     private final JwtService jwtService;
     private final UserRepository userRepository;
     private final HashMap<Long,Integer> LikeRepository;
-    private final HashMap<String, Integer> StreamingRepository;
+    private final HashMap<String, Integer> streamingRepository;
 
     @Autowired
     public VideoProvider(VideoRepository videoRepository, CouponRepository couponRepository,
                          JwtService jwtService, UserRepository userRepository,
                          HashMap<Long, Integer> likeRepository,
-                         HashMap<String, Integer> streamingRepository) {
+                         @Qualifier("streaming") HashMap<String, Integer> streamingRepository) {
         this.videoRepository = videoRepository;
         this.couponRepository = couponRepository;
         this.jwtService = jwtService;
         this.userRepository = userRepository;
         this.LikeRepository = likeRepository;
-        this.StreamingRepository = streamingRepository;
+        this.streamingRepository = streamingRepository;
     }
 
     public List<GetVideos> retrieveVideos() throws BaseException {
@@ -76,9 +77,7 @@ public class VideoProvider {
         Video video = videoRepository.findByIdAndStatus(videoId,"Y")
                 .orElseThrow(() -> new BaseException(FAILED_TO_GET_VIDEO));
 
-        String videoURL = video.getVideoURL();
-        int startTime = StreamingRepository.get(videoURL);
-
+        int startTime = streamingRepository.get(video.getVideoURL());
 
         int couponCount = couponRepository.findByStatusAndUser("Y",user).size();
 
@@ -96,6 +95,7 @@ public class VideoProvider {
                 .title(video.getTitle())
                 .hostName(video.getUser().getName())
                 .hostImageURL(video.getUser().getProfileImageURL())
+                .startTime(startTime)
                 .couponCount(couponCount)
                 .liveCheck(video.getLiveCheck())
                 //.storeId(video.getUser().getStore().getId())

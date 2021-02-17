@@ -20,6 +20,7 @@ import com.app.grip.src.video.models.Video;
 import com.app.grip.src.videoCategory.VideoCategory;
 import com.app.grip.src.videoCategory.VideoCategoryRepository;
 import com.app.grip.utils.GetFileMetaData;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,8 +43,8 @@ public class GripApplication implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
     private final CouponRepository couponRepository;
-    private final HashMap<String,List<Integer>> StreamingRepository;
-    private final GetFileMetaData getFileMetaData;
+    private final HashMap<String, Integer> StreamingRepository;
+    private final HashMap<String, Integer> StreamingSizeRepository;
 
     public GripApplication(VideoCategoryRepository videoCategoryRepository,
                            AdvertisementRepository advertisementRepository,
@@ -51,8 +52,10 @@ public class GripApplication implements CommandLineRunner {
                            StoreRepository storeRepository,
                            ProductCategoryRepository productCategoryRepository,
                            ProductRepository productRepository, ReviewRepository reviewRepository,
-                           CouponRepository couponRepository, HashMap<String,
-            List<Integer>> streamingRepository, GetFileMetaData getFileMetaData) {
+                           CouponRepository couponRepository,
+                           @Qualifier("streaming") HashMap<String, Integer> streamingRepository,
+                           @Qualifier("streamingSize")HashMap<String, Integer> streamingSizeRepository,
+                           GetFileMetaData getFileMetaData) {
         this.videoCategoryRepository = videoCategoryRepository;
         this.advertisementRepository = advertisementRepository;
         this.userRepository = userRepository;
@@ -63,7 +66,7 @@ public class GripApplication implements CommandLineRunner {
         this.reviewRepository = reviewRepository;
         this.couponRepository = couponRepository;
         this.StreamingRepository = streamingRepository;
-        this.getFileMetaData = getFileMetaData;
+        this.StreamingSizeRepository = streamingSizeRepository;
     }
 
     public static void main(String[] args) {
@@ -353,19 +356,19 @@ public class GripApplication implements CommandLineRunner {
         final List<Video> videoList =
                 Arrays.asList(
                         //라이브 예고
-                        new Video("곽스타","N","2021년 02월 12일 20시 00분","N","https://ahnbat.kr/stream/video1.mp4"
+                        new Video("곽스타","N","2021년 02월 12일 20시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory1,grapher1),
-                        new Video("네이플 본사 공식몰","N","2021년 02월 12일 20시 00분","N","https://ahnbat.kr/stream/video3.mp4"
+                        new Video("네이플 본사 공식몰","N","2021년 02월 12일 20시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory1,grapher2),
-                        new Video("고랭고랭","N","2021년 02월 13일 20시 00분","N","https://ahnbat.kr/stream/video2.mp4"
+                        new Video("고랭고랭","N","2021년 02월 13일 20시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory1,grapher3),
 
                         //전체 라이브
-                        new Video("2부시작5초전","Y","2021년 02월 12일 17시 00분","N","https://ahnbat.kr/stream/video1.mp4"
+                        new Video("2부시작5초전","Y","2021년 02월 12일 17시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory3,grapher1),
-                        new Video("오버티 55-88까지 맨투맨","Y","2021년 02월 12일 15시 00분","N","https://ahnbat.kr/stream/video2.mp4"
+                        new Video("오버티 55-88까지 맨투맨","Y","2021년 02월 12일 15시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory3,grapher2),
-                        new Video("짧은라방, 구두가방","Y","2021년 02월 12일 16시 00분","N","https://ahnbat.kr/stream/test.mp4"
+                        new Video("짧은라방, 구두가방","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory3,grapher3),
 
                         //소호몰 언니
@@ -421,18 +424,16 @@ public class GripApplication implements CommandLineRunner {
 
         List<Video> savedVideo = (List<Video>) videoRepository.saveAll(videoList);
 
-        List<Integer> list1 = new ArrayList<>();
         String url1 = "https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8";
-        list1.add(0);
-        list1.add(GetFileMetaData.fileMetaData(url1));
-        StreamingRepository.put(url1,list1);
+        //String url1 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video1\\videotest1.m3u8";
+        StreamingRepository.put(url1,0);
+        StreamingSizeRepository.put(url1,GetFileMetaData.fileMetaData(url1));
         System.out.println(GetFileMetaData.fileMetaData(url1));
 
-        List<Integer> list2 = new ArrayList<>();
         String url2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
-        list2.add(0);
-        list2.add(GetFileMetaData.fileMetaData(url2));
-        StreamingRepository.put(url2,list2);
+        //String url2 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video2\\videotest2.m3u8";
+        StreamingRepository.put(url2,0);
+        StreamingSizeRepository.put(url2,GetFileMetaData.fileMetaData(url2));
         System.out.println(GetFileMetaData.fileMetaData(url2));
 
     }

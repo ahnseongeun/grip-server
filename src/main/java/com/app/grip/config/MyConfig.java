@@ -1,5 +1,6 @@
 package com.app.grip.config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -20,7 +21,14 @@ public class MyConfig {
     }
 
     @Bean
-    public HashMap<String, List<Integer>> StreamingRepository(){
+    @Qualifier("streaming")
+    public HashMap<String, Integer> StreamingRepository(){
+        return new HashMap<>();
+    }
+
+    @Bean
+    @Qualifier("streamingSize")
+    public HashMap<String, Integer> StreamingSizeRepository(){
         return new HashMap<>();
     }
 

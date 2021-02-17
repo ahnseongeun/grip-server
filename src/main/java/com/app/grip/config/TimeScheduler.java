@@ -2,6 +2,7 @@ package com.app.grip.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -12,37 +13,39 @@ import java.util.List;
 @Component
 public class TimeScheduler {
 
-    private final HashMap<String, List<Integer>> StreamingRepository;
+    private final HashMap<String, Integer> StreamingRepository;
+    private final HashMap<String, Integer> StreamingSizeRepository;
 
     @Autowired
-    public TimeScheduler(HashMap<String, List<Integer>> streamingRepository) {
+    public TimeScheduler(
+            @Qualifier("streaming") HashMap<String, Integer> streamingRepository,
+            @Qualifier("streamingSize") HashMap<String, Integer> streamingSizeRepository) {
         this.StreamingRepository = streamingRepository;
+        this.StreamingSizeRepository = streamingSizeRepository;
     }
 
 
     @Scheduled(fixedDelay = 1000)
     public void alert() {
+        //String video1 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video1\\videotest1.m3u8";
+        //String video2 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video2\\videotest2.m3u8";
         String video1 = "https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8";
         String video2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
-        List<Integer> list1 = StreamingRepository.get(video1);
-        List<Integer> list2 = StreamingRepository.get(video2);
-        if(list1 == null)
-            return;
-        if(list2 == null)
-            return;
-        listTest(list1);
-        listTest(list2);
-        StreamingRepository.put(video1,list1);
-        StreamingRepository.put(video2,list2);
-        log.info(list1.get(0) +" "+list2.get(0));
+        int time1 = StreamingRepository.get(video1);
+        int time1Size = StreamingSizeRepository.get(video1);
+        int time2 = StreamingRepository.get(video2);
+        int time2Size = StreamingSizeRepository.get(video2);
+
+        StreamingRepository.put(video1,timeCheck(time1,time1Size));
+        StreamingRepository.put(video2,timeCheck(time2,time2Size));
+        log.info(StreamingRepository.get(video1) +" "+StreamingRepository.get(video2));
     }
 
-    private void listTest(List<Integer> list) {
-        if(list.get(0) <= list.get(1)){
-            list.add(0,list.get(0)+1);
+    private int timeCheck(int time, int timeSize) {
+        if(time <= timeSize){
+            return time+1;
         }else{
-            list.add(0,0);
+            return 0;
         }
-        list.add(1,list.get(1));
     }
 }

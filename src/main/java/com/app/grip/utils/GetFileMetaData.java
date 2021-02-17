@@ -11,13 +11,12 @@ import java.io.IOException;
 @Service
 public class GetFileMetaData {
 
-
     public static int fileMetaData(String url) {
         try {
-            String name = url.substring(34);
+            //String name = url.substring(34);
             //파일 객체 생성
-            String path = "/home/ubuntu/video/" + name;
-            File file = new File(path);
+            //String path = "/home/ubuntu/video/" + name;
+            File file = new File(url);
             FileReader filereader = new FileReader(file);
 
             //입력 스트림 생성
