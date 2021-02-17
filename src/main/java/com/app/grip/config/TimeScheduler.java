@@ -26,12 +26,11 @@ public class TimeScheduler {
         String video2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
         List<Integer> list1 = StreamingRepository.get(video1);
         List<Integer> list2 = StreamingRepository.get(video2);
-        log.info("test");
         if(list1 == null)
             return;
         if(list2 == null)
             return;
-        if(list1.get(0) <= list1.get(1)){
+        if(list1.get(0) <= list2.get(0)){
             list1.add(0,list1.get(0)+1);
         }else{
             list1.add(0,0);
@@ -41,6 +40,8 @@ public class TimeScheduler {
         }else{
             list2.add(0,0);
         }
-        log.info(list1.get(0)+" "+ list2.get(0));
+        StreamingRepository.put(video1,list1);
+        StreamingRepository.put(video2,list2);
+        log.info(list1.get(0) +" "+list2.get(0));
     }
 }
