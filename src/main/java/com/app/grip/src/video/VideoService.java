@@ -7,6 +7,7 @@ import com.app.grip.src.video.models.PostVideoAndThumbNail;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.src.video.videoLike.VideoLikeRepository;
 import com.app.grip.src.video.videoLike.models.VideoLike;
+import com.app.grip.utils.GetDateTime;
 import com.app.grip.utils.S3Service;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -23,8 +24,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 
 import static com.app.grip.config.BaseResponseStatus.*;
@@ -35,14 +34,17 @@ public class VideoService {
 
     private static final String IMAGE_PNG_FORMAT = "png";
     private final S3Service s3Service;
+    private final GetDateTime getDateTime;
     private final VideoRepository videoRepository;
     private final HashMap<Long,Integer>  likeRepository;
     private final VideoLikeRepository videoLikeRepository;
 
-    public VideoService(S3Service s3Service, VideoRepository videoRepository,
+    public VideoService(S3Service s3Service, GetDateTime getDateTime,
+                        VideoRepository videoRepository,
                         HashMap<Long, Integer> likeRepository,
                         VideoLikeRepository videoLikeRepository) {
         this.s3Service = s3Service;
+        this.getDateTime = getDateTime;
         this.videoRepository = videoRepository;
         this.likeRepository = likeRepository;
         this.videoLikeRepository = videoLikeRepository;
@@ -112,8 +114,8 @@ public class VideoService {
         }
 
         video.setVideoLike(videoLike);
-        video.setEndLiveStatus("Y");
-        video.setEndLiveTime(LocalDateTime.now());
+        video.setEndLiveStatus("N");
+        video.setEndLiveTime(getDateTime.getDataTime());
 
         return PatchVideo.builder()
                 .videoId(videoId)

@@ -17,8 +17,13 @@ import com.app.grip.src.user.UserRepository;
 import com.app.grip.src.user.models.User;
 import com.app.grip.src.video.VideoRepository;
 import com.app.grip.src.video.models.Video;
+import com.app.grip.src.video.videoParticipant.VideoParticipantRepository;
+import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
 import com.app.grip.src.videoCategory.VideoCategory;
 import com.app.grip.src.videoCategory.VideoCategoryRepository;
+import com.app.grip.src.watchMyVideo.WatchMyVideoRepository;
+import com.app.grip.src.watchMyVideo.models.WatchMyVideo;
+import com.app.grip.utils.GetDateTime;
 import com.app.grip.utils.GetFileMetaData;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +33,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @EnableJpaAuditing
@@ -43,6 +49,10 @@ public class GripApplication implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
     private final CouponRepository couponRepository;
+    private final WatchMyVideoRepository watchMyVideoRepository;
+    private final VideoParticipantRepository videoParticipantRepository;
+    private final GetDateTime getDateTime;
+    private final HashMap<Long, Integer> likeRepository;
     private final HashMap<String, Integer> StreamingRepository;
     private final HashMap<String, Integer> StreamingSizeRepository;
 
@@ -53,9 +63,13 @@ public class GripApplication implements CommandLineRunner {
                            ProductCategoryRepository productCategoryRepository,
                            ProductRepository productRepository, ReviewRepository reviewRepository,
                            CouponRepository couponRepository,
+                           WatchMyVideoRepository watchMyVideoRepository,
+                           VideoParticipantRepository videoParticipantRepository,
+                           GetDateTime getDateTime,
                            @Qualifier("streaming") HashMap<String, Integer> streamingRepository,
-                           @Qualifier("streamingSize")HashMap<String, Integer> streamingSizeRepository,
-                           GetFileMetaData getFileMetaData) {
+                           @Qualifier("streamingSize") HashMap<String, Integer> streamingSizeRepository,
+                           GetFileMetaData getFileMetaData,
+                           HashMap<Long, Integer> likeRepository) {
         this.videoCategoryRepository = videoCategoryRepository;
         this.advertisementRepository = advertisementRepository;
         this.userRepository = userRepository;
@@ -65,8 +79,12 @@ public class GripApplication implements CommandLineRunner {
         this.productRepository = productRepository;
         this.reviewRepository = reviewRepository;
         this.couponRepository = couponRepository;
+        this.watchMyVideoRepository = watchMyVideoRepository;
+        this.videoParticipantRepository = videoParticipantRepository;
+        this.getDateTime = getDateTime;
         this.StreamingRepository = streamingRepository;
         this.StreamingSizeRepository = streamingSizeRepository;
+        this.likeRepository = likeRepository;
     }
 
     public static void main(String[] args) {
@@ -361,73 +379,118 @@ public class GripApplication implements CommandLineRunner {
         final List<Video> videoList =
                 Arrays.asList(
                         //라이브 예고
-                        new Video("곽스타","N","2021년 02월 12일 20시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("곽스타","N", getDateTime.getCustomDataTime("plus",4L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory1,grapher1),
-                        new Video("네이플 본사 공식몰","N","2021년 02월 12일 20시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("네이플 본사 공식몰","N",getDateTime.getCustomDataTime("plus",4L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory1,grapher2),
-                        new Video("고랭고랭","N","2021년 02월 13일 20시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("고랭고랭","N",getDateTime.getCustomDataTime("plus",4L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory1,grapher3),
 
                         //전체 라이브
-                        new Video("2부시작5초전","Y","2021년 02월 12일 17시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("2부시작5초전","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory3,grapher1),
-                        new Video("오버티 55-88까지 맨투맨","Y","2021년 02월 12일 15시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("오버티 55-88까지 맨투맨","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory3,grapher2),
-                        new Video("짧은라방, 구두가방","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("짧은라방, 구두가방","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory3,grapher3),
 
                         //소호몰 언니
-                        new Video("째즈언니","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("째즈언니","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory4,grapher1),
-                        new Video("신사%세일해용, 10만원이상 선물","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("신사%세일해용, 10만원이상 선물","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory4,grapher2),
-                        new Video("반지할인, 새해복_언니들","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("반지할인, 새해복_언니들","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory4,grapher4),
 
                         //스타일링
-                       new Video("2부시작5초전","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                       new Video("2부시작5초전","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory5,grapher2),
-                        new Video("짧은라방, 구두가방","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("짧은라방, 구두가방","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory5,grapher3),
-                        new Video("올해는 나 장가갈꺼래...","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("올해는 나 장가갈꺼래...","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory5,grapher4),
 
                         //신인
-                       new Video("오늘도 수고했어~","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                       new Video("오늘도 수고했어~","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory6,grapher1),
-                        new Video("다시 소통 방송 들어와요ㅠㅠ","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("다시 소통 방송 들어와요ㅠㅠ","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory6,grapher3),
-                        new Video("소통과 판매 논녀와용...","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("소통과 판매 논녀와용...","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory6,grapher4),
 
                         //뷰티 꿀팁
-                        new Video("복주머니!!!","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("복주머니!!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory7,grapher4),
-                        new Video("셀로니아 줄기세포 샴푸!!","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("셀로니아 줄기세포 샴푸!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory7,grapher3),
-                        new Video("피부에 양보하세요","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("피부에 양보하세요","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory7,grapher2),
 
                         //먹방쿡방
-                       new Video("크로플+누텔라","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                       new Video("크로플+누텔라","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory8,grapher1),
-                        new Video("쭈꾸미 품절!!!일보직전!!","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("쭈꾸미 품절!!!일보직전!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory8,grapher4),
-                        new Video("피자나라 치킨공주","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("피자나라 치킨공주","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory8,grapher2),
 
                         //알쓸신템
-                        new Video("사라 사라 사라 양말좀 사라~~","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("사라 사라 사라 양말좀 사라~~","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory9,grapher4),
-                        new Video("이걸 안들어와??","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("이걸 안들어와??","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/test.png",0,videoCategory9,grapher2),
-                        new Video("롱패딩 딱대!!","Y","2021년 02월 12일 16시 00분","N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("롱패딩 딱대!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory9,grapher3)
                         );
 
 
-
         List<Video> savedVideo = (List<Video>) videoRepository.saveAll(videoList);
+
+
+        // 비디오 참여자 등록
+        final List<VideoParticipant> videoParticipantList =
+                Arrays.asList(
+                        new VideoParticipant(user1,videoList.get(4)),
+                        new VideoParticipant(user1,videoList.get(5)),
+                        new VideoParticipant(user1,videoList.get(6)),
+                        new VideoParticipant(user1,videoList.get(7)),
+                        new VideoParticipant(user2,videoList.get(8)),
+                        new VideoParticipant(user2,videoList.get(9)),
+                        new VideoParticipant(user2,videoList.get(10)),
+                        new VideoParticipant(user2,videoList.get(11)),
+                        new VideoParticipant(user3,videoList.get(12)),
+                        new VideoParticipant(user3,videoList.get(13)),
+                        new VideoParticipant(user3,videoList.get(14)),
+                        new VideoParticipant(user3,videoList.get(15))
+                );
+        videoParticipantRepository.saveAll(videoParticipantList);
+
+        // 내가 본 비디오 삽입
+        final List<WatchMyVideo> watchMyVideoList =
+                Arrays.asList(
+                        new WatchMyVideo(user1,videoList.get(4)),
+                        new WatchMyVideo(user1,videoList.get(5)),
+                        new WatchMyVideo(user1,videoList.get(6)),
+                        new WatchMyVideo(user1,videoList.get(7)),
+                        new WatchMyVideo(user2,videoList.get(8)),
+                        new WatchMyVideo(user2,videoList.get(9)),
+                        new WatchMyVideo(user2,videoList.get(10)),
+                        new WatchMyVideo(user2,videoList.get(11)),
+                        new WatchMyVideo(user3,videoList.get(12)),
+                        new WatchMyVideo(user3,videoList.get(13)),
+                        new WatchMyVideo(user3,videoList.get(14)),
+                        new WatchMyVideo(user3,videoList.get(15))
+                );
+
+        watchMyVideoRepository.saveAll(watchMyVideoList);
+
+
+
+
+        // 좋아요 삽입
+        for(int i = 4;i <= 24; i++){
+            likeRepository.put((long)i,i*10);
+        }
 
         String url1 = "https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8";
         //String url1 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video1\\videotest1.m3u8";

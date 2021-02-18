@@ -34,23 +34,39 @@ public class videoLikeController {
     }
 
     /**
-     * 비디오 좋아요 조회
+     * 비디오 좋아요 전체 조회
      */
     //HashMap을 이용해서 Inmemory DB로 구현하자.
     @ResponseBody
-    @RequestMapping(value = "/videos/like",method = RequestMethod.GET)
-    @ApiOperation(value = "영상 좋아요 조회", notes = "영상 좋아요 조회")
+    @RequestMapping(value = "/admin/videos/like",method = RequestMethod.GET)
+    @ApiOperation(value = "영상 좋아요 전체 조회", notes = "영상 좋아요 전체 조회")
     public BaseResponse<List<GetVideoLike>> GetVideoLikes() throws BaseException {
 
         List<GetVideoLike> getVideoLikeList;
         try{
-            log.info("영상 좋아요 조회");
+            log.info("영상 좋아요 전체 조회");
 
             getVideoLikeList = videoLikeProvider.retrieveVideoLike();
             return new BaseResponse<>(SUCCESS, getVideoLikeList);
         }catch(BaseException exception){
             return new BaseResponse<>(exception.getStatus());
         }
+    }
+
+    /**
+     * 비디오 좋아요 조회
+     */
+    //HashMap을 이용해서 Inmemory DB로 구현하자.
+    @ResponseBody
+    @RequestMapping(value = "/videos/{videoId}/like",method = RequestMethod.GET)
+    @ApiOperation(value = "영상 좋아요 조회", notes = "영상 좋아요 조회")
+    public BaseResponse<GetVideoLike> GetVideoLike(@PathVariable Long videoId) throws BaseException {
+
+            GetVideoLike getVideoLike;
+            log.info("영상 좋아요 전체 조회");
+            getVideoLike = videoLikeProvider.retrieveVideoLikeById(videoId);
+            return new BaseResponse<>(SUCCESS, getVideoLike);
+
     }
 
     /**

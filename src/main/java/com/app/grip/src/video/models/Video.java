@@ -61,7 +61,7 @@ public class Video extends BaseEntity {
      * 생방송 종료 시간
      */
     @Column(name = "endLiveTime")
-    private LocalDateTime endLiveTime;
+    private String endLiveTime;
 
     /**
      * 비디오 경로
