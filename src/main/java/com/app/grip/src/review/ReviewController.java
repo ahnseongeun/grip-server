@@ -89,15 +89,20 @@ public class ReviewController {
     @ResponseBody
     @GetMapping("/reviews/category")
     public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestParam(value = "name",required = false) String name) {
-        if(name == null || name.length() == 0) {
+
+        String categoryName = "";
+        try {
+            categoryName = name;
+        } catch (Exception exception) {
+            return new BaseResponse<>(EMPTY_CATEGORY);
+        }
+        if(categoryName == null || categoryName.length() == 0) {
             return new BaseResponse<>(EMPTY_CATEGORY);
         }
 
         try {
-            List<Review> reviewList = reviewProvider.retrieveReviewsByCategoryNameAndStatusY(name);
-            return new BaseResponse<>(SUCCESS, reviewList.stream().map(review -> {
-                return reviewProvider.retrieveGetReviewRes(review);
-            }).collect(Collectors.toList()));
+            List<Review> reviewList = reviewProvider.retrieveReviewsByCategoryNameAndStatusY(categoryName);
+            return new BaseResponse<>(SUCCESS, reviewList.stream().map(reviewProvider::retrieveGetReviewRes).collect(Collectors.toList()));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
