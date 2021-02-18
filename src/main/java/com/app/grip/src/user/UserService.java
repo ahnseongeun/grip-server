@@ -32,7 +32,7 @@ public class UserService {
         this.s3Service = s3Service;
     }
 
-    public PostUserRes createUserInfo(String parameters,String login) throws BaseException {
+    public PostUserRes createUserInfo(String parameters) throws BaseException {
 
         User existsUser = null;
 
@@ -46,7 +46,7 @@ public class UserService {
         String id = null;
         String imageStatus = "Y";
         String profile_image = null;
-
+        System.out.println(parameters);
         JSONObject json = new JSONObject(parameters);
         try {
             name = json.getJSONObject("response").getString("name");
@@ -73,11 +73,11 @@ public class UserService {
             }
         }
 
-
-        // 1-3. 이미 존재하는 회원이 있다면 return DUPLICATED_USER
-        if (existsUser != null && login.equals("N")) {
-            throw new BaseException(DUPLICATED_USER);
-        }
+//
+//        // 1-3. 이미 존재하는 회원이 있다면 return DUPLICATED_USER
+//        if (existsUser != null && login.equals("N")) {
+//            throw new BaseException(DUPLICATED_USER);
+//        }
 
 
         // 1-4. 로그인 구현
