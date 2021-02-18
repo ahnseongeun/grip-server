@@ -87,10 +87,10 @@ public class ReviewController {
     @ApiOperation(value = "카테고리별 리뷰 조회", notes = "카테고리별 리뷰 조회")
     @ResponseBody
     @GetMapping("/reviews/category")
-    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestParam(required = false) HashMap<String, String> parameter) {
+    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestParam(value = "name",required = false) String name) {
         String categoryName = "";
         try {
-            categoryName = parameter.get("name");
+            categoryName = name;
         } catch (Exception exception) {
             return new BaseResponse<>(EMPTY_CATEGORY);
         }
@@ -100,9 +100,7 @@ public class ReviewController {
 
         try {
             List<Review> reviewList = reviewProvider.retrieveReviewsByCategoryNameAndStatusY(categoryName);
-            return new BaseResponse<>(SUCCESS, reviewList.stream().map(review -> {
-                return reviewProvider.retrieveGetReviewRes(review);
-            }).collect(Collectors.toList()));
+            return new BaseResponse<>(SUCCESS, reviewList.stream().map(reviewProvider::retrieveGetReviewRes).collect(Collectors.toList()));
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
         }
