@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 public class StoreProvider {
     private final StoreRepository storeRepository;
 
-    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
      * 상점 전체 조회
@@ -42,7 +42,7 @@ public class StoreProvider {
         return storeList.stream().map(store -> {
             return new GetStoresRes(store.getId(), store.getName(),
                     store.getIntroduction(), store.getPictureURL(), store.getUser().getNo(),
-                    outputDateFormat.format(store.getCreateDate()), outputDateFormat.format(store.getUpdateDate()),
+                    dateFormat.format(store.getCreateDate()), dateFormat.format(store.getUpdateDate()),
                     store.getStatus());
         }).collect(Collectors.toList());
     }

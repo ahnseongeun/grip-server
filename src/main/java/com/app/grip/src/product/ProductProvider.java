@@ -3,6 +3,7 @@ package com.app.grip.src.product;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.product.models.*;
 import com.app.grip.src.review.ReviewProvider;
+import com.app.grip.src.review.models.Review;
 import com.app.grip.src.store.models.GetStoresRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -22,7 +23,7 @@ public class ProductProvider {
     private final ProductRepository productRepository;
     private final ReviewProvider reviewProvider;
 
-    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
      * 전체 카테고리 조회
@@ -88,11 +89,11 @@ public class ProductProvider {
                             product.getStore().getIntroduction(),
                             product.getStore().getPictureURL(),
                             product.getStore().getUser().getNo(),
-                            outputDateFormat.format(product.getStore().getCreateDate()),
-                            outputDateFormat.format(product.getStore().getUpdateDate()),
+                            dateFormat.format(product.getStore().getCreateDate()),
+                            dateFormat.format(product.getStore().getUpdateDate()),
                             product.getStore().getStatus()),
                     product.getProductCategory().getName(),
-                    outputDateFormat.format(product.getCreateDate()),
+                    dateFormat.format(product.getCreateDate()),
                     product.getStatus());
         }).collect(Collectors.toList());
     }
@@ -134,6 +135,13 @@ public class ProductProvider {
      * @Auther shine
      */
     public GetProductRes retrieveGetProductRes(Product product) {
+        int i = 0;
+        double sum = 0;
+        for (Review review : product.getReviewList()) {
+            sum += product.getReviewList().get(i).getStar();
+            i++;
+        }
+
         return new GetProductRes(
                 product.getId(),
                 product.getName(),
@@ -142,8 +150,9 @@ public class ProductProvider {
                 product.getPictureURL(),
                 product.getStore().getName(),
                 product.getProductCategory().getName(),
-                outputDateFormat.format(product.getCreateDate()),
+                dateFormat.format(product.getCreateDate()),
                 product.getStatus(),
+                new Double(sum / product.getReviewList().size()),
                 product.getReviewList().stream().map(review -> {
                     return reviewProvider.retrieveGetReviewRes(review);
                 }).collect(Collectors.toList()));
