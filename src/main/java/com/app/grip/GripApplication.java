@@ -80,32 +80,32 @@ public class GripApplication implements CommandLineRunner {
          * 유저 더미 데이터 삽입
          */
         User user1 = new User("김철수","철수입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1111", "1995-03-10", "test1@naver.com", "M",
                 "N", 1, "Y", "111111");
 
         User user2 = new User("안철수","철수입니다"
-                        ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                        ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                         "010-1111-1112", "1995-03-12", "test2@naver.com", "M",
                         "N", 1, "Y", "111112");
 
         User user3 = new User("홍철수","철수입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1113", "1995-03-13", "test3@naver.com", "W",
                 "N", 1, "Y", "111113");
 
         User grapher1 = new User("이철수","철수입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1114", "1995-03-14", "test4@naver.com", "M",
                 "N", 50, "Y", "111114");
 
         User grapher2 = new User("이철박","철수입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1115", "1995-03-15", "test5@naver.com", "M",
                 "N", 50, "Y", "111115");
 
         User grapher3 = new User("박철이","철수입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1116", "1995-03-16", "test6@naver.com", "M",
                 "N", 50, "Y", "111116");
 
@@ -115,27 +115,27 @@ public class GripApplication implements CommandLineRunner {
                 "N", 50, "Y", "111117");
 
         User admin = new User("박철수","철수입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1118", "1995-03-18", "test8@naver.com", "M",
                 "N", 100, "Y", "111118");
 
         User userFace1 = new User("김도윤","도윤입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1100", "1990-03-10", "test1@gmail.com", "M",
                 "F", 1, "Y", "222221");
 
         User userFace2 = new User("윤서윤","서윤입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1122", "1996-03-13", "test2@gmail.com", "W",
                 "F", 1, "Y", "222222");
 
         User grapherFace1 = new User("김하준","하준입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1133", "1993-03-12", "test3@gmail.com", "M",
                 "F", 50, "Y", "222223");
 
         User grapherFace2 = new User("정수아","수아입니다"
-                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user.png",
+                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/user1.png",
                 "010-1111-1144", "1997-03-12", "test4@gmail.com", "W",
                 "F", 50, "Y", "222224");
 
