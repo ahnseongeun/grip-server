@@ -282,33 +282,33 @@ public class GripApplication implements CommandLineRunner {
         /**
          * 쿠폰 더미 데이터 삽입
          */
-        SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
         Date effectiveDate = new Date();
         try {
-            effectiveDate = inputDateFormat.parse("2021-02-28 23:59:59");
+            effectiveDate = dateFormat.parse("2021-02-28 23:59:59");
         } catch (ParseException exception) {
             exception.printStackTrace();
         }
         Coupon coupon1 = new Coupon("회원가입 감사 할인 쿠폰", 1000, 10000, effectiveDate);
-        coupon1.setUser(grapher1);
+        coupon1.setUser(user1);
         Coupon coupon2 = new Coupon("2월 할인 쿠폰", 2000, 20000, effectiveDate);
-        coupon2.setUser(grapher2);
+        coupon2.setUser(user2);
         Coupon coupon3 = new Coupon("2월 할인쿠폰", 3000, 30000, effectiveDate);
-        coupon3.setUser(grapher3);
+        coupon3.setUser(user3);
         Coupon coupon4 = new Coupon("선착순 100명 할인 쿠폰", 4000, 40000, effectiveDate);
-        coupon4.setUser(grapher4);
+        coupon4.setUser(userFace1);
         Coupon coupon5 = new Coupon("첫 구매 감사 할인 쿠폰", 5000, 50000, effectiveDate);
-        coupon5.setUser(grapher1);
+        coupon5.setUser(userFace2);
         Coupon coupon6 = new Coupon("발렌타인 기념 할인 쿠폰", 6000, 60000, effectiveDate);
-        coupon6.setUser(grapher2);
+        coupon6.setUser(user1);
         Coupon coupon7 = new Coupon("이벤트 적용 할인 쿠폰", 7000, 70000, effectiveDate);
-        coupon7.setUser(grapher3);
+        coupon7.setUser(user2);
         Coupon coupon8 = new Coupon("5명 추천 감사 쿠폰", 8000, 80000, effectiveDate);
-        coupon8.setUser(grapher4);
+        coupon8.setUser(user3);
         Coupon coupon9 = new Coupon("10번 구매 감사 쿠폰", 9000, 90000, effectiveDate);
-        coupon9.setUser(grapher1);
+        coupon9.setUser(userFace1);
         Coupon coupon10 = new Coupon("VIP 전용 쿠폰", 10000, 1000000, effectiveDate);
-        coupon10.setUser(grapher2);
+        coupon10.setUser(userFace2);
 
         final List<Coupon> couponList = Arrays.asList(coupon1,coupon2,coupon3,coupon4,coupon5,coupon6,coupon7,coupon8,coupon9,coupon10);
         List<Coupon> savedCoupon = (List<Coupon>) couponRepository.saveAll(couponList);

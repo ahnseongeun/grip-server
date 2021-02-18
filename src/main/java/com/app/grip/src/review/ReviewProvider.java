@@ -2,7 +2,6 @@ package com.app.grip.src.review;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.src.product.ProductCategoryRepository;
-import com.app.grip.src.product.ProductProvider;
 import com.app.grip.src.review.models.GetReviewRes;
 import com.app.grip.src.review.models.GetReviewsRes;
 import com.app.grip.src.review.models.PictureRes;
@@ -24,7 +23,7 @@ public class ReviewProvider {
     private final ReviewRepository reviewRepository;
     private final ProductCategoryRepository productCategoryRepository;
 
-    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
      * 리뷰 전체 조회
@@ -126,8 +125,8 @@ public class ReviewProvider {
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
                 }).collect(Collectors.toList()),
-                outputDateFormat.format(review.getCreateDate()),
-                outputDateFormat.format(review.getUpdateDate()),
+                dateFormat.format(review.getCreateDate()),
+                dateFormat.format(review.getUpdateDate()),
                 review.getStatus());
     }
 
@@ -149,7 +148,7 @@ public class ReviewProvider {
                 review.getReviewPictureList().stream().map(reviewPicture -> {
                     return new PictureRes(reviewPicture.getId(), reviewPicture.getPictureURL(), reviewPicture.getStatus());
                 }).collect(Collectors.toList()),
-                outputDateFormat.format(review.getCreateDate()));
+                dateFormat.format(review.getCreateDate()));
     }
 
 }

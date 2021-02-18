@@ -5,7 +5,6 @@ import com.app.grip.src.coupon.models.Coupon;
 import com.app.grip.src.coupon.models.GetCouponRes;
 import com.app.grip.src.coupon.models.GetCouponsRes;
 import com.app.grip.src.user.UserRepository;
-import com.app.grip.src.user.models.User;
 import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ public class CouponProvider {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
     
     /**
      * 쿠폰 전체 조회(관리자용)
@@ -83,9 +82,9 @@ public class CouponProvider {
                 coupon.getContent(),
                 coupon.getDiscount(),
                 coupon.getMinimumPrice(),
-                outputDateFormat.format(coupon.getEffectiveDate()),
-                outputDateFormat.format(coupon.getCreateDate()),
-                outputDateFormat.format(coupon.getUpdateDate()),
+                dateFormat.format(coupon.getEffectiveDate()),
+                dateFormat.format(coupon.getCreateDate()),
+                dateFormat.format(coupon.getUpdateDate()),
                 coupon.getStatus());
     }
 
@@ -103,7 +102,7 @@ public class CouponProvider {
                 coupon.getContent(),
                 coupon.getDiscount(),
                 coupon.getMinimumPrice(),
-                outputDateFormat.format(coupon.getEffectiveDate()));
+                dateFormat.format(coupon.getEffectiveDate()));
     }
 
 }

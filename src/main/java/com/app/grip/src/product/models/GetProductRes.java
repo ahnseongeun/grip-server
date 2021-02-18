@@ -18,5 +18,6 @@ public class GetProductRes {
     private final String productCategoryName;
     private final String createDate;
     private final String status;
+    private final Double avgStar;
     private final List<GetReviewRes> reviewList;
 }

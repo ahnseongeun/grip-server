@@ -24,8 +24,7 @@ public class CouponService {
     private final CouponRepository couponRepository;
     private final JwtService jwtService;
 
-    SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
-    SimpleDateFormat outputDateFormat = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분 ss초", Locale.KOREA);
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
      * 쿠폰 생성
@@ -39,7 +38,7 @@ public class CouponService {
         Date effectiveDate = new Date();
 
         try {
-            effectiveDate = inputDateFormat.parse(parameters.getEffectiveDate() + " 23:59:59");
+            effectiveDate = dateFormat.parse(parameters.getEffectiveDate() + " 23:59:59");
         } catch (ParseException exception) {
             exception.printStackTrace();
         }
@@ -59,7 +58,7 @@ public class CouponService {
         }
 
         return new PostCouponRes(newCoupon.getId(), newCoupon.getUser().getNo(), newCoupon.getContent(),
-                newCoupon.getDiscount(), newCoupon.getMinimumPrice(), outputDateFormat.format(effectiveDate));
+                newCoupon.getDiscount(), newCoupon.getMinimumPrice(), dateFormat.format(effectiveDate));
     }
 
 }
