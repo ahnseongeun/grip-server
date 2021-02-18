@@ -94,14 +94,11 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/users/naver")
-    @ApiOperation(value = "네이버 로그인 및 회원가입",
-            notes = "네이버 로그인 및 회원가입\n"+"로그인은 login Y, 회원가입은 login N로 구분")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "login", value = "Y일경우 로그인, N일 경우 회원 가입", required = false, dataType = "string", paramType = "query", defaultValue="Y")
-    })
+    @ApiOperation(value = "네이버 로그인 및 회원가입", notes = "네이버 로그인 및 회원가입")
     public BaseResponse<PostUserRes> postUsersByNaver(
-            @RequestHeader(value = "token") String token,
-            @RequestParam(value = "login",required = false,defaultValue = "Y") String login) {
+            @RequestHeader(value = "token") String token)
+            //@RequestParam(value = "login",required = false,defaultValue = "Y") String login)
+            {
 
         String header = "Bearer " + token; // Bearer 다음에 공백 추가
 
@@ -125,7 +122,7 @@ public class UserController {
 
         // 2. Post UserInfo
         try {
-            PostUserRes postUserRes = userService.createUserInfo(responseBody,login);
+            PostUserRes postUserRes = userService.createUserInfo(responseBody);
 
             if (postUserRes.getResponse().equals("login")) {
                 return new BaseResponse<>(SUCCESS_LOGIN, postUserRes);
