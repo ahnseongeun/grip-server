@@ -80,6 +80,7 @@ public class ReviewController {
     /**
      * 카테고리별 리뷰 조회 API
      * [GET] /api/reviews
+     * @RequestParam String categoryName
      * @RequestBody String categoryName
      * @return BaseResponse<List<GetReviewRes>>
      * @Auther shine
@@ -87,19 +88,13 @@ public class ReviewController {
     @ApiOperation(value = "카테고리별 리뷰 조회", notes = "카테고리별 리뷰 조회")
     @ResponseBody
     @GetMapping("/reviews/category")
-    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestParam(required = false) HashMap<String, String> parameter) {
-        String categoryName = "";
-        try {
-            categoryName = parameter.get("name");
-        } catch (Exception exception) {
-            return new BaseResponse<>(EMPTY_CATEGORY);
-        }
-        if(categoryName == null || categoryName.length() == 0) {
+    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestParam(value = "name",required = false) String name) {
+        if(name == null || name.length() == 0) {
             return new BaseResponse<>(EMPTY_CATEGORY);
         }
 
         try {
-            List<Review> reviewList = reviewProvider.retrieveReviewsByCategoryNameAndStatusY(categoryName);
+            List<Review> reviewList = reviewProvider.retrieveReviewsByCategoryNameAndStatusY(name);
             return new BaseResponse<>(SUCCESS, reviewList.stream().map(review -> {
                 return reviewProvider.retrieveGetReviewRes(review);
             }).collect(Collectors.toList()));
