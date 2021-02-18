@@ -31,4 +31,9 @@ public class WatchMyVideo extends BaseEntity {
     @JoinColumn(name = "videoId",nullable = false)
     private Video video;
 
+    public WatchMyVideo(User user,Video video){
+        this.user = user;
+        this.video = video;
+    }
+
 }

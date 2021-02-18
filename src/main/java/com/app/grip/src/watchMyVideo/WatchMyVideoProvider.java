@@ -12,6 +12,8 @@ import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,16 +25,19 @@ public class WatchMyVideoProvider {
     private final UserRepository userRepository;
     private final VideoParticipantRepository videoParticipantRepository;
     private final VideoRepository videoRepository;
+    private final HashMap<Long,Integer> likeRepository;
     private final JwtService jwtService;
 
     @Autowired
     public WatchMyVideoProvider(UserRepository userRepository,
                                 VideoParticipantRepository videoParticipantRepository,
                                 VideoRepository videoRepository,
+                                HashMap<Long, Integer> likeRepository,
                                 JwtService jwtService) {
         this.userRepository = userRepository;
         this.videoParticipantRepository = videoParticipantRepository;
         this.videoRepository = videoRepository;
+        this.likeRepository = likeRepository;
         this.jwtService = jwtService;
     }
 
@@ -57,9 +62,9 @@ public class WatchMyVideoProvider {
                         .title(video.getTitle())
                         .LiveCheck(video.getLiveCheck())
                         .thumbNailURL(video.getThumbnailURL())
-                        .videoLike(video.getVideoLike() == null? 1 : video.getVideoLike().getCount())
+                        .videoLike(likeRepository.get(video.getId()) == null ? 1 : likeRepository.get(video.getId()))
                         .watchVideoCount(video.getVideoWatchUserCount())
-                        .endLiveTime("한시간전")
+                        .endLiveTime(video.getEndLiveTime())
                         .hostName(video.getUser().getName())
                         .hostProfileImageURL(video.getUser().getProfileImageURL())
                         .build())

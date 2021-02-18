@@ -24,7 +24,8 @@ public class WatchMyVideoController {
 
     @GetMapping("/watch-videos")
     @ResponseBody
-    @ApiOperation(value = "내가 본 영상 조회", notes = "내가 본 영상 조회")
+    @ApiOperation(value = "내가 본 영상 조회(userNo 1,2,3의 jwt만 사용해주세요.)"
+            , notes = "내가 본 영상 조회(userNo 1,2,3의 jwt만 사용해주세요.)")
     public BaseResponse<List<GetWatchMyVideo>> getWatchMyVideo(
             @RequestHeader(value = "jwt") String jwt)  {
 

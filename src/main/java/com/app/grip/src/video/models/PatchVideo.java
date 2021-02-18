@@ -14,5 +14,5 @@ public class PatchVideo {
     private final Long videoId;
     private final Integer videoLikeCount;
     private final String endLiveStatus;
-    private final LocalDateTime EndLiveTime;
+    private final String EndLiveTime;
 }

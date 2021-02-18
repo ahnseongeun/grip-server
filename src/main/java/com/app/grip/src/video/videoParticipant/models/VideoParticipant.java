@@ -32,4 +32,9 @@ public class VideoParticipant extends BaseEntity {
     @JoinColumn(name = "videoId",nullable = false)
     private Video video;
 
+    public VideoParticipant(User user,Video video){
+        this.user = user;
+        this.video = video;
+    }
+
 }
