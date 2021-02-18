@@ -102,7 +102,10 @@ public class CouponProvider {
                 coupon.getContent(),
                 coupon.getDiscount(),
                 coupon.getMinimumPrice(),
-                dateFormat.format(coupon.getEffectiveDate()));
+                dateFormat.format(coupon.getEffectiveDate()),
+                "세상에 모든 것이 다이소!",
+                "https://spng.subpng.com/20180906/vqw/kisspng-earring-jewellery-necklace-kalyan-jewellers-gold-jewellery-transparent-png-arts-5b91ec7d692563.1314281415362899174307.jpg"
+                );
     }
 
 }

@@ -13,4 +13,6 @@ public class GetCouponRes {
     private final Integer discount;
     private final Integer minimumPrice;
     private final String effectiveDate;
+    private final String storeName;
+    private final String storeURL;
 }
