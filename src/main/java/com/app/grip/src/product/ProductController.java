@@ -40,16 +40,14 @@ public class ProductController {
     /**
      * 상품카테고리 조회 API
      * [GET] /api/products-category/:categoryName
-     * @RequestBody String categoryName
+     * @RequestParam String categoryName
      * @return BaseResponse<GetProductCategoryRes>
      * @Auther shine
      */
     @ApiOperation(value = "상품카테고리 조회", notes = "상품카테고리 조회")
     @ResponseBody
     @GetMapping("/products-category")
-    public BaseResponse<GetProductCategoryRes> getProductCategory(@RequestBody(required = false) HashMap<String, String> parameter) {
-        String categoryName = parameter.get("categoryName");
-
+    public BaseResponse<GetProductCategoryRes> getProductCategory(@RequestParam(value = "categoryName", required = false) String categoryName) {
         if(categoryName == null || categoryName.length() == 0) {
             return new BaseResponse<>(EMPTY_CATEGORY);
         }

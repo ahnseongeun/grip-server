@@ -81,7 +81,6 @@ public class ReviewController {
      * 카테고리별 리뷰 조회 API
      * [GET] /api/reviews
      * @RequestParam String categoryName
-     * @RequestBody String categoryName
      * @return BaseResponse<List<GetReviewRes>>
      * @Auther shine
      */
