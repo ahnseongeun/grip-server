@@ -183,19 +183,18 @@ public class GripApplication implements CommandLineRunner {
         /**
          * 상품 카테고리 더미 데이터 삽입
          */
-        ProductCategory productCategory1 = new ProductCategory("패션");
-        ProductCategory productCategory2 = new ProductCategory("화장품/미용");
-        ProductCategory productCategory3 = new ProductCategory("디지털/가전");
-        ProductCategory productCategory4 = new ProductCategory("가구/인테리어");
-        ProductCategory productCategory5 = new ProductCategory("출산/육아");
-        ProductCategory productCategory6 = new ProductCategory("식품");
-        ProductCategory productCategory7 = new ProductCategory("스포츠/레저");
-        ProductCategory productCategory8 = new ProductCategory("생활/건강");
-        ProductCategory productCategory9 = new ProductCategory("여가/생활편의");
+        ProductCategory productCategory1 = new ProductCategory("패션의류");
+        ProductCategory productCategory2 = new ProductCategory("패션잡화");
+        ProductCategory productCategory3 = new ProductCategory("주얼리");
+        ProductCategory productCategory4 = new ProductCategory("뷰티");
+        ProductCategory productCategory5 = new ProductCategory("디지털/가전");
+        ProductCategory productCategory6 = new ProductCategory("가구/인테리어");
+        ProductCategory productCategory7 = new ProductCategory("출산/유아동");
+        ProductCategory productCategory8 = new ProductCategory("식품");
 
         final List<ProductCategory> productCategoryList = Arrays.asList(productCategory1,
                 productCategory2, productCategory3, productCategory4, productCategory5, productCategory6,
-                productCategory7, productCategory8, productCategory9);
+                productCategory7, productCategory8);
         List<ProductCategory> savedProductCategory = (List<ProductCategory>) productCategoryRepository.saveAll(productCategoryList);
 
 
@@ -205,7 +204,7 @@ public class GripApplication implements CommandLineRunner {
         Product product1 = new Product("블링 블링 금목걸이 팔아요~", "멀리서봐도 아름답고 반짝 반짝 빛나는 24K 금목걸이 팝니다~", 200000,
                 "https://spng.subpng.com/20180906/vqw/kisspng-earring-jewellery-necklace-kalyan-jewellers-gold-jewellery-transparent-png-arts-5b91ec7d692563.1314281415362899174307.jpg");
         product1.setStore(store1);
-        product1.setProductCategory(productCategory1);
+        product1.setProductCategory(productCategory3);
 
         Product product2 = new Product("핫이슈~ 땡땡이 원피스~", "요즘 핫한 그 원피스! 품질 좋고 싸게 팝니다~", 88000,
                 "https://img1.daumcdn.net/thumb/R720x0/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fliveboard%2Ftag%2Fa9d8ddfca41d4139ad073089a4d6958e.jpg");
@@ -215,24 +214,19 @@ public class GripApplication implements CommandLineRunner {
         Product product3 = new Product("품절 임박! 핸드메이드 주스~", "직접 만든 핸드메이드 주스~ 품절되기 전에 빨리와서 구매해주세요!", 50000,
                 "http://bompack.com/web/product/extra/small/201809/dd9b17fb93e8ee27b0875fef7768fb0e.jpg");
         product3.setStore(store3);
-        product3.setProductCategory(productCategory6);
+        product3.setProductCategory(productCategory8);
 
         Product product4 = new Product("신제품! 노트북 팝니다", "출시 기념으로 싸게 팝니다~ 많이들 사러 와주세용~~", 1000000,
                 "https://byline.network/wp-content/uploads/2020/05/ASUS-ExpertBook-B9-side.jpg");
         product4.setStore(store4);
-        product4.setProductCategory(productCategory3);
+        product4.setProductCategory(productCategory5);
 
         Product product5 = new Product("올겨울 인싸템! 양털 팝니다", "요즘 인싸라면 없어서는 안되는 아이템! 양털 겉옷! 싸게 판매할때 장만하세요~", 59999,
                 "https://i.ytimg.com/vi/kUmHOpg_UZY/hqdefault.jpg");
         product5.setStore(store5);
-        product5.setProductCategory(productCategory1);
+        product5.setProductCategory(productCategory2);
 
-        Product product6 = new Product("블링 블링 금목걸이 팔아요~", "멀리서봐도 아름답고 반짝 반짝 빛나는 24K 금목걸이 팝니다~", 200000,
-                "https://spng.subpng.com/20180906/vqw/kisspng-earring-jewellery-necklace-kalyan-jewellers-gold-jewellery-transparent-png-arts-5b91ec7d692563.1314281415362899174307.jpg");
-        product6.setStore(store1);
-        product6.setProductCategory(productCategory1);
-
-        final List<Product> productList = Arrays.asList(product1,product2,product3,product4,product5,product6);
+        final List<Product> productList = Arrays.asList(product1,product2,product3,product4,product5);
         List<Product> savedProduct = (List<Product>) productRepository.saveAll(productList);
 
 
@@ -240,6 +234,7 @@ public class GripApplication implements CommandLineRunner {
          * 리뷰 더미 데이터 삽입
          */
         List<ReviewPicture> reviewPictureList;
+
         Review review1 = new Review(5, "빠른 배송과 실제로 받아보니 정말 정말 예쁘네요!");
         reviewPictureList = Arrays.asList(
                 new ReviewPicture("https://previews.123rf.com/images/muralinathypr/muralinathypr1209/muralinathypr120900097/15123481-%EC%9D%B8%EB%8F%84%EC%9D%98-%EC%A0%84%ED%86%B5%EC%A0%81%EC%9D%B8-%EA%B8%88-%EB%AA%A9%EA%B1%B8%EC%9D%B4.jpg"),
@@ -249,14 +244,14 @@ public class GripApplication implements CommandLineRunner {
         review1.setReviewPictureList(reviewPictureList);
 
         Review review2 = new Review(4, "제가 원하던 원피스였으나 배송이 느린점이 아쉽습니다! 배송 부분만 감안하면 가격도 저렴하고 품질도 훌륭합니다!");
-        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.momoring.kr/web/product/big/201905/f19e479bc7827024257bb3723bea4611.gif"));
+        reviewPictureList = Arrays.asList(new ReviewPicture("https://photo.newsen.com/mphoto/2013/12/17/201312170013599310_1.jpg"));
         review2.setUser(user2);
         review2.setProduct(product2);
         review2.setReviewPictureList(reviewPictureList);
 
         Review review3 = new Review(5, "식품같은 경우는 신선도가 생명인데 빠른 배송으로 하루만에 배송을 받았습니다! 유기농 재료로 직접 만들어서 먹는 순간 건강해지는 느낌! 정말 강추합니다.");
         reviewPictureList = Arrays.asList(new ReviewPicture("https://dimg.donga.com/wps/NEWS/IMAGE/2015/03/07/69995569.1.jpg"),
-                new ReviewPicture("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEosFKYRqlMvldH3Vkj2yIxKhYnBFMJ7vgGQ&usqp=CAU"));
+                new ReviewPicture("http://image.dongascience.com/Photo/2017/03/14909336653856.jpg"));
         review3.setUser(user3);
         review3.setProduct(product3);
         review3.setReviewPictureList(reviewPictureList);
@@ -269,13 +264,62 @@ public class GripApplication implements CommandLineRunner {
 
         Review review5 = new Review(1, "배송도 느리고 생각보다 가격대비 품질이 그저 그러네요.");
         review5.setUser(userFace2);
-        review5.setProduct(product5);
+        review5.setProduct(product4);
 
         Review review6 = new Review(2, "배송은 빨랐으나 생각보다 상품이 별로네요. 비추합니다.");
         review6.setUser(userFace1);
         review6.setProduct(product1);
 
-        final List<Review> reviewList = Arrays.asList(review1,review2,review3,review4,review5,review6);
+        Review review7 = new Review(5, "너무 너무 이쁜 원피스입니다! 입는순간..!! 반해버렸습니다.");
+        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.baddiary.com/web/product/medium/20191219/1108dc41b462954c52256d74d631e3ec.jpg"));
+        review7.setUser(user1);
+        review7.setProduct(product2);
+        review7.setReviewPictureList(reviewPictureList);
+
+        Review review8 = new Review(4, "배송이 살짝 아쉽긴 했으나...!! 딱맞고 예쁜 옷입니다! 굿굿굿!");
+        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.soosulhwa.com/web/product/medium/202010/91c02d835d14baae719ac23bd5d37bd2.jpg"));
+        review8.setUser(user3);
+        review8.setProduct(product2);
+        review8.setReviewPictureList(reviewPictureList);
+
+        Review review9 = new Review(5, "역시! 후기가 좋은 이유가 있습니다!! 남친과 데이트때 입을려고 샀는데 너무 너무 이쁜 원피스입니다! 남친도 옷을 이쁘다고 얼마나 칭찬하던지! 추천합니다!");
+        reviewPictureList = Arrays.asList(new ReviewPicture("http://img4.tmon.kr/cdn3/deals/2020/12/19/2032893610/front_dfe4f_t0a8u.jpg"));
+        review9.setUser(userFace1);
+        review9.setProduct(product2);
+        review9.setReviewPictureList(reviewPictureList);
+
+        Review review10 = new Review(5, "QNA도 너무 너무 친절했고 배송도 너무 빨랐습니다. 마음에 듭니다!");
+        reviewPictureList = Arrays.asList(new ReviewPicture("https://thumb.mt.co.kr/06/2018/07/2018072009471344251_1.jpg"));
+        review10.setUser(userFace2);
+        review10.setProduct(product2);
+        review10.setReviewPictureList(reviewPictureList);
+
+        Review review11 = new Review(5, "요즘 핫한 양털 후리스! 이거 입고 갔더니 친구들이 어디서 샀냐고 합니다 ㅋㅋㅋ 완전 핫해졌어요 추천 추천");
+        reviewPictureList = Arrays.asList(new ReviewPicture("https://pbs.twimg.com/media/EfDgo5TUcAYaJFk.jpg"));
+        review11.setUser(user1);
+        review11.setProduct(product5);
+        review11.setReviewPictureList(reviewPictureList);
+
+        Review review12 = new Review(4, "하태 하태! 학교에서 하태! 싸고 저렴하게 구입한것 같습니다 강추!");
+        reviewPictureList = Arrays.asList(new ReviewPicture("http://image.auction.co.kr/itemimage/1a/f2/06/1af206c286.jpg"));
+        review12.setUser(userFace1);
+        review12.setProduct(product5);
+        review12.setReviewPictureList(reviewPictureList);
+
+        Review review13 = new Review(5, "요즘 학교에 후리스 없는 친구가 있나요? 그만큼 핫한 제품을 이렇게 저렴하게!! 심지어 완전 트랜디한 제품을! 만족합니다!!");
+        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.modaloco.com/web/product/big/20191204/205ea4aa65f247bd104e4e9f5a3f920a.jpg"));
+        review13.setUser(user3);
+        review13.setProduct(product5);
+        review13.setReviewPictureList(reviewPictureList);
+
+        Review review14 = new Review(5, "추운날씨에 멋까지 챙길 수 있는 효자템입니다!! 배송도 빠르고 문의도 되게 친절하고 빠르게 답변해주셨어요!");
+        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.ajoonholic.com/web/product/big/201911/506543dbe51b03566d1579d5d47d1270.jpg"));
+        review14.setUser(user2);
+        review14.setProduct(product5);
+        review14.setReviewPictureList(reviewPictureList);
+
+        final List<Review> reviewList = Arrays.asList(review1,review2,review3,review4,review5,
+                review6,review7,review8,review9,review10,review11,review12,review13,review14);
         List<Review> savedReview = (List<Review>) reviewRepository.saveAll(reviewList);
 
 
