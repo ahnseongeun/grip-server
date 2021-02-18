@@ -99,7 +99,7 @@ public class VideoService {
 
     @Transactional
     public PatchVideo updateVideo(Long videoId) throws BaseException {
-        Video video = videoRepository.findById(videoId)
+        Video video = videoRepository.findByIdAndEndLiveStatus(videoId,"Y")
                 .orElseThrow(() -> new BaseException(FAILED_TO_GET_VIDEO));
 
         VideoLike videoLike = VideoLike.builder()
