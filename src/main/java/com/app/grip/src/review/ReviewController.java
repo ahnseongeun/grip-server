@@ -87,7 +87,7 @@ public class ReviewController {
     @ApiOperation(value = "카테고리별 리뷰 조회", notes = "카테고리별 리뷰 조회")
     @ResponseBody
     @GetMapping("/reviews/category")
-    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestBody(required = false) HashMap<String, String> parameter) {
+    public BaseResponse<List<GetReviewRes>> getReviewByCategoryName(@RequestParam(required = false) HashMap<String, String> parameter) {
         String categoryName = "";
         try {
             categoryName = parameter.get("name");
