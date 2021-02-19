@@ -289,13 +289,18 @@ public class GripApplication implements CommandLineRunner {
         review6.setProduct(product1);
 
         Review review7 = new Review(5, "너무 너무 이쁜 원피스입니다! 입는순간..!! 반해버렸습니다.");
-        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.baddiary.com/web/product/medium/20191219/1108dc41b462954c52256d74d631e3ec.jpg"));
+        reviewPictureList = Arrays.asList(
+                new ReviewPicture("http://m.baddiary.com/web/product/medium/20191219/1108dc41b462954c52256d74d631e3ec.jpg"),
+                new ReviewPicture("http://lovesome-one.com/web/product/big/201903/7c552fd55c1df814ad4e97eb2d7ea631.jpg"),
+                new ReviewPicture("http://m.uniqcong.com/web/product/big/201806/738_shop1_15290449049889.jpg"));
         review7.setUser(user1);
         review7.setProduct(product2);
         review7.setReviewPictureList(reviewPictureList);
 
         Review review8 = new Review(4, "배송이 살짝 아쉽긴 했으나...!! 딱맞고 예쁜 옷입니다! 굿굿굿!");
-        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.soosulhwa.com/web/product/medium/202010/91c02d835d14baae719ac23bd5d37bd2.jpg"));
+        reviewPictureList = Arrays.asList(
+                new ReviewPicture("http://m.soosulhwa.com/web/product/medium/202010/91c02d835d14baae719ac23bd5d37bd2.jpg"),
+                new ReviewPicture("http://m.uniqcong.com/web/product/big/201902/b2c2f7e596a2f74515c2580fa5cb7d2d.jpg"));
         review8.setUser(user3);
         review8.setProduct(product2);
         review8.setReviewPictureList(reviewPictureList);
@@ -307,13 +312,21 @@ public class GripApplication implements CommandLineRunner {
         review9.setReviewPictureList(reviewPictureList);
 
         Review review10 = new Review(5, "QNA도 너무 너무 친절했고 배송도 너무 빨랐습니다. 마음에 듭니다!");
-        reviewPictureList = Arrays.asList(new ReviewPicture("https://thumb.mt.co.kr/06/2018/07/2018072009471344251_1.jpg"));
+        reviewPictureList = Arrays.asList(
+                new ReviewPicture("https://thumb.mt.co.kr/06/2018/07/2018072009471344251_1.jpg"),
+                new ReviewPicture("https://m.qng.co.kr/web/product/big/201804/53058_shop1_174058.jpg"),
+                new ReviewPicture("http://m.may-jan.com/web/product/big/20200427/91edd525910f7c44ebbbf3752d5252fc.jpg"),
+                new ReviewPicture("https://m.monodaily.com/web/product/big/20191213/b44a3e4a5e46a0702c30f775f731fda7.jpg"));
         review10.setUser(userFace2);
         review10.setProduct(product2);
         review10.setReviewPictureList(reviewPictureList);
 
         Review review11 = new Review(5, "요즘 핫한 양털 후리스! 이거 입고 갔더니 친구들이 어디서 샀냐고 합니다 ㅋㅋㅋ 완전 핫해졌어요 추천 추천");
-        reviewPictureList = Arrays.asList(new ReviewPicture("https://pbs.twimg.com/media/EfDgo5TUcAYaJFk.jpg"));
+        reviewPictureList = Arrays.asList(
+                new ReviewPicture("https://pbs.twimg.com/media/EfDgo5TUcAYaJFk.jpg"),
+                new ReviewPicture("http://m.906studio.co.kr/web/product/big/202010/49cf646a9621882630817125f64049d8.jpg"),
+                new ReviewPicture("https://jmj8413.speedgabia.com/new2/zs4449/10.jpg"),
+                new ReviewPicture("https://i.pinimg.com/736x/1a/e3/21/1ae321ea876f4c7f9ba57ba84d88de35.jpg"));
         review11.setUser(user1);
         review11.setProduct(product5);
         review11.setReviewPictureList(reviewPictureList);
@@ -325,13 +338,18 @@ public class GripApplication implements CommandLineRunner {
         review12.setReviewPictureList(reviewPictureList);
 
         Review review13 = new Review(5, "요즘 학교에 후리스 없는 친구가 있나요? 그만큼 핫한 제품을 이렇게 저렴하게!! 심지어 완전 트랜디한 제품을! 만족합니다!!");
-        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.modaloco.com/web/product/big/20191204/205ea4aa65f247bd104e4e9f5a3f920a.jpg"));
+        reviewPictureList = Arrays.asList(
+                new ReviewPicture("http://m.modaloco.com/web/product/big/20191204/205ea4aa65f247bd104e4e9f5a3f920a.jpg"),
+                new ReviewPicture("http://99streetshop.com/web/product/tiny/20191114/38c50b7c4dac02d725bcc97e3ce07b7b.jpg"),
+                new ReviewPicture("http://m.zavino.co.kr/web/product/big/20191124/61773726d1e5095d58cbb51aadcf95d3.jpg"));
         review13.setUser(user3);
         review13.setProduct(product5);
         review13.setReviewPictureList(reviewPictureList);
 
         Review review14 = new Review(5, "추운날씨에 멋까지 챙길 수 있는 효자템입니다!! 배송도 빠르고 문의도 되게 친절하고 빠르게 답변해주셨어요!");
-        reviewPictureList = Arrays.asList(new ReviewPicture("http://m.ajoonholic.com/web/product/big/201911/506543dbe51b03566d1579d5d47d1270.jpg"));
+        reviewPictureList = Arrays.asList(
+                new ReviewPicture("http://m.ajoonholic.com/web/product/big/201911/506543dbe51b03566d1579d5d47d1270.jpg"),
+                new ReviewPicture("http://shop-phinf.pstatic.net/20201023_181/1603392731567QDK4O_JPEG/%EC%96%91%ED%84%B811.jpg"));
         review14.setUser(user2);
         review14.setProduct(product5);
         review14.setReviewPictureList(reviewPictureList);
