@@ -1,7 +1,6 @@
 package com.app.grip.utils;
 
 import com.app.grip.config.BaseException;
-import com.app.grip.config.BaseResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
