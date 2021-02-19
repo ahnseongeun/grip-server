@@ -554,14 +554,14 @@ public class GripApplication implements CommandLineRunner {
 
         String url1 = "https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8";
         //String url1 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video1\\videotest1.m3u8";
-        StreamingRepository.put(url1,0);
-        StreamingSizeRepository.put(url1,GetFileMetaData.fileMetaData(url1));
+        StreamingRepository.put("https://test.shine94.kr/video/video2/videotest1.m3u8",0);
+        StreamingSizeRepository.put("https://test.shine94.kr/video/video2/videotest1.m3u8",GetFileMetaData.fileMetaData(url1));
         System.out.println(GetFileMetaData.fileMetaData(url1));
 
         String url2 = "https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8";
         //String url2 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video2\\videotest2.m3u8";
-        StreamingRepository.put(url2,0);
-        StreamingSizeRepository.put(url2,GetFileMetaData.fileMetaData(url2));
+        StreamingRepository.put("https://test.shine94.kr/video/video2/videotest2.m3u8",0);
+        StreamingSizeRepository.put("https://test.shine94.kr/video/video2/videotest2.m3u8",GetFileMetaData.fileMetaData(url2));
         System.out.println(GetFileMetaData.fileMetaData(url2));
 
     }
