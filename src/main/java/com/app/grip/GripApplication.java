@@ -404,14 +404,14 @@ public class GripApplication implements CommandLineRunner {
          */
         final List<Advertisement> advertisementList =
                 Arrays.asList(
-                        new Advertisement("광고1번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad1.png",1L),
+                        new Advertisement("광고1번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad8.png",1L),
                         new Advertisement("광고2번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad2.png",1L),
                         new Advertisement("광고3번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad3.png",1L),
                         new Advertisement("광고4번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad4.png",1L),
                         new Advertisement("광고5번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad5.png",1L),
                         new Advertisement("광고6번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad6.png",1L),
                         new Advertisement("광고7번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad7.png",1L),
-                        new Advertisement("광고8번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad8.png",1L));
+                        new Advertisement("광고8번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad1.png",1L));
 
 
         List<Advertisement> savedAdvertisement = (List<Advertisement>) advertisementRepository.saveAll(advertisementList);
@@ -519,18 +519,18 @@ public class GripApplication implements CommandLineRunner {
         // 내가 본 비디오 삽입
         final List<WatchMyVideo> watchMyVideoList =
                 Arrays.asList(
+                        new WatchMyVideo(user1,videoList.get(6)),
                         new WatchMyVideo(user1,videoList.get(7)),
                         new WatchMyVideo(user1,videoList.get(8)),
                         new WatchMyVideo(user1,videoList.get(9)),
-                        new WatchMyVideo(user1,videoList.get(10)),
+                        new WatchMyVideo(user2,videoList.get(10)),
                         new WatchMyVideo(user2,videoList.get(11)),
                         new WatchMyVideo(user2,videoList.get(12)),
                         new WatchMyVideo(user2,videoList.get(13)),
-                        new WatchMyVideo(user2,videoList.get(14)),
+                        new WatchMyVideo(user3,videoList.get(14)),
                         new WatchMyVideo(user3,videoList.get(15)),
                         new WatchMyVideo(user3,videoList.get(16)),
-                        new WatchMyVideo(user3,videoList.get(17)),
-                        new WatchMyVideo(user3,videoList.get(18))
+                        new WatchMyVideo(user3,videoList.get(17))
                 );
 
         watchMyVideoRepository.saveAll(watchMyVideoList);
