@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class GetProductInfo {
 
-    private final String productPrice;
+    private final Integer productPrice;
     private final String productContent;
     private final String productImageURL;
 

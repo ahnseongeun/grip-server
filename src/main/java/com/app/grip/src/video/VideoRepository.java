@@ -17,4 +17,6 @@ public interface VideoRepository extends CrudRepository<Video, Long> {
     Optional<Video> findByIdAndStatus(Long videoId, String y);
 
     List<Video> findByUserAndStatus(User user, String y);
+
+    Optional<Video> findByIdAndEndLiveStatus(Long videoId, String y);
 }

@@ -82,7 +82,7 @@ public enum BaseResponseStatus {
     FAILED_TO_GET_VIDEO(false, 3504, "영상 조회에 실패하였습니다."),
     END_TO_VIDEO(false, 3505, "라이브가 종료 되었습니다."),
     NOT_START_VIDEO(false, 3506, "라이브가 아직 시작하지 않았습니다."),
-    FAILED_TO_POST_VIDEO_LIKE(false, 3507, "좋아요 영구저장에 실패했습니다."),
+    FAILED_TO_POST_VIDEO_LIKE(false, 3507, "좋아요에 실패했습니다."),
     FAILED_TO_GET_VIDEO_LIKE(false,3508,"좋아요 조회에 실패했습니다."),
     FAILED_TO_POST_PARTICIPANT(false,3509,"참여자 등록에 실패했습니다."),
     NOT_FOUND_PARTICIPANT(false,3510,"참여자 조회에 실패했습니다."),

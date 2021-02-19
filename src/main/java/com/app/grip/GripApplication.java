@@ -379,15 +379,15 @@ public class GripApplication implements CommandLineRunner {
         /**
          * 영상 카테고리 더미 데이터 삽입
          */
-        VideoCategory videoCategory1 = new VideoCategory("라이브예고","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory2 = new VideoCategory("내팔로잉","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory3 = new VideoCategory("전체LIVE","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory4 = new VideoCategory("소호몰언니","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory5 = new VideoCategory("스타일링","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory6 = new VideoCategory("신인그리퍼","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory7 = new VideoCategory("뷰티꿀팁","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory8 = new VideoCategory("먹방쿡방","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
-        VideoCategory videoCategory9 = new VideoCategory("알쓸신템","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg");
+        VideoCategory videoCategory1 = new VideoCategory("라이브예고","https://png.pngtree.com/png-clipart/20200225/original/pngtree-clock-icon-in-neon-style-png-image_5276803.jpg");
+        VideoCategory videoCategory2 = new VideoCategory("내팔로잉","https://png.pngtree.com/png-vector/20190726/ourlarge/pngtree-hearts-icon-design-vector-png-image_1607664.jpg");
+        VideoCategory videoCategory3 = new VideoCategory("전체LIVE","https://png.pngtree.com/png-clipart/20190516/original/pngtree-neon-welcome-logo-png-image_3782592.jpg");
+        VideoCategory videoCategory4 = new VideoCategory("소호몰언니","https://media.istockphoto.com/vectors/vip-neon-icons-concept-neon-beach-lifeguard-man-with-lifebuoy-icon-on-vector-id1194137362");
+        VideoCategory videoCategory5 = new VideoCategory("스타일링","https://image.freepik.com/free-vector/birthday-party-neon-icon-set_36298-697.jpg");
+        VideoCategory videoCategory6 = new VideoCategory("신인그리퍼","https://png.pngtree.com/png-clipart/20200225/original/pngtree-stars-icon-in-neon-style-png-image_5289522.jpg");
+        VideoCategory videoCategory7 = new VideoCategory("뷰티꿀팁","https://image.freepik.com/free-vector/cosmetic-neon-icons-set_36298-634.jpg");
+        VideoCategory videoCategory8 = new VideoCategory("먹방쿡방","https://previews.123rf.com/images/stockgiu/stockgiu1710/stockgiu171006558/89619173-%EC%9D%8C%EC%8B%9D-%EB%84%A4%EC%98%A8-%EC%95%84%EC%9D%B4%EC%BD%98-%EC%9E%A5%EC%8B%9D%EC%9D%84-%EC%84%A4%EC%A0%95.jpg");
+        VideoCategory videoCategory9 = new VideoCategory("알쓸신템","https://media.istockphoto.com/vectors/music-band-neon-icons-vector-id1071998638");
 
             final List<VideoCategory> videoCategoryList =
                 Arrays.asList(
@@ -404,14 +404,14 @@ public class GripApplication implements CommandLineRunner {
          */
         final List<Advertisement> advertisementList =
                 Arrays.asList(
-                        new Advertisement("광고1번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고2번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고3번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고4번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고5번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고6번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고7번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L),
-                        new Advertisement("광고8번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/pizza.jpg",1L));
+                        new Advertisement("광고1번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad1.png",1L),
+                        new Advertisement("광고2번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad2.png",1L),
+                        new Advertisement("광고3번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad3.png",1L),
+                        new Advertisement("광고4번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad4.png",1L),
+                        new Advertisement("광고5번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad5.png",1L),
+                        new Advertisement("광고6번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad6.png",1L),
+                        new Advertisement("광고7번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad7.png",1L),
+                        new Advertisement("광고8번","https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/ad8.png",1L));
 
 
         List<Advertisement> savedAdvertisement = (List<Advertisement>) advertisementRepository.saveAll(advertisementList);
@@ -423,11 +423,18 @@ public class GripApplication implements CommandLineRunner {
         final List<Video> videoList =
                 Arrays.asList(
                         //라이브 예고
-                        new Video("곽스타","N", getDateTime.getCustomDataTime("plus",4L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                        new Video("곽스타","N", getDateTime.getCustomDataTime("plus",2L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory1,grapher1),
-                        new Video("네이플 본사 공식몰","N",getDateTime.getCustomDataTime("plus",4L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                        new Video("네이플 본사 공식몰","N",getDateTime.getCustomDataTime("plus",3L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory1,grapher2),
                         new Video("고랭고랭","N",getDateTime.getCustomDataTime("plus",4L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory1,grapher3),
+
+                        new Video("네오스키마 트러블키트 마스크팩 수분토너 피부진정 트러블","N", getDateTime.getCustomDataTime("plus",5L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
+                                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video1.png",0,videoCategory1,grapher1),
+                        new Video("츤아저씨 첫 그립 라이브! 고당도 블랙 라벨 오렌지 파격 할인","N",getDateTime.getCustomDataTime("plus",6L),"N","https://subdomain.ahnbat.kr/video/video2/videotest2.m3u8"
+                                ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video3.png",0,videoCategory1,grapher2),
+                        new Video("우리 아이를 위한 자기주도 이슈식 매트","N",getDateTime.getCustomDataTime("plus",7L),"N","https://subdomain.ahnbat.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/video2.png",0,videoCategory1,grapher3),
 
                         //전체 라이브
@@ -494,36 +501,36 @@ public class GripApplication implements CommandLineRunner {
         // 비디오 참여자 등록
         final List<VideoParticipant> videoParticipantList =
                 Arrays.asList(
-                        new VideoParticipant(user1,videoList.get(4)),
-                        new VideoParticipant(user1,videoList.get(5)),
-                        new VideoParticipant(user1,videoList.get(6)),
                         new VideoParticipant(user1,videoList.get(7)),
-                        new VideoParticipant(user2,videoList.get(8)),
-                        new VideoParticipant(user2,videoList.get(9)),
-                        new VideoParticipant(user2,videoList.get(10)),
+                        new VideoParticipant(user1,videoList.get(8)),
+                        new VideoParticipant(user1,videoList.get(9)),
+                        new VideoParticipant(user1,videoList.get(10)),
                         new VideoParticipant(user2,videoList.get(11)),
-                        new VideoParticipant(user3,videoList.get(12)),
-                        new VideoParticipant(user3,videoList.get(13)),
-                        new VideoParticipant(user3,videoList.get(14)),
-                        new VideoParticipant(user3,videoList.get(15))
+                        new VideoParticipant(user2,videoList.get(12)),
+                        new VideoParticipant(user2,videoList.get(13)),
+                        new VideoParticipant(user2,videoList.get(14)),
+                        new VideoParticipant(user3,videoList.get(15)),
+                        new VideoParticipant(user3,videoList.get(16)),
+                        new VideoParticipant(user3,videoList.get(17)),
+                        new VideoParticipant(user3,videoList.get(18))
                 );
         videoParticipantRepository.saveAll(videoParticipantList);
 
         // 내가 본 비디오 삽입
         final List<WatchMyVideo> watchMyVideoList =
                 Arrays.asList(
-                        new WatchMyVideo(user1,videoList.get(4)),
-                        new WatchMyVideo(user1,videoList.get(5)),
-                        new WatchMyVideo(user1,videoList.get(6)),
                         new WatchMyVideo(user1,videoList.get(7)),
-                        new WatchMyVideo(user2,videoList.get(8)),
-                        new WatchMyVideo(user2,videoList.get(9)),
-                        new WatchMyVideo(user2,videoList.get(10)),
+                        new WatchMyVideo(user1,videoList.get(8)),
+                        new WatchMyVideo(user1,videoList.get(9)),
+                        new WatchMyVideo(user1,videoList.get(10)),
                         new WatchMyVideo(user2,videoList.get(11)),
-                        new WatchMyVideo(user3,videoList.get(12)),
-                        new WatchMyVideo(user3,videoList.get(13)),
-                        new WatchMyVideo(user3,videoList.get(14)),
-                        new WatchMyVideo(user3,videoList.get(15))
+                        new WatchMyVideo(user2,videoList.get(12)),
+                        new WatchMyVideo(user2,videoList.get(13)),
+                        new WatchMyVideo(user2,videoList.get(14)),
+                        new WatchMyVideo(user3,videoList.get(15)),
+                        new WatchMyVideo(user3,videoList.get(16)),
+                        new WatchMyVideo(user3,videoList.get(17)),
+                        new WatchMyVideo(user3,videoList.get(18))
                 );
 
         watchMyVideoRepository.saveAll(watchMyVideoList);
@@ -532,7 +539,7 @@ public class GripApplication implements CommandLineRunner {
 
 
         // 좋아요 삽입
-        for(int i = 4;i <= 24; i++){
+        for(int i = 7;i <= 24; i++){
             likeRepository.put((long)i,i*10);
         }
 
