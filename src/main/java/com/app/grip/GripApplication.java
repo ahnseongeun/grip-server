@@ -436,12 +436,12 @@ public class GripApplication implements CommandLineRunner {
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory1,grapher1),
                         new Video("네이플 본사 공식몰","N",getDateTime.getCustomDataTime("plus",3L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory1,grapher2),
-                        new Video("고랭고랭","N",getDateTime.getCustomDataTime("plus",4L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("고랭고랭","N",getDateTime.getCustomDataTime("plus",4L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory1,grapher3),
 
-                        new Video("네오스키마 트러블키트 마스크팩 수분토너 피부진정 트러블","N", getDateTime.getCustomDataTime("plus",5L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("네오스키마 트러블키트 마스크팩 수분토너 피부진정 트러블","N", getDateTime.getCustomDataTime("plus",5L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory1,grapher1),
-                        new Video("츤아저씨 첫 그립 라이브! 고당도 블랙 라벨 오렌지 파격 할인","N",getDateTime.getCustomDataTime("plus",6L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("츤아저씨 첫 그립 라이브! 고당도 블랙 라벨 오렌지 파격 할인","N",getDateTime.getCustomDataTime("plus",6L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory1,grapher2),
                         new Video("우리 아이를 위한 자기주도 이슈식 매트","N",getDateTime.getCustomDataTime("plus",7L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory1,grapher3),
@@ -449,39 +449,39 @@ public class GripApplication implements CommandLineRunner {
                         //전체 라이브
                         new Video("2부시작5초전","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory3,grapher1),
-                        new Video("오버티 55-88까지 맨투맨","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("오버티 55-88까지 맨투맨","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory3,grapher2),
                         new Video("짧은라방, 구두가방","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory3,grapher3),
 
                         //소호몰 언니
-                        new Video("째즈언니","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("째즈언니","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory4,grapher1),
                         new Video("신사%세일해용, 10만원이상 선물","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory4,grapher2),
-                        new Video("반지할인, 새해복_언니들","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("반지할인, 새해복_언니들","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory4,grapher4),
 
                         //스타일링
                        new Video("2부시작5초전","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory5,grapher2),
-                        new Video("짧은라방, 구두가방","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("짧은라방, 구두가방","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory5,grapher3),
                         new Video("올해는 나 장가갈꺼래...","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory5,grapher4),
 
                         //신인
-                       new Video("오늘도 수고했어~","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                       new Video("오늘도 수고했어~","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory6,grapher1),
                         new Video("다시 소통 방송 들어와요ㅠㅠ","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory6,grapher3),
-                        new Video("소통과 판매 논녀와용...","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("소통과 판매 논녀와용...","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory6,grapher4),
 
                         //뷰티 꿀팁
                         new Video("복주머니!!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory7,grapher4),
-                        new Video("셀로니아 줄기세포 샴푸!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("셀로니아 줄기세포 샴푸!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory7,grapher3),
                         new Video("피부에 양보하세요","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory7,grapher2),
@@ -489,15 +489,15 @@ public class GripApplication implements CommandLineRunner {
                         //먹방쿡방
                        new Video("크로플+누텔라","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory8,grapher1),
-                        new Video("쭈꾸미 품절!!!일보직전!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("쭈꾸미 품절!!!일보직전!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory8,grapher4),
-                        new Video("피자나라 치킨공주","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("피자나라 치킨공주","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory8,grapher2),
 
                         //알쓸신템
-                        new Video("사라 사라 사라 양말좀 사라~~","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("사라 사라 사라 양말좀 사라~~","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory9,grapher4),
-                        new Video("이걸 안들어와??","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest2.m3u8"
+                        new Video("이걸 안들어와??","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video2/videotest2.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail1.PNG",0,videoCategory9,grapher2),
                         new Video("롱패딩 딱대!!","Y",getDateTime.getCustomDataTime("minus",2L),"N","https://test.shine94.kr/video/video1/videotest1.m3u8"
                                 ,"https://grip-image-directory.s3.ap-northeast-2.amazonaws.com/thumnail2.PNG",0,videoCategory9,grapher3)
