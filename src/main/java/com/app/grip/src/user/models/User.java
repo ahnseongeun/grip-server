@@ -1,7 +1,6 @@
 package com.app.grip.src.user.models;
 
 import com.app.grip.config.BaseEntity;
-import com.app.grip.src.chattingMessage.models.ChattingMessage;
 import com.app.grip.src.coupon.models.Coupon;
 import com.app.grip.src.store.models.Store;
 import com.app.grip.src.video.models.Video;
@@ -115,8 +114,8 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<WatchMyVideo> watchMyVideoList;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<ChattingMessage> chattingMessageList;
+//    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+//    private List<ChattingMessage> chattingMessageList;
 
     public User(String name, String nickname,String profileImageURL ,String phoneNumber,
                 String birthday,String email,String gender,String snsDiv,Integer role,String imageStatus,
