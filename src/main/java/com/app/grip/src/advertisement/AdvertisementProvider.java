@@ -3,9 +3,11 @@ package com.app.grip.src.advertisement;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.advertisement.models.Advertisement;
 import com.app.grip.src.advertisement.models.GetAdvertisement;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,8 +30,10 @@ public class AdvertisementProvider {
      */
     public List<GetAdvertisement> retrieveAdvertisementList() throws BaseException{
 
+        Long directoryId = DateTime.now().getMinuteOfDay() % 2 == 0 ? 1L : 2L;
+
         List<Advertisement> advertisementList =
-                advertisementRepository.findByDirectoryIdAndStatus(1L,"Y");
+                advertisementRepository.findByDirectoryIdAndStatus(directoryId,"Y");
 
         if(advertisementList.size() == 0){
             throw new BaseException(NOT_FOUND_ADVERTISEMENT);
