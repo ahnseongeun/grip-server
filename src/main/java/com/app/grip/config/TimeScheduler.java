@@ -29,7 +29,7 @@ public class TimeScheduler {
     public void alert() {
         //String video1 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video1\\videotest1.m3u8";
         //String video2 = "C:\\home1\\ffmpeg-4.3.2-2021-02-02-full_build\\ffmpeg-4.3.2-2021-02-02-full_build\\bin\\video2\\videotest2.m3u8";
-        String video1 = "https://test.shine94.kr/video/video2/videotest1.m3u8";
+        String video1 = "https://test.shine94.kr/video/video1/videotest1.m3u8";
         String video2 = "https://test.shine94.kr/video/video2/videotest2.m3u8";
         if(StreamingRepository.get(video1) == null)
             return;
