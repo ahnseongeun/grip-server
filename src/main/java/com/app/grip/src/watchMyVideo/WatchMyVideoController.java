@@ -38,4 +38,19 @@ public class WatchMyVideoController {
         }
     }
 
+    @PatchMapping("/watch-videos/{videoId}")
+    @ResponseBody
+    @ApiOperation(value = "내가 본 영상 삭제)", notes = "내가 본 영상 삭제")
+    public BaseResponse<Void> getWatchMyVideo(
+            @RequestHeader(value = "jwt") String jwt, @PathVariable Long videoId)  {
+
+
+        try{
+            watchMyVideoProvider.deleteWatchMyVideo(videoId);
+            return new BaseResponse<>(SUCCESS);
+        }catch (BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
 }

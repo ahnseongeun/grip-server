@@ -8,11 +8,12 @@ import com.app.grip.src.video.models.Video;
 import com.app.grip.src.video.videoParticipant.VideoParticipantRepository;
 import com.app.grip.src.video.videoParticipant.models.VideoParticipant;
 import com.app.grip.src.watchMyVideo.models.GetWatchMyVideo;
+import com.app.grip.src.watchMyVideo.models.WatchMyVideo;
 import com.app.grip.utils.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +24,7 @@ import static com.app.grip.config.BaseResponseStatus.*;
 public class WatchMyVideoProvider {
 
     private final UserRepository userRepository;
+    private final WatchMyVideoRepository watchMyVideoRepository;
     private final VideoParticipantRepository videoParticipantRepository;
     private final VideoRepository videoRepository;
     private final HashMap<Long,Integer> likeRepository;
@@ -30,11 +32,13 @@ public class WatchMyVideoProvider {
 
     @Autowired
     public WatchMyVideoProvider(UserRepository userRepository,
+                                WatchMyVideoRepository watchMyVideoRepository,
                                 VideoParticipantRepository videoParticipantRepository,
                                 VideoRepository videoRepository,
                                 HashMap<Long, Integer> likeRepository,
                                 JwtService jwtService) {
         this.userRepository = userRepository;
+        this.watchMyVideoRepository = watchMyVideoRepository;
         this.videoParticipantRepository = videoParticipantRepository;
         this.videoRepository = videoRepository;
         this.likeRepository = likeRepository;
@@ -69,5 +73,22 @@ public class WatchMyVideoProvider {
                         .hostProfileImageURL(video.getUser().getProfileImageURL())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void deleteWatchMyVideo(Long videoId) throws BaseException {
+
+        User user = userRepository.findByNoAndStatus(jwtService.getUserNo(),"Y")
+                .orElseThrow(() -> new BaseException(NOT_FOUND_USER));
+
+        //TODO 
+        Video video = videoRepository.findByIdAndStatus(videoId,"Y")
+                .orElseThrow(() -> new BaseException(NOT_START_VIDEO));
+
+        VideoParticipant videoParticipant = videoParticipantRepository.findByUserAndVideoAndStatus(user,video,"Y")
+                .orElseThrow(() -> new BaseException(NOT_START_VIDEO));
+
+        videoParticipant.setStatus("N");
+
     }
 }
