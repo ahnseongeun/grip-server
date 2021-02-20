@@ -210,4 +210,30 @@ public class VideoCategoryProvider {
 
         return getVideosCategoryList;
     }
+
+    public List<GetVideoListByCategory> retrieveVideosByCategory(String categoryName) throws BaseException {
+
+        List<Video> videoList = videoRepository.findByVideoCategory_NameAndStatus(categoryName,"Y");
+
+        if(videoList.size() == 0)
+            throw new BaseException(FAILED_TO_GET_VIDEO);
+
+        return videoList.stream().map(video -> GetVideoListByCategory.builder()
+                .hostName(video.getUser().getName())
+                .videoId(video.getId())
+                .videoURL(video.getVideoURL())
+                .watchUserCount(video.getVideoWatchUserCount())
+                .thumbnailURL(video.getThumbnailURL())
+                .startLiveTime(video.getStartLiveTime())
+                .title(video.getTitle())
+                .liveCheck(video.getLiveCheck())
+                .productInfo(video.getUser().getStore().getProductList().stream().findFirst()
+                        .map(product -> GetProductInfo.builder()
+                                .productPrice(product.getPrice())
+                                .productContent(product.getContent())
+                                .productImageURL(product.getPictureURL())
+                                .build())
+                        .orElse(null))
+                .build()).collect(Collectors.toList());
+    }
 }

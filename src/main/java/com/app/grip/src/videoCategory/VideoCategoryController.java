@@ -2,6 +2,7 @@ package com.app.grip.src.videoCategory;
 
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
+import com.app.grip.src.video.models.GetVideoListByCategory;
 import com.app.grip.src.videoCategory.models.GetVideoCategory;
 import com.app.grip.src.videoCategory.models.GetVideosCategory;
 import com.app.grip.utils.S3Service;
@@ -59,6 +60,25 @@ public class VideoCategoryController {
             log.info("영상 카테고리 영상 조회");
 
             List<GetVideosCategory> getVideosCategoryList = videoCategoryProvider.retrieveVideosCategoryList();
+            return new BaseResponse<>(SUCCESS, getVideosCategoryList);
+        }catch(BaseException exception){
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    /**
+     * 카테고리에 따른 영상 필터링 제공
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "/videos-category/{categoryName}",method = RequestMethod.GET)
+    @ApiOperation(value = "카테고리에 따른 영상 필터링 제공", notes = "카테고리에 따른 영상 필터링 제공")
+    public BaseResponse<List<GetVideoListByCategory>> GetVideosByCategory(@PathVariable String categoryName) {
+
+        try{
+            log.info("영상 카테고리 영상 조회");
+
+            List<GetVideoListByCategory> getVideosCategoryList = videoCategoryProvider.retrieveVideosByCategory(categoryName);
             return new BaseResponse<>(SUCCESS, getVideosCategoryList);
         }catch(BaseException exception){
             return new BaseResponse<>(exception.getStatus());

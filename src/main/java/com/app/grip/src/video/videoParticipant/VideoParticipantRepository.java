@@ -16,4 +16,6 @@ public interface VideoParticipantRepository extends CrudRepository<VideoParticip
     int countByVideo(Video video);
 
     List<VideoParticipant> findByUserAndStatus(User user, String y);
+
+    Optional<VideoParticipant> findByUserAndVideoAndStatus(User user, Video video, String y);
 }
