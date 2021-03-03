@@ -3,7 +3,6 @@ package com.app.grip.src.chatting;
 import com.app.grip.config.BaseException;
 import com.app.grip.src.chatting.models.ChattingRoom;
 import com.app.grip.src.chatting.models.GetChattingRoomRes;
-import com.app.grip.src.chatting.models.GetChattingRoomsRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,30 +18,9 @@ public class ChattingProvider {
     private final ChattingRoomRepository chattingRoomRepository;
 
     /**
-     * 관리자용 채팅방 전체조회
-     * @return
-     * @throws
-     * @Auther shine
-     */
-    @Transactional
-    public List<GetChattingRoomsRes> retrieveAdminChattingRooms() throws BaseException {
-        List<ChattingRoom> chattingRoomList;
-
-        try {
-            chattingRoomList = chattingRoomRepository.findByOrderByIdDesc();
-        } catch (Exception exception) {
-            throw new BaseException(FAILED_TO_GET_CHATTINGROOM);
-        }
-
-        return chattingRoomList.stream().map(chattingRoom -> {
-            return new GetChattingRoomsRes(chattingRoom.getId(), chattingRoom.getStatus());
-        }).collect(Collectors.toList());
-    }
-
-    /**
      * 채팅방 전체조회
-     * @return
-     * @throws
+     * @return List<GetChattingRoomRes>
+     * @throws BaseException
      * @Auther shine
      */
     @Transactional
@@ -62,8 +40,8 @@ public class ChattingProvider {
 
     /**
      * 채팅방 조회
-     * @return
-     * @throws
+     * @return GetChattingRoomRes
+     * @throws BaseException
      * @Auther shine
      */
     @Transactional

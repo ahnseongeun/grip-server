@@ -4,6 +4,8 @@ import com.app.grip.config.BaseException;
 import com.app.grip.src.product.models.*;
 import com.app.grip.src.store.StoreProvider;
 import com.app.grip.src.store.models.Store;
+import com.app.grip.src.user.UserRepository;
+import com.app.grip.src.user.models.User;
 import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ public class ProductService {
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductProvider productProvider;
     private final StoreProvider storeProvider;
+    private final UserRepository userRepository;
     private final JwtService jwtService;
 
     /**
@@ -27,6 +30,12 @@ public class ProductService {
      * @Auther shine
      */
     public PostProductCategoryRes createProductCategory(PostProductCategoryReq parameters) throws BaseException {
+        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
+
+        if(user.getRole() != 100) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
+
         ProductCategory newProductCategory = ProductCategory.builder()
                 .name(parameters.getName())
                 .build();

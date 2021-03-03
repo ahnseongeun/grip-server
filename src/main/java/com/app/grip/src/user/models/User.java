@@ -2,6 +2,7 @@ package com.app.grip.src.user.models;
 
 import com.app.grip.config.BaseEntity;
 import com.app.grip.src.coupon.models.Coupon;
+import com.app.grip.src.review.models.Review;
 import com.app.grip.src.store.models.Store;
 import com.app.grip.src.video.models.Video;
 import com.app.grip.src.video.videoLike.models.VideoLike;
@@ -101,6 +102,9 @@ public class User extends BaseEntity {
 
     @OneToOne(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private Store store;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Review> reviewList;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Coupon> couponList;

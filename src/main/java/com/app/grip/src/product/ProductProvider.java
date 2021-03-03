@@ -5,6 +5,9 @@ import com.app.grip.src.product.models.*;
 import com.app.grip.src.review.ReviewProvider;
 import com.app.grip.src.review.models.Review;
 import com.app.grip.src.store.models.GetStoresRes;
+import com.app.grip.src.user.UserRepository;
+import com.app.grip.src.user.models.User;
+import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -22,17 +25,24 @@ public class ProductProvider {
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
     private final ReviewProvider reviewProvider;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
-     * 전체 카테고리 조회
+     * 관리자용 전체 카테고리 조회
      * @return List<GetProductCategoryRes>
      * @throws BaseException
      * @Auther shine
      */
     public List<GetProductCategoryRes> retrieveProductsCategory() throws BaseException {
+        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
         List<ProductCategory> productCategoryList;
+
+        if(user.getRole() != 100) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
 
         try {
             productCategoryList = productCategoryRepository.findAll(Sort.by("id"));
@@ -66,13 +76,18 @@ public class ProductProvider {
 
 
     /**
-     * 전체 상품 조회
+     * 관리자용 전체 상품 조회
      * @return List<GetProductsRes>
      * @throws BaseException
      * @Auther shine
      */
     public List<GetProductsRes> retrieveProducts() throws BaseException {
+        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
         List<Product> productList;
+
+        if(user.getRole() != 100) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
 
         try {
             productList = productRepository.findAllByOrderByIdDesc();

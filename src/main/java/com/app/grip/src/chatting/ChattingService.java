@@ -15,9 +15,8 @@ public class ChattingService {
 
     /**
      * 채팅방 생성
-     * @param
-     * @return
-     * @throws
+     * @return PostChattingRoomRes
+     * @throws BaseException
      * @Auther shine
      */
     public PostChattingRoomRes createChattingRoom() throws BaseException {

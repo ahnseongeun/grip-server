@@ -3,7 +3,6 @@ package com.app.grip.src.chatting;
 import com.app.grip.config.BaseException;
 import com.app.grip.config.BaseResponse;
 import com.app.grip.src.chatting.models.GetChattingRoomRes;
-import com.app.grip.src.chatting.models.GetChattingRoomsRes;
 import com.app.grip.src.chatting.models.PostChattingRoomRes;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -19,24 +18,6 @@ import static com.app.grip.config.BaseResponseStatus.*;
 public class ChattingController {
     private final ChattingProvider chattingProvider;
     private final ChattingService chattingService;
-
-    /**
-     * 채팅방 전체조회 API
-     * [GET] /api/admin/chatting-rooms
-     * @return
-     * @Auther shine
-     */
-    @ApiOperation(value = "채팅방 전체조회(관리자용)", notes = "채팅방 전체조회(관리자용)")
-    @ResponseBody
-    @GetMapping("/admin/chatting-rooms")
-    public BaseResponse<List<GetChattingRoomsRes>> getAdminChattingRooms() {
-        try {
-            List<GetChattingRoomsRes> chattingRoomList = chattingProvider.retrieveAdminChattingRooms();
-            return new BaseResponse<>(SUCCESS, chattingRoomList);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
 
     /**
      * 채팅방 전체조회 API
@@ -57,7 +38,7 @@ public class ChattingController {
     }
 
     /**
-     * 채팅방 전체조회 API
+     * 채팅방 조회 API
      * [GET] /api/chatting-rooms/:chattingRoomId
      * @return
      * @Auther shine

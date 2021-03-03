@@ -6,6 +6,9 @@ import com.app.grip.src.review.models.GetReviewRes;
 import com.app.grip.src.review.models.GetReviewsRes;
 import com.app.grip.src.review.models.PictureRes;
 import com.app.grip.src.review.models.Review;
+import com.app.grip.src.user.UserRepository;
+import com.app.grip.src.user.models.User;
+import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,18 +25,25 @@ import java.util.stream.Collectors;
 public class ReviewProvider {
     private final ReviewRepository reviewRepository;
     private final ProductCategoryRepository productCategoryRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
-     * 리뷰 전체 조회
+     * 관리자용 전체 리뷰 조회
      * @return List<GetReviewsRes>
      * @throws BaseException
      * @Auther shine
      */
     @Transactional
     public List<GetReviewsRes> retrieveReviews() throws BaseException {
+        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
         List<Review> reviewList;
+
+        if(user.getRole() != 100) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
 
         try {
             reviewList = reviewRepository.findAllByOrderByIdDesc();
