@@ -5,6 +5,7 @@ import com.app.grip.src.coupon.models.Coupon;
 import com.app.grip.src.coupon.models.GetCouponRes;
 import com.app.grip.src.coupon.models.GetCouponsRes;
 import com.app.grip.src.user.UserRepository;
+import com.app.grip.src.user.models.User;
 import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,12 @@ public class CouponProvider {
      */
     @Transactional
     public List<GetCouponsRes> retrieveCoupons() throws BaseException {
+        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
         List<Coupon> couponList;
+
+        if(user.getRole() != 100) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
 
         try {
             couponList = couponRepository.findAllByOrderByIdDesc();

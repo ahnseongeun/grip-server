@@ -7,7 +7,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,7 +109,7 @@ public class ReviewController {
 
     /**
      * 리뷰 등록 API
-     * [POST] /api/stores/:storeId/reviews
+     * [POST] /api/products/:productId/reviews
      * @RequestBody PostReviewReq parameters
      * @PathVariable Long storeId
      * @return BaseResponse<PostReviewRes>
@@ -118,8 +117,8 @@ public class ReviewController {
      */
     @ApiOperation(value = "리뷰 등록", notes = "리뷰 등록")
     @ResponseBody
-    @PostMapping("/stores/{storeId}/reviews")
-    public BaseResponse<PostReviewRes> postReview(@RequestBody(required = false) PostReviewReq parameters, @PathVariable Long storeId) {
+    @PostMapping("/products/{productId}/reviews")
+    public BaseResponse<PostReviewRes> postReview(@RequestBody(required = false) PostReviewReq parameters, @PathVariable Long productId) {
         if(parameters.getStar() == null) {
             return new BaseResponse<>(EMPTY_STAR);
         }
@@ -128,7 +127,7 @@ public class ReviewController {
         }
 
         try {
-            PostReviewRes postReviewRes = reviewService.createReview(parameters, storeId);
+            PostReviewRes postReviewRes = reviewService.createReview(parameters, productId);
             return new BaseResponse<>(SUCCESS, postReviewRes);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

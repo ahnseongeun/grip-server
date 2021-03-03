@@ -26,7 +26,7 @@ public class CouponController {
     /**
      * 쿠폰 전체조회 API
      * [GET] /api/admin/coupons
-     * @return
+     * @return BaseResponse<List<GetCouponsRes>>
      * @Auther shine
      */
     @ApiOperation(value = "전체 쿠폰조회(관리자용)", notes = "전체 쿠폰조회")
@@ -44,7 +44,7 @@ public class CouponController {
     /**
      * 쿠폰 전체조회 API
      * [GET] /api/coupons
-     * @return
+     * @return BaseResponse<List<GetCouponRes>>
      * @Auther shine
      */
     @ApiOperation(value = "쿠폰 전체조회(클라용)", notes = "내 쿠폰 조회(클라용)")

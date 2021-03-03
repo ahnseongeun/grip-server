@@ -4,7 +4,9 @@ import com.app.grip.config.BaseException;
 import com.app.grip.src.store.models.GetStoreRes;
 import com.app.grip.src.store.models.GetStoresRes;
 import com.app.grip.src.store.models.Store;
+import com.app.grip.src.user.UserRepository;
 import com.app.grip.src.user.models.User;
+import com.app.grip.utils.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,18 +22,25 @@ import java.util.stream.Collectors;
 @Service
 public class StoreProvider {
     private final StoreRepository storeRepository;
+    private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA);
 
     /**
-     * 상점 전체 조회
+     * 관리자용 상점 전체 조회
      * @return List<GetStoresRes>
      * @throws BaseException
      * @Auther shine
      */
     @Transactional
     public List<GetStoresRes> retrieveStores() throws BaseException {
+        User user = userRepository.findById(jwtService.getUserNo()).orElseThrow(() -> new BaseException(FAILED_TO_GET_USER));
         List<Store> storeList;
+
+        if(user.getRole() != 100) {
+            throw new BaseException(DO_NOT_AUTH_USER);
+        }
 
         try {
             storeList = storeRepository.findAllByOrderByIdDesc();
