@@ -74,6 +74,12 @@ dependencies {
     //영상
     compile 'net.bramp.ffmpeg:ffmpeg:0.6.2'
 
+    // 채팅
+    compile 'org.springframework.boot:spring-boot-starter-websocket'
+    compile 'org.webjars:sockjs-client:1.1.2'
+    compile 'org.webjars:stomp-websocket:2.3.3'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
     sourceSets {
         main {
             resources {
